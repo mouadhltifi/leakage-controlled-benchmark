@@ -1,0 +1,91 @@
+# Phase 1 — Architecture screening base config.
+#
+# Tests axis 1 (head.architecture): parallel_multitask vs
+# sequential_cascade vs single_task(direction).
+#
+# The sweep driver overrides:
+#   - data.fold_idx (0..4)
+#   - seed (42, 123, 456)
+#   - head.architecture (parallel_multitask | sequential_cascade | single_task)
+#   - head.targets (matched to architecture; see run_phase1.py)
+#   - macro.enabled (false for A7, true for A4)
+#
+# Research plan: the research plan
+
+name = "phase1_architecture"
+seed = 42
+device = "auto"
+
+[data]
+universe = "sp500_sector_55"
+start_date = "2015-02-03"
+end_date = "2023-12-31"
+fold_idx = 0
+lookback = 20                 # LSTM path per research plan (v1 d=0.28 advantage)
+deadzone = 0.005
+warmup_days = 252
+
+[price]
+enabled = true
+
+[news]
+enabled = false
+
+[social]
+enabled = false
+
+[macro]
+enabled = false               # toggled per grid entry for A7 vs A4
+
+[graph]
+enabled = false
+
+[standardization]
+price = true
+macro = true
+news = true
+social = true
+graph_node = true
+fit_scope = "train_fold_only"
+
+[model]
+hidden_dim = 64
+dropout = 0.2
+num_heads = 4
+price_encoder = "lstm"
+price_lstm_layers = 2
+tabular_hidden_layers = 1
+graph_gat_heads = 4
+graph_gat_layers = 2
+
+[fusion]
+strategy = "concat"
+primary_modality = "price"
+
+[head]
+architecture = "parallel_multitask"     # overridden per grid entry
+targets = ["direction", "return"]       # overridden for single_task
+mtl_alpha = 0.5
+cascade_reg_target = "return"
+
+[training]
+batch_size = 64
+max_epochs = 150
+min_epochs = 0
+patience = 30
+grad_clip = 1.0
+learning_rate = 1e-4
+weight_decay = 1e-5
+optimizer = "adam"
+scheduler = "cosine_warm_restarts"
+class_weights = "inverse_frequency"
+val_fraction = 0.2
+
+[intraday]
+enabled = false
+frequency = "daily"
+source = "none"
+
+[logging]
+level = "INFO"
+per_epoch_log_every = 10

@@ -1,0 +1,103 @@
+# Phase 2 — News encoder screening base config.
+#
+# Tests axis 2 (news.encoder): finbert_11dim vs finbert_cls_768 vs
+# bge_base vs qwen3_embedding.  DeBERTa-v3-financial deferred (cache
+# not generated; future-work supplementary run).
+#
+# The sweep driver overrides:
+#   - data.fold_idx (0..4)
+#   - seed (42, 123, 456)
+#   - news.encoder (4 values)
+#   - news.pca_dims (None for finbert_11dim, 32 for vector encoders)
+#   - news.enabled (false for the A7 control rows)
+#
+# Architecture fixed to parallel_multitask pending Phase 1 result; if
+# Phase 1 picks sequential_cascade, edit this base and re-run.
+#
+# Research plan: the research plan
+
+name = "phase2_encoder"
+seed = 42
+device = "auto"
+
+[data]
+universe = "sp500_sector_55"
+start_date = "2015-02-03"
+end_date = "2023-12-31"
+fold_idx = 0
+lookback = 20
+deadzone = 0.005
+warmup_days = 252
+
+[price]
+enabled = true
+
+[news]
+enabled = true                # overridden to false for A7 control rows
+encoder = "finbert_11dim"     # overridden per grid entry
+aggregation = "arithmetic_mean"
+pca_dims = 0                  # 0 = no PCA (finbert_11dim path); overridden to 32 for vector encoders
+pca_train_end = ""            # "" = use fold train_end (per-fold PCA, audit B.4 fix)
+log1p_volume = true
+dispersion_feature = false
+empty_day_policy = "zero_fill_has_news_flag"
+lag_days = 1
+
+[social]
+enabled = false
+
+[macro]
+enabled = false
+
+[graph]
+enabled = false
+
+[standardization]
+price = true
+macro = true
+news = true
+social = true
+graph_node = true
+fit_scope = "train_fold_only"
+
+[model]
+hidden_dim = 64
+dropout = 0.2
+num_heads = 4
+price_encoder = "lstm"
+price_lstm_layers = 2
+tabular_hidden_layers = 1
+graph_gat_heads = 4
+graph_gat_layers = 2
+
+[fusion]
+strategy = "concat"
+primary_modality = "price"
+
+[head]
+architecture = "parallel_multitask"
+targets = ["direction", "return"]
+mtl_alpha = 0.5
+cascade_reg_target = "return"
+
+[training]
+batch_size = 64
+max_epochs = 150
+min_epochs = 0
+patience = 30
+grad_clip = 1.0
+learning_rate = 1e-4
+weight_decay = 1e-5
+optimizer = "adam"
+scheduler = "cosine_warm_restarts"
+class_weights = "inverse_frequency"
+val_fraction = 0.2
+
+[intraday]
+enabled = false
+frequency = "daily"
+source = "none"
+
+[logging]
+level = "INFO"
+per_epoch_log_every = 10

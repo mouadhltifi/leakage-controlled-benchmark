@@ -1,0 +1,29 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+*.egg-info/
+
+# Secrets — never commit
+.env
+.env.*
+*.key
+kaggle.json
+.kaggle/
+
+# OS
+.DS_Store
+
+# Generated figures (regenerate with scripts/figures/make_paper_figures.py)
+figures/*.pdf
+
+# Derived/fetched data — kept OUT of the repo to stay lean for double-blind upload
+# (anonymous.4open.science / GitHub). It is regenerable or fetchable per
+# data/README.md + REPRODUCE.md; the committed result CSVs in results/ already
+# reproduce every headline number and figure.
+data/external/
+data/interim/
+data/raw/prices/
+data/processed/

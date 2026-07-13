@@ -1,0 +1,46 @@
+cff-version: 1.2.0
+message: "If you use this benchmark, harness, or its reference results, please cite the accompanying paper."
+title: "A Leakage-Controlled Evaluation Protocol and Benchmark for Multi-Source Stock Prediction"
+type: software
+authors:
+  - family-names: Ltifi
+    given-names: Mouadh
+    orcid: "https://orcid.org/0009-0007-7456-0472"
+    affiliation: "Politecnico di Milano"
+  - family-names: Puoti
+    given-names: Francesco
+    affiliation: "Politecnico di Milano"
+  - family-names: Pittorino
+    given-names: Fabrizio
+    affiliation: "Politecnico di Milano"
+license: MIT
+abstract: >-
+  Evaluation protocol, harness, point-in-time feature datasets, and reference
+  baselines for multi-source next-day stock prediction (55 US large-caps,
+  2015-2023; price, news, social, macro, inter-stock graphs). The committed
+  result files regenerate every reference number with no download; the
+  repository also documents from-scratch re-runs and two reproducibility
+  audits that price individual protocol conditions (test-set model selection;
+  non-temporal split leakage).
+keywords:
+  - evaluation protocol
+  - benchmark
+  - data leakage
+  - financial machine learning
+  - reproducibility
+
+# This artifact reproduces two published third-party baselines for an
+# evaluation-methodology audit. They are NOT the work of the authors of this
+# artifact; cite the originals below.
+references:
+  - type: article
+    title: "MSGCA: Multi-Source Gated Cross-Attention for stock movement prediction"
+    authors:
+      - name: "MSGCA authors (see upstream)"
+    notes: "Upstream code: https://github.com/changzong/MSGCA (Apache-2.0). Cite the original publication."
+  - type: article
+    title: "CAMEF: Causal multi-modal macro-economic event forecasting"
+    authors:
+      - name: "CAMEF authors (see upstream)"
+    year: 2025
+    notes: "KDD 2025. Upstream code: https://github.com/lakebodhi/CAMEF. Cite the original publication."

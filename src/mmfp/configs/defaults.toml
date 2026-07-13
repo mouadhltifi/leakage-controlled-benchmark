@@ -1,0 +1,102 @@
+# Canonical defaults for every experiment.
+#
+# This file is the TOML counterpart of ``mmfp.config.defaults.DEFAULT_CONFIG``.
+# The two must agree field-for-field; a round-trip test enforces this.
+#
+# Precedence when merged by ``mmfp.config.load.load_config``:
+#   defaults.toml < experiment.toml < CLI --set key=value
+
+name = "default"
+seed = 42
+device = "auto"
+
+[data]
+universe = "sp500_sector_55"
+start_date = "2015-02-03"  # First dynamic-graph snapshot date; avoids first-month gap
+end_date = "2023-12-31"
+fold_idx = 0
+lookback = 1
+deadzone = 0.005
+warmup_days = 252
+
+[price]
+enabled = true
+
+[news]
+enabled = false
+encoder = "finbert_11dim"
+aggregation = "arithmetic_mean"
+pca_dims = 32
+pca_train_end = ""           # "" = use fold train end (per-fold PCA)
+log1p_volume = true
+dispersion_feature = false
+empty_day_policy = "zero_fill_has_news_flag"
+lag_days = 1
+
+[social]
+enabled = false
+aggregation_window = 3
+log1p_volume = true
+lag_days = 1
+
+[macro]
+enabled = false
+fomc_window = 1
+
+[graph]
+enabled = false
+source = "static_gics"
+dynamic_window = 20
+dynamic_threshold = 0.3
+dynamic_refresh_every = 20
+
+[standardization]
+price = true
+macro = true
+news = true
+social = true
+graph_node = true
+fit_scope = "train_fold_only"
+
+[model]
+hidden_dim = 64
+dropout = 0.2
+num_heads = 4
+price_encoder = "lstm"
+price_lstm_layers = 2
+tabular_hidden_layers = 1
+graph_gat_heads = 4
+graph_gat_layers = 2
+
+[fusion]
+strategy = "concat"
+primary_modality = "price"
+
+[head]
+architecture = "parallel_multitask"
+targets = ["direction", "return"]
+mtl_alpha = 0.5
+cascade_reg_target = "return"
+detach_cascade = false
+
+[training]
+batch_size = 64
+max_epochs = 150
+min_epochs = 0
+patience = 30
+grad_clip = 1.0
+learning_rate = 1e-4
+weight_decay = 1e-5
+optimizer = "adam"
+scheduler = "cosine_warm_restarts"
+class_weights = "inverse_frequency"
+val_fraction = 0.2
+
+[intraday]
+enabled = false
+frequency = "daily"
+source = "none"
+
+[logging]
+level = "INFO"
+per_epoch_log_every = 10

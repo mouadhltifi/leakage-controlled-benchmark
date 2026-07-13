@@ -1,0 +1,62 @@
+=== CAMEF repro — SPLIT=time (flag=['--split-by-time']) epochs=5 ===
+=== installing deps (authors' moment.yml; momentfm --no-deps to keep transformers 4.43.1) ===
+
+$ /usr/bin/python3 -m pip install -q gdown transformers==4.43.1 tokenizers==0.19.1 huggingface-hub==0.24.0 numpy<2 accelerate==1.9.0 scikit-learn==1.5.0 sentencepiece==0.2.0
+(exit 0, 25s)
+
+$ /usr/bin/python3 -m pip install -q --no-deps momentfm==0.1.4
+(exit 0, 1s)
+torch 2.10.0+cu128 cuda? True Tesla T4
+transformers 4.43.1 numpy 1.26.4
+momentfm ?
+
+=== staging CAMEF code (authors' repo, exact branch) ===
+
+$ git clone --depth 1 -b publish-camef-code https://github.com/lakebodhi/CAMEF.git /kaggle/working/CAMEF_repo
+(exit 0, 4s)
+CAMEF code dir: /kaggle/working/CAMEF_repo/CAMEF exists: True
+PATCHED dataloader.py: num_workers 15 -> 2  (D1; Kaggle 2-vCPU)
+
+=== downloading authors' dataset.zip from Google Drive (~4 GB) ===
+dataset.zip = 3981.7 MB
+zip entries: 43500
+EVENTS  = /kaggle/working/dataset_x/dataset/events/processed_events_and_counterfactuals
+SERIES  = /kaggle/working/dataset_x/dataset/time-sersseries
+symlink /kaggle/working/CAMEF_repo/CAMEF/data/event -> /kaggle/working/dataset_x/dataset/events/processed_events_and_counterfactuals
+symlink /kaggle/working/CAMEF_repo/CAMEF/data/series -> /kaggle/working/dataset_x/dataset/time-sersseries
+dataloader split('/')[2] on 'data/event/1/20100506.txt' = '1' (must equal class '1')
+
+=== pre-fetching pretrained weights (all OPEN; NO LLaMA at runtime) ===
+  OK: roberta-base
+  OK: gpt2
+  OK: AutonLab/MOMENT-1-large
+
+############### TRAIN [time] (epochs=5) ###############
+$ /usr/bin/python3 train.py --moment-model AutonLab/MOMENT-1-large --event-dir data/event --series-dir data/series --series-id SP500 --seq-len 35 --pred-len 35 --batch-size 10 --epochs 5 --output-path /kaggle/working/out_time --split-by-time
+[time] train exited rc=0 after 7579s
+[time] checkpoint: /kaggle/working/out_time/best_model.pth exists: True (walled=False)
+[time] --- authors' log.txt (last 20 lines) ---
+     Step in Epoch: 5/5, loss: 3.6026015281677246
+     Step in Epoch: 5/5, loss: 3.429050922393799
+     Step in Epoch: 5/5, loss: 2.678969621658325
+     Step in Epoch: 5/5, loss: 3.3459372520446777
+     Step in Epoch: 5/5, loss: 4.01676082611084
+     Step in Epoch: 5/5, loss: 3.97407865524292
+     Step in Epoch: 5/5, loss: 4.087889194488525
+     Step in Epoch: 5/5, loss: 4.794317245483398
+     Step in Epoch: 5/5, loss: 5.003064155578613
+     Step in Epoch: 5/5, loss: 4.717864990234375
+     Step in Epoch: 5/5, loss: 4.681499481201172
+     Step in Epoch: 5/5, loss: 5.5025224685668945
+     Step in Epoch: 5/5, loss: 5.902419567108154
+     Step in Epoch: 5/5, loss: 6.542556285858154
+     Step in Epoch: 5/5, loss: 6.986394882202148
+     Step in Epoch: 5/5, loss: 7.499595642089844
+     Epoch: 5/5, loss: 2.7854958785616835
+     Vali Combined Loss: 52.42378280931664, Vali MSE Loss: 44.7852299111916, Vali MAE Loss: 6.635238110783327
+     Test Combined loss: 20.006335895293567, Test MSE Loss: 15.265559729202506, Test MAE Loss: 3.7367620278385596Saving Best Model @ iter5: Vali Combined Loss: 52.42378280931664, Vali MSE Loss: 44.7852299111916, Vali MAE Loss: 6.635238110783327
+      Test Combined loss: 20.006335895293567, Test MSE Loss: 15.265559729202506, Test MAE Loss: 3.7367620278385596
+
+$ /usr/bin/python3 test.py --checkpoint /kaggle/working/out_time/best_model.pth --moment-model AutonLab/MOMENT-1-large --event-dir data/event --series-dir data/series --series-id SP500 --seq-len 35 --pred-len 35 --batch-size 10 --split test --split-by-time
+(exit 0, 344s)
+[time] test.py exit 0

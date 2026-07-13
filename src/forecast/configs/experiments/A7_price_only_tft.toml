@@ -1,0 +1,33 @@
+# A7 price-only baseline under v3 TFT architecture.
+#
+# Reference config for the M6 smoke test and the M7 equivalence-vs-v2 check:
+# the v3 A7 baseline MCC is compared to v2's A7 750-core reference
+# (FF + concat, mean MCC = 0.0095) for order-of-magnitude sanity — NOT
+# strict regression equivalence, because v3 is a different architecture.
+# See architecture-spec §11.3 for tolerance bounds.
+#
+# All fields not set here inherit from ``forecast/configs/defaults.toml``.
+# The sweep driver (M5) overrides ``seed`` and ``data.fold_idx`` on each
+# iteration; everything else is fixed in this file.
+
+name = "v3_A7_price_only"
+seed = 42
+device = "auto"
+
+[price]
+enabled = true
+
+[news]
+enabled = false
+
+[social]
+enabled = false
+
+[macro]
+enabled = false
+
+[graph]
+enabled = false
+
+[forecast]
+architecture = "tft"

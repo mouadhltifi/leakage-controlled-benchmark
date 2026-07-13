@@ -1,0 +1,202 @@
+{
+  "experiment": "MSGCA selection-bias diagnostic \u2014 rigorous re-run (v2)",
+  "dataset": "bd22_stock",
+  "outer_seed": 42,
+  "outer_split_ratio": 0.8,
+  "val_ratio": 0.2,
+  "epoch_num": 400,
+  "device": "cpu",
+  "what_their_code_does": "github.com/changzong/MSGCA main.py: random 80/20 train/test, NO val set, best_mcc = max test-MCC over epochs (argmax-over-epochs on TEST). Reported number.",
+  "method": {
+    "arm_a": "full train data, no val, max test-MCC over epochs (reproduces their protocol)",
+    "arm_b": "carve 20% val from train; WITHIN one run compare max-test vs test-at-best-val (isolates selection criterion; data/model/run held identical)",
+    "within_run_inflation": "arm_b best_on_test - best_on_val_test_mcc (confound-free)",
+    "cross_arm_gap": "arm_a best_on_test - arm_b honest; bundles selection + 20% data carve"
+  },
+  "report_by_budget": {
+    "200": {
+      "arm_a_reproduction_best_on_test": {
+        "mean": 0.030226640163155103,
+        "std": 0.05235407650468667,
+        "min": 0.0,
+        "max": 0.09067992048946531,
+        "n": 3
+      },
+      "arm_b_best_on_test_80pct": {
+        "mean": 0.037766844888177636,
+        "std": 0.052944175756775874,
+        "min": 0.0,
+        "max": 0.12077491812649044,
+        "n": 8
+      },
+      "arm_b_honest_best_on_val_test": {
+        "mean": -0.0017588777681146288,
+        "std": 0.004974857588448456,
+        "min": -0.01407102214491703,
+        "max": 0.0,
+        "n": 8
+      },
+      "arm_b_within_run_inflation": {
+        "mean": 0.03952572265629226,
+        "std": 0.05622767691094893,
+        "min": 0.0,
+        "max": 0.13484594027140748,
+        "n": 8
+      },
+      "cross_arm_gap_repro_minus_honest": 0.03198551793126973
+    },
+    "300": {
+      "arm_a_reproduction_best_on_test": {
+        "mean": 0.09672804742828496,
+        "std": 0.03274988668797175,
+        "min": 0.06742379206615125,
+        "max": 0.1320804297292383,
+        "n": 3
+      },
+      "arm_b_best_on_test_80pct": {
+        "mean": 0.048930850980180414,
+        "std": 0.0491404908747515,
+        "min": 0.0,
+        "max": 0.12077491812649044,
+        "n": 8
+      },
+      "arm_b_honest_best_on_val_test": {
+        "mean": -0.007221715897165113,
+        "std": 0.02552880238163284,
+        "min": -0.06559096170227481,
+        "max": 0.021888256669870938,
+        "n": 8
+      },
+      "arm_b_within_run_inflation": {
+        "mean": 0.056152566877345524,
+        "std": 0.0622175470797983,
+        "min": 0.0,
+        "max": 0.13484594027140748,
+        "n": 8
+      },
+      "cross_arm_gap_repro_minus_honest": 0.10394976332545007
+    },
+    "400": {
+      "arm_a_reproduction_best_on_test": {
+        "mean": 0.09672804742828496,
+        "std": 0.03274988668797175,
+        "min": 0.06742379206615125,
+        "max": 0.1320804297292383,
+        "n": 3
+      },
+      "arm_b_best_on_test_80pct": {
+        "mean": 0.053742677251649974,
+        "std": 0.04798531365741749,
+        "min": 0.0,
+        "max": 0.12077491812649044,
+        "n": 8
+      },
+      "arm_b_honest_best_on_val_test": {
+        "mean": -0.015005833209731805,
+        "std": 0.035472867139272224,
+        "min": -0.07634396064545056,
+        "max": 0.021888256669870938,
+        "n": 8
+      },
+      "arm_b_within_run_inflation": {
+        "mean": 0.06874851046138176,
+        "std": 0.0723734822543445,
+        "min": 0.0,
+        "max": 0.197118878771941,
+        "n": 8
+      },
+      "cross_arm_gap_repro_minus_honest": 0.11173388063801676
+    }
+  },
+  "runs": {
+    "arm_a": [
+      {
+        "arm": "A_reproduction",
+        "init_seed": 42,
+        "n_train": 440,
+        "n_test": 110,
+        "elapsed_s": 693.3843142986298
+      },
+      {
+        "arm": "A_reproduction",
+        "init_seed": 43,
+        "n_train": 440,
+        "n_test": 110,
+        "elapsed_s": 694.2301571369171
+      },
+      {
+        "arm": "A_reproduction",
+        "init_seed": 44,
+        "n_train": 440,
+        "n_test": 110,
+        "elapsed_s": 716.1364507675171
+      }
+    ],
+    "arm_b": [
+      {
+        "arm": "B_within_run",
+        "split_seed": 100,
+        "n_train": 352,
+        "n_val": 88,
+        "n_test": 110,
+        "elapsed_s": 555.1587152481079
+      },
+      {
+        "arm": "B_within_run",
+        "split_seed": 200,
+        "n_train": 352,
+        "n_val": 88,
+        "n_test": 110,
+        "elapsed_s": 553.0682537555695
+      },
+      {
+        "arm": "B_within_run",
+        "split_seed": 300,
+        "n_train": 352,
+        "n_val": 88,
+        "n_test": 110,
+        "elapsed_s": 557.8990361690521
+      },
+      {
+        "arm": "B_within_run",
+        "split_seed": 400,
+        "n_train": 352,
+        "n_val": 88,
+        "n_test": 110,
+        "elapsed_s": 558.1494262218475
+      },
+      {
+        "arm": "B_within_run",
+        "split_seed": 500,
+        "n_train": 352,
+        "n_val": 88,
+        "n_test": 110,
+        "elapsed_s": 563.9346842765808
+      },
+      {
+        "arm": "B_within_run",
+        "split_seed": 600,
+        "n_train": 352,
+        "n_val": 88,
+        "n_test": 110,
+        "elapsed_s": 561.7653698921204
+      },
+      {
+        "arm": "B_within_run",
+        "split_seed": 700,
+        "n_train": 352,
+        "n_val": 88,
+        "n_test": 110,
+        "elapsed_s": 560.4979231357574
+      },
+      {
+        "arm": "B_within_run",
+        "split_seed": 800,
+        "n_train": 352,
+        "n_val": 88,
+        "n_test": 110,
+        "elapsed_s": 551.6482429504395
+      }
+    ]
+  }
+}

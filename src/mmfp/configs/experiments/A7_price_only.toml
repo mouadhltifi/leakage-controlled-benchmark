@@ -1,0 +1,97 @@
+# A7 price-only baseline — equivalence-gate base config.
+#
+# Matches v1's A7 ablation cell used to generate the archived 750-core
+# reference: modalities=["price"], lookback=1, feedforward price encoder,
+# parallel multi-task head over (direction, return), concat fusion
+# (identity pass-through for a single modality).
+#
+# Reference values (``results/analysis/phase5_full_750core.md``):
+#     mean MCC  : 0.0071  (5 folds x 3 seeds, FF, concat)
+#     per-fold  : [0.0263, 0.0459, -0.0085, -0.0093, -0.0191]  (F0..F4)
+#
+# Equivalence-gate tolerance (per the pre-registered tolerance):
+#     mean within +/- 0.005
+#     per-fold within +/- 0.015
+#
+# The sweep driver (``scripts/run_equivalence_gate.py``) overrides
+# ``seed`` and ``data.fold_idx`` on each iteration; everything else is
+# fixed in this file.
+
+name = "A7_price_only"
+seed = 42                                  # overridden by sweep
+device = "auto"
+
+[data]
+universe = "sp500_sector_55"
+start_date = "2015-02-03"
+end_date = "2023-12-31"
+fold_idx = 0                               # overridden by sweep
+lookback = 1                               # FF price encoder: single-day
+deadzone = 0.005
+warmup_days = 252
+
+[price]
+enabled = true
+
+[news]
+enabled = false
+
+[social]
+enabled = false
+
+[macro]
+enabled = false
+
+[graph]
+enabled = false
+
+[standardization]
+price = true
+macro = true
+news = true
+social = true
+graph_node = true
+fit_scope = "train_fold_only"
+
+[model]
+hidden_dim = 64
+dropout = 0.2
+num_heads = 4
+price_encoder = "feedforward"              # critical: FF matches 0.0071 ref
+price_lstm_layers = 2
+tabular_hidden_layers = 1
+graph_gat_heads = 4
+graph_gat_layers = 2
+
+[fusion]
+strategy = "concat"                        # identity for single modality
+primary_modality = "price"
+
+[head]
+architecture = "parallel_multitask"
+targets = ["direction", "return"]
+mtl_alpha = 0.5
+cascade_reg_target = "return"
+detach_cascade = false
+
+[training]
+batch_size = 64
+max_epochs = 150
+min_epochs = 0
+patience = 30
+grad_clip = 1.0
+learning_rate = 1e-4
+weight_decay = 1e-5
+optimizer = "adam"
+scheduler = "cosine_warm_restarts"
+class_weights = "inverse_frequency"
+val_fraction = 0.2
+
+[intraday]
+enabled = false
+frequency = "daily"
+source = "none"
+
+[logging]
+level = "INFO"
+per_epoch_log_every = 10

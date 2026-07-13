@@ -1,0 +1,13 @@
+{
+  "id": "<ANON-KAGGLE-USER>/camef-eval",
+  "title": "camef-eval",
+  "code_file": "camef_eval.py",
+  "language": "python",
+  "kernel_type": "script",
+  "is_private": true,
+  "enable_gpu": true,
+  "enable_internet": true,
+  "dataset_sources": [],
+  "competition_sources": [],
+  "kernel_sources": []
+}

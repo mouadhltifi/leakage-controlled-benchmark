@@ -1,0 +1,50 @@
+# Reproducibility artifact dependencies.
+#
+# Python: 3.11+ required (uses tomllib from the stdlib). Tested on CPython 3.14.
+# Pins reflect the exact versions the committed results were produced/verified
+# with. If a pin is unavailable on your platform, the headline path (analysis +
+# figures) is tolerant of nearby versions of numpy / pandas / scipy / matplotlib.
+#
+# Two tiers:
+#   * CORE  — needed for the seconds-not-GPU path (analysis scripts + figures).
+#   * FULL  — additionally needed to RE-RUN experiments from scratch.
+#
+# Install everything:   pip install -r requirements.txt
+# Headline path only:   pip install numpy pandas scipy matplotlib
+
+# ---- CORE: reproduce the paper's numbers + figures from the committed CSVs ----
+numpy==2.4.2
+pandas==3.0.0
+scipy==1.17.0
+matplotlib==3.10.8
+seaborn==0.13.2
+
+# ---- FULL: re-run the ablation / forecaster from scratch -------------------
+# Deep learning (the v2 classifier + v3 TFT). torch-geometric is only needed for
+# the graph (A8/A9) configs.
+torch==2.10.0
+torch-geometric==2.7.0
+
+# NLP / text encoders (only needed to regenerate news embeddings, not to re-run
+# from the cached feature parquets).
+transformers==5.1.0
+tokenizers==0.22.2
+
+# ML tooling + storage + config + technical analysis + data fetch.
+scikit-learn==1.8.0
+h5py==3.15.1
+pyarrow==23.0.0
+pydantic==2.13.2
+ta==0.11.0
+pyyaml==6.0.3
+python-dotenv==1.2.1
+tqdm==4.67.3
+rich==14.3.2
+
+# Data fetch (raw sources; see data/README.md). Uncomment if you intend to
+# re-download prices / macro from upstream:
+# yfinance
+# fredapi
+
+# Testing
+pytest==9.0.2

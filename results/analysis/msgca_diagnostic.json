@@ -1,0 +1,79 @@
+{
+  "experiment": "MSGCA test-set selection bias diagnostic",
+  "dataset": "bd22_stock",
+  "outer_seed": 42,
+  "outer_split_ratio": 0.8,
+  "val_ratio": 0.2,
+  "n_epochs": 400,
+  "device": "cpu",
+  "methodology": {
+    "their_method": "max(test_MCC) across all 400 epochs, no validation set",
+    "honest_method": "test_MCC at epoch with best val_MCC, proper model selection",
+    "inflation": "best_test_MCC minus val_selected_test_MCC",
+    "approach": "Use original data pipeline (cached embeddings with seed=42), then sub-split train entities into 80% train_proper + 20% val. Three different sub-splits provide variance."
+  },
+  "original_baseline": {
+    "method": "original_no_val",
+    "best_test_mcc": 0.11571086627305362,
+    "best_test_acc": 0.6636363636363637,
+    "best_test_epoch": 296,
+    "elapsed_s": 1038.3756580352783
+  },
+  "val_split_results": [
+    {
+      "val_split_seed": 100,
+      "n_train": 352,
+      "n_val": 88,
+      "n_test": 110,
+      "best_test_mcc": 0.08336717153399427,
+      "best_test_acc": 0.6545454545454545,
+      "best_test_epoch": 324,
+      "best_val_mcc": 0.2498495233833691,
+      "best_val_epoch": 221,
+      "test_mcc_at_best_val": -0.04064961952976032,
+      "test_acc_at_best_val": 0.6090909090909091,
+      "inflation_mcc": 0.12401679106375459,
+      "inflation_acc": 0.045454545454545414,
+      "elapsed_s": 803.1367070674896
+    },
+    {
+      "val_split_seed": 200,
+      "n_train": 352,
+      "n_val": 88,
+      "n_test": 110,
+      "best_test_mcc": 0.021888256669870938,
+      "best_test_acc": 0.6272727272727273,
+      "best_test_epoch": 259,
+      "best_val_mcc": 0.294837375109653,
+      "best_val_epoch": 248,
+      "test_mcc_at_best_val": 0.0,
+      "test_acc_at_best_val": 0.6545454545454545,
+      "inflation_mcc": 0.021888256669870938,
+      "inflation_acc": -0.027272727272727226,
+      "elapsed_s": 785.7159781455994
+    },
+    {
+      "val_split_seed": 300,
+      "n_train": 352,
+      "n_val": 88,
+      "n_test": 110,
+      "best_test_mcc": 0.09067992048946531,
+      "best_test_acc": 0.6181818181818182,
+      "best_test_epoch": 104,
+      "best_val_mcc": 0.2762959756325133,
+      "best_val_epoch": 157,
+      "test_mcc_at_best_val": 0.017688382536705623,
+      "test_acc_at_best_val": 0.6,
+      "inflation_mcc": 0.07299153795275969,
+      "inflation_acc": 0.018181818181818188,
+      "elapsed_s": 822.4119400978088
+    }
+  ],
+  "summary": {
+    "original_best_test_mcc": 0.11571086627305362,
+    "mean_best_test_mcc_with_val_split": 0.06531178289777684,
+    "mean_val_selected_test_mcc": -0.007653745664351564,
+    "mean_inflation_mcc": 0.0729655285621284,
+    "mean_inflation_pct": 953.3309801758371
+  }
+}

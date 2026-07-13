@@ -1,0 +1,13 @@
+{
+  "id": "<ANON-KAGGLE-USER>/camef-train",
+  "title": "camef-train",
+  "code_file": "camef_train.py",
+  "language": "python",
+  "kernel_type": "script",
+  "is_private": true,
+  "enable_gpu": true,
+  "enable_internet": true,
+  "dataset_sources": [],
+  "competition_sources": [],
+  "kernel_sources": []
+}
