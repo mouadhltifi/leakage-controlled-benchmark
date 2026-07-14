@@ -1,0 +1,145 @@
+{
+  "meta": {
+    "task": "next-day direction, 0.5% dead-zone",
+    "deadzone": 0.005,
+    "n_folds": 5,
+    "assembly": "mmfp.data.assemble.assemble_fold (price-only A7 config)",
+    "logistic_features": "10 *_norm price block (harness train-fold scaler)",
+    "momentum_feature": "raw return_1d (sign), joined by (Ticker, Date)",
+    "random_seed": 42,
+    "random_draws": 100,
+    "mcc": "sklearn.metrics.matthews_corrcoef (0.0 for single-class)",
+    "fold_mean": "unweighted mean over the five folds",
+    "generated_by": "scripts/analysis/make_naive_anchors.py"
+  },
+  "harness_ntest": {
+    "0": 10100,
+    "1": 9851,
+    "2": 9979,
+    "3": 9994,
+    "4": 4514
+  },
+  "per_fold_ntest": {
+    "0": 10100,
+    "1": 9851,
+    "2": 9979,
+    "3": 9994,
+    "4": 4514
+  },
+  "anchors": {
+    "always-up": {
+      "mcc_per_fold": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "accuracy_per_fold": [
+        0.53198,
+        0.543295,
+        0.513679,
+        0.517811,
+        0.531236
+      ],
+      "mcc_mean": 0.0,
+      "accuracy_mean": 0.5276,
+      "provenance": "computed"
+    },
+    "always-down": {
+      "mcc_per_fold": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "accuracy_per_fold": [
+        0.46802,
+        0.456705,
+        0.486321,
+        0.482189,
+        0.468764
+      ],
+      "mcc_mean": 0.0,
+      "accuracy_mean": 0.4724,
+      "provenance": "computed"
+    },
+    "random": {
+      "mcc_per_fold": [
+        -0.002192,
+        0.001055,
+        7.8e-05,
+        0.001255,
+        0.000125
+      ],
+      "accuracy_per_fold": [
+        0.498897,
+        0.500518,
+        0.500054,
+        0.500619,
+        0.500066
+      ],
+      "mcc_mean": 6.4e-05,
+      "accuracy_mean": 0.500031,
+      "provenance": "computed"
+    },
+    "momentum": {
+      "mcc_per_fold": [
+        -0.047852,
+        -0.063738,
+        0.030132,
+        0.00493,
+        0.045687
+      ],
+      "accuracy_per_fold": [
+        0.476832,
+        0.470612,
+        0.515182,
+        0.502802,
+        0.524147
+      ],
+      "mcc_mean": -0.006168,
+      "accuracy_mean": 0.497915,
+      "provenance": "computed"
+    },
+    "reversal": {
+      "mcc_per_fold": [
+        0.047852,
+        0.063738,
+        -0.030132,
+        -0.00493,
+        -0.045687
+      ],
+      "accuracy_per_fold": [
+        0.523168,
+        0.529388,
+        0.484818,
+        0.497198,
+        0.475853
+      ],
+      "mcc_mean": 0.006168,
+      "accuracy_mean": 0.502085,
+      "provenance": "computed"
+    },
+    "logistic-price": {
+      "mcc_per_fold": [
+        0.085196,
+        0.014718,
+        0.012182,
+        -0.014493,
+        -0.025484
+      ],
+      "accuracy_per_fold": [
+        0.547921,
+        0.543803,
+        0.514781,
+        0.512407,
+        0.522818
+      ],
+      "mcc_mean": 0.014424,
+      "accuracy_mean": 0.528346,
+      "provenance": "computed"
+    }
+  }
+}
