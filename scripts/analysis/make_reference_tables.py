@@ -50,7 +50,7 @@ CONFIGS = [
     ("P+M+G",   "A9", "macrolag"),
     ("P+N+M+S", "A1", "macrolag"),
 ]
-PROV = {"core": "core grid (v1 runner)", "macrolag": "leakage-free re-run (mmfp)"}
+PROV = {"core": "v1 core", "macrolag": "mmfp re-run"}
 
 # Published canon (ICAIF paper Table 5 / rq1 forest; verified twice in the
 # v2 gauntlet). The generator must reproduce these or die.
