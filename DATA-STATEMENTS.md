@@ -86,8 +86,10 @@
 1. Every reported reference number **regenerates from the committed result
    files** by the analysis scripts (seconds, no GPU, no data download).
 2. Re-training within the shipped harness is **deterministic (CPU
-   bit-identical) under fixed seeds and the pinned environment**
-   (`requirements.txt`).
+   bit-identical) under fixed seeds and the pinned environment, including
+   its BLAS/torch thread configuration** (`requirements.txt`; the reference
+   results pin `OMP_NUM_THREADS=2` — thread count alters floating-point
+   summation order, shifting single runs while ensemble means hold).
 3. The historical core grid was produced by the study's first-generation
    codebase and bridged to the shipped harness by a **validated equivalence
    gate** (±0.005 MCC at the mean level; the gate report ships in the

@@ -48,7 +48,11 @@ feature tables are CC-BY-4.0 (`LICENSE`).
 
 1. Reference numbers regenerate from committed results (verified).
 2. Re-training in the shipped harness is deterministic (CPU bit-identical)
-   under fixed seeds and the pinned environment.
+   under fixed seeds and the pinned environment, *including its BLAS/torch
+   thread configuration* (verified: a run reproduces bit-exactly under the
+   same thread count; changing `OMP_NUM_THREADS` shifts single runs by up
+   to ~0.04 MCC through summation order while ensemble means hold — the
+   reference results pin `OMP_NUM_THREADS=2`).
 3. The historical core grid was produced by the study's first-generation
    codebase and bridged to this harness by a validated equivalence gate
    (±0.005 MCC at the mean level; the gate report ships in
