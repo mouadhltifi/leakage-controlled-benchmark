@@ -34,13 +34,28 @@ keywords:
 # artifact; cite the originals below.
 references:
   - type: article
-    title: "MSGCA: Multi-Source Gated Cross-Attention for stock movement prediction"
+    title: "Stock Movement Prediction with Multimodal Stable Fusion via Gated Cross-Attention Mechanism (MSGCA)"
     authors:
-      - name: "MSGCA authors (see upstream)"
-    notes: "Upstream code: https://github.com/changzong/MSGCA (Apache-2.0). Cite the original publication."
-  - type: article
-    title: "CAMEF: Causal multi-modal macro-economic event forecasting"
+      - family-names: Zong
+        given-names: Chang
+      - family-names: Zhou
+        given-names: Hang
+    year: 2024
+    doi: "10.1007/s40747-025-02023-3"
+    notes: "arXiv:2406.06594; published 2025 in Complex & Intelligent Systems. Upstream code: https://github.com/changzong/MSGCA (Apache-2.0)."
+  - type: conference-paper
+    title: "CAMEF: Causal-Augmented Multi-Modality Event-Driven Financial Forecasting by Integrating Time Series Patterns and Salient Macroeconomic Announcements"
     authors:
-      - name: "CAMEF authors (see upstream)"
+      - family-names: Zhang
+        given-names: Yang
+      - family-names: Yang
+        given-names: Wenbo
+      - family-names: Wang
+        given-names: Jun
+      - family-names: Ma
+        given-names: Qiang
+      - family-names: Xiong
+        given-names: Jie
     year: 2025
-    notes: "KDD 2025. Upstream code: https://github.com/lakebodhi/CAMEF. Cite the original publication."
+    doi: "10.1145/3711896.3736872"
+    notes: "KDD 2025. Upstream code: https://github.com/lakebodhi/CAMEF."

@@ -7,10 +7,10 @@
   "n_epochs": 400,
   "device": "cpu",
   "methodology": {
-    "their_method": "max(test_MCC) across all 400 epochs, no validation set",
-    "honest_method": "test_MCC at epoch with best val_MCC, proper model selection",
     "inflation": "best_test_MCC minus val_selected_test_MCC",
-    "approach": "Use original data pipeline (cached embeddings with seed=42), then sub-split train entities into 80% train_proper + 20% val. Three different sub-splits provide variance."
+    "approach": "Use original data pipeline (cached embeddings with seed=42), then sub-split train entities into 80% train_proper + 20% val. Three different sub-splits provide variance.",
+    "test_selected_as_released": "max(test_MCC) across all 400 epochs, no validation set",
+    "validation_selected": "test_MCC at epoch with best val_MCC"
   },
   "original_baseline": {
     "method": "original_no_val",

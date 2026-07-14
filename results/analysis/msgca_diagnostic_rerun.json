@@ -11,7 +11,7 @@
     "arm_a": "full train data, no val, max test-MCC over epochs (reproduces their protocol)",
     "arm_b": "carve 20% val from train; WITHIN one run compare max-test vs test-at-best-val (isolates selection criterion; data/model/run held identical)",
     "within_run_inflation": "arm_b best_on_test - best_on_val_test_mcc (confound-free)",
-    "cross_arm_gap": "arm_a best_on_test - arm_b honest; bundles selection + 20% data carve"
+    "cross_arm_gap": "arm_a best_on_test - arm_b validation-selected; bundles selection + 20% data carve"
   },
   "report_by_budget": {
     "200": {
@@ -29,7 +29,7 @@
         "max": 0.12077491812649044,
         "n": 8
       },
-      "arm_b_honest_best_on_val_test": {
+      "arm_b_val_selected_best_on_val_test": {
         "mean": -0.0017588777681146288,
         "std": 0.004974857588448456,
         "min": -0.01407102214491703,
@@ -43,7 +43,7 @@
         "max": 0.13484594027140748,
         "n": 8
       },
-      "cross_arm_gap_repro_minus_honest": 0.03198551793126973
+      "cross_arm_gap_repro_minus_val_selected": 0.03198551793126973
     },
     "300": {
       "arm_a_reproduction_best_on_test": {
@@ -60,7 +60,7 @@
         "max": 0.12077491812649044,
         "n": 8
       },
-      "arm_b_honest_best_on_val_test": {
+      "arm_b_val_selected_best_on_val_test": {
         "mean": -0.007221715897165113,
         "std": 0.02552880238163284,
         "min": -0.06559096170227481,
@@ -74,7 +74,7 @@
         "max": 0.13484594027140748,
         "n": 8
       },
-      "cross_arm_gap_repro_minus_honest": 0.10394976332545007
+      "cross_arm_gap_repro_minus_val_selected": 0.10394976332545007
     },
     "400": {
       "arm_a_reproduction_best_on_test": {
@@ -91,7 +91,7 @@
         "max": 0.12077491812649044,
         "n": 8
       },
-      "arm_b_honest_best_on_val_test": {
+      "arm_b_val_selected_best_on_val_test": {
         "mean": -0.015005833209731805,
         "std": 0.035472867139272224,
         "min": -0.07634396064545056,
@@ -105,7 +105,7 @@
         "max": 0.197118878771941,
         "n": 8
       },
-      "cross_arm_gap_repro_minus_honest": 0.11173388063801676
+      "cross_arm_gap_repro_minus_val_selected": 0.11173388063801676
     }
   },
   "runs": {

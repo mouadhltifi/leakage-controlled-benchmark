@@ -47,7 +47,7 @@ python scripts/figures/make_paper_figures.py   # writes vector PDFs to figures/
 ```
 
 Produces the per-config forest plot, the MSGCA selection-inflation diagnostic
-(reported/reproduced vs validation-honest, plus the per-budget within-run
+(reported/reproduced vs validation-based, plus the per-budget within-run
 inflation), the news-by-fold panel, the cross-family scatter, the parameter
 budget, the volatility heatmap, Sharpe, and the encoder boxplot.
 
@@ -88,7 +88,7 @@ PYTHONPATH=. python /ABS/PATH/TO/scripts/audits/msgca_diagnostic_rerun.py --cana
 ```
 
 It compares, within a single run, selecting the reported epoch by the TEST
-metric (their criterion) vs by a held-out validation metric (honest), at epoch
+metric (test-selected, as released) vs by a held-out validation metric (validation-based), at epoch
 budgets {200, 300, 400}. No OpenAI call is made when the shipped caches are
 present.
 

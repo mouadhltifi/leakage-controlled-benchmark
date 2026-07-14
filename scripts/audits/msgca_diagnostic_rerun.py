@@ -29,8 +29,8 @@ OpenAI API; the cache lets us run fully offline). Within that constraint we add:
   ARM B — Within-run isolation (the clean causal number): carve 20% of the
           training entities into a validation set, train on the rest, and track
           BOTH val and test MCC every epoch. WITHIN A SINGLE RUN compare:
-             best_on_test = max test-MCC over epochs        (their criterion)
-             best_on_val  = test-MCC at the best-val epoch   (honest criterion)
+             best_on_test = max test-MCC over epochs        (the selection rule in the released code)
+             best_on_val  = test-MCC at the best-val epoch   (validation-based criterion)
           The difference is the selection inflation with the data, the model,
           and the training run all held IDENTICAL — only the selection criterion
           differs. Run with K (val-split, init) seeds for a stable estimate.
@@ -227,7 +227,7 @@ def run_arm_b(args, data, split_seed, device):
 # budget-aware analysis (recompute selection criteria at each epoch budget)
 # --------------------------------------------------------------------------
 def arm_a_at_budget(hist, budget):
-    """Max test-MCC over epochs < budget (their criterion, full data)."""
+    """Max test-MCC over epochs < budget (the released selection rule, full data)."""
     h = [r for r in hist if r["epoch"] < budget]
     best = max(h, key=lambda r: r["test_mcc"])
     return {"best_on_test": best["test_mcc"], "best_epoch": best["epoch"]}
@@ -239,9 +239,9 @@ def arm_b_at_budget(hist, budget):
     best_test = max(h, key=lambda r: r["test_mcc"])
     best_val = max(h, key=lambda r: r["val_mcc"])
     return {
-        "best_on_test": best_test["test_mcc"],          # their criterion
+        "best_on_test": best_test["test_mcc"],          # the released code's selection rule
         "best_on_test_epoch": best_test["epoch"],
-        "best_on_val_test_mcc": best_val["test_mcc"],    # honest criterion
+        "best_on_val_test_mcc": best_val["test_mcc"],    # validation-based criterion
         "best_on_val_epoch": best_val["epoch"],
         "best_val_mcc": best_val["val_mcc"],
         "within_run_inflation": best_test["test_mcc"] - best_val["test_mcc"],
@@ -300,9 +300,9 @@ def main():
         report[str(B)] = {
             "arm_a_reproduction_best_on_test": summarize(a_best),
             "arm_b_best_on_test_80pct": summarize([x["best_on_test"] for x in b]),
-            "arm_b_honest_best_on_val_test": summarize([x["best_on_val_test_mcc"] for x in b]),
+            "arm_b_val_selected_best_on_val_test": summarize([x["best_on_val_test_mcc"] for x in b]),
             "arm_b_within_run_inflation": summarize([x["within_run_inflation"] for x in b]),
-            "cross_arm_gap_repro_minus_honest": (
+            "cross_arm_gap_repro_minus_val_selected": (
                 summarize(a_best)["mean"] - summarize([x["best_on_val_test_mcc"] for x in b])["mean"]),
         }
 
@@ -322,7 +322,7 @@ def main():
             "arm_b": "carve 20% val from train; WITHIN one run compare max-test vs test-at-best-val "
                      "(isolates selection criterion; data/model/run held identical)",
             "within_run_inflation": "arm_b best_on_test - best_on_val_test_mcc (confound-free)",
-            "cross_arm_gap": "arm_a best_on_test - arm_b honest; bundles selection + 20% data carve",
+            "cross_arm_gap": "arm_a best_on_test - arm_b validation-selected; bundles selection + 20% data carve",
         },
         "report_by_budget": report,
         "runs": {
@@ -347,7 +347,7 @@ def main():
     for B in args.budgets:
         rb = report[str(B)]
         print(f" budget {B}: repro(best-on-test)={rb['arm_a_reproduction_best_on_test']['mean']:+.4f} "
-              f"| honest(best-on-val)={rb['arm_b_honest_best_on_val_test']['mean']:+.4f} "
+              f"| val-selected(best-on-val)={rb['arm_b_val_selected_best_on_val_test']['mean']:+.4f} "
               f"| within-run inflation={rb['arm_b_within_run_inflation']['mean']:+.4f} "
               f"(±{rb['arm_b_within_run_inflation']['std']:.4f})")
     print(f"\nsaved: {args.output_file}")

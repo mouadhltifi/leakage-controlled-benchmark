@@ -148,7 +148,7 @@ def fig_msgca():
     r = j["report_by_budget"]
     budgets = ["200", "300", "400"]
     repro = [r[b]["arm_a_reproduction_best_on_test"]["mean"] for b in budgets]
-    honest = [r[b]["arm_b_honest_best_on_val_test"]["mean"] for b in budgets]
+    val_selected = [r[b]["arm_b_val_selected_best_on_val_test"]["mean"] for b in budgets]
 
     fig, ax = plt.subplots(figsize=(6.4, 3.9))
     x = np.arange(len(budgets))
@@ -162,8 +162,8 @@ def fig_msgca():
     # +0.04-0.07 within-run inflation reported in Table 6.
     ax.bar(x - w / 2, repro, w, color=BLUE, zorder=3,
            label="best-on-test, original split (reported / reproduced)")
-    ax.bar(x + w / 2, honest, w, color=GREY, zorder=3,
-           label="validation-best, leakage-free split (honest)")
+    ax.bar(x + w / 2, val_selected, w, color=GREY, zorder=3,
+           label="validation-best, leakage-free split (validation-selected)")
     ax.axhline(0.1112, color=BLUE_D, lw=1.0, ls=":", zorder=2)
     ax.text(2.52, 0.1112, "paper 0.111", va="bottom", ha="right",
             fontsize=7.5, color=BLUE_D)

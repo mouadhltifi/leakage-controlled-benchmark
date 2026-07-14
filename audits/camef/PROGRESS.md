@@ -295,7 +295,7 @@ train() saved. test.py printed: "Evaluation results: ... MSE=0.00248575220629840
   index@5  MSE 0.002486 / MAE 0.042529  vs  timesplit@5 MSE 15.27 / MAE 3.74
   => timesplit MSE ~6,140x HIGHER, MAE ~88x HIGHER. COLOSSAL degradation under chronological eval.
   (Note: timesplit loss INCREASES across epoch-5 steps 3.6->7.5 — diverging, not converging, on true-future.)
-- => Inference (d) uses STRONG framing (not softened): the default split's low error depends on look-ahead;
+- => Inference (d): the default split's low error depends on look-ahead;
   the random split is methodologically improper for time-series, and the measured effect is enormous.
 
 ## FULL THREE-LEG TABLE (all SP500/Len35, TEST split, authors' UNMODIFIED test.py + data)
