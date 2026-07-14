@@ -153,6 +153,9 @@ def main() -> int:
             pbs = f"{pb:.3f}" if pb < 0.9995 else "1.000"
             f.write(f"{disp} & {m:+.4f} & {d:+.3f} & {p:.3f} & {pbs} & {n} & "
                     f"{prov} \\\\\n")
+        # booktabs rule must arrive from the same token stream as the rows:
+        # \input inside tabular breaks if \bottomrule follows the \input.
+        f.write("\\bottomrule\n")
 
     print(f"{'config':9s} {'dMCC':>8s} {'d':>7s} {'p':>6s} {'p_bonf':>7s} "
           f"{'n':>3s}  provenance")
