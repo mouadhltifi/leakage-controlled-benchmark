@@ -1,0 +1,74 @@
+{
+  "@context": {
+    "@language": "en",
+    "@vocab": "https://schema.org/",
+    "cr": "http://mlcommons.org/croissant/",
+    "sc": "https://schema.org/"
+  },
+  "@type": "sc:Dataset",
+  "@id": "leakage-controlled-benchmark",
+  "conformsTo": "http://mlcommons.org/croissant/1.0",
+  "name": "leakage-controlled-benchmark-multi-source-stock-prediction",
+  "description": "Protocol-locked benchmark for multi-source next-day stock prediction: availability-timed derived feature datasets for five source families (price technical indicators, news sentiment statistics, social media day-level aggregates, publication-lagged macroeconomic series, public sector graphs) over 55 liquid US large-caps, 2015-02-03 to 2023-12-31, with five expanding chronological folds, a tuned price-only reference baseline, naive/classical anchors, and reference results from 2,468 controlled runs. Raw third-party text and proprietary classifications are not redistributed (see DATA-STATEMENTS.md).",
+  "license": [
+    "https://opensource.org/licenses/MIT",
+    "https://creativecommons.org/licenses/by/4.0/"
+  ],
+  "creator": [
+    {"@type": "sc:Person", "name": "Mouadh Ltifi", "affiliation": "Politecnico di Milano"},
+    {"@type": "sc:Person", "name": "Francesco Puoti", "affiliation": "Politecnico di Milano"},
+    {"@type": "sc:Person", "name": "Fabrizio Pittorino", "affiliation": "Politecnico di Milano"}
+  ],
+  "datePublished": "2026",
+  "version": "1.0.0-submission",
+  "keywords": [
+    "evaluation protocol", "benchmark", "data leakage",
+    "financial machine learning", "reproducibility",
+    "multi-source data", "time series"
+  ],
+  "citeAs": "See CITATION.cff",
+  "distribution": [
+    {
+      "@type": "cr:FileObject",
+      "@id": "results",
+      "name": "results",
+      "description": "Committed reference results (CSV): direction/volatility grids, leakage-free macro re-runs, harness-native single-state reference cells, sector-graph equivalence arms, naive anchors, audit diagnostics.",
+      "encodingFormat": "text/csv",
+      "contentUrl": "results/"
+    },
+    {
+      "@type": "cr:FileObject",
+      "@id": "macro-raw",
+      "name": "macro-raw",
+      "description": "Public-domain FRED federal series (business-day resampled, original and publication-lag-corrected) + FOMC dates.",
+      "encodingFormat": "application/x-parquet",
+      "contentUrl": "data/raw/macro/"
+    },
+    {
+      "@type": "cr:FileObject",
+      "@id": "derived-features",
+      "name": "derived-features",
+      "description": "Per-stock-day derived feature tables for the five source families (DOI-archived deposit on acceptance; regeneration scripts included in this repository).",
+      "encodingFormat": "application/x-parquet",
+      "contentUrl": "DATA-STATEMENTS.md"
+    }
+  ],
+  "recordSet": [
+    {
+      "@type": "cr:RecordSet",
+      "@id": "stock-days",
+      "name": "stock-days",
+      "description": "~124k per-stock-day rows (55 tickers x 2,239 trading days); primary label = next-day direction under a symmetric 0.5% dead-zone applied to train/validation/test alike; secondary label = next-day realized volatility; five expanding chronological folds with test years 2019-2023.",
+      "field": [
+        {"@type": "cr:Field", "@id": "stock-days/ticker", "name": "ticker", "dataType": "sc:Text"},
+        {"@type": "cr:Field", "@id": "stock-days/date", "name": "date", "dataType": "sc:Date"},
+        {"@type": "cr:Field", "@id": "stock-days/fold", "name": "fold", "dataType": "sc:Integer"},
+        {"@type": "cr:Field", "@id": "stock-days/direction_label", "name": "direction_label", "dataType": "sc:Integer"},
+        {"@type": "cr:Field", "@id": "stock-days/price_features", "name": "price_features", "description": "10 technical indicators + rolling-normalized variants", "dataType": "sc:Float"},
+        {"@type": "cr:Field", "@id": "stock-days/news_features", "name": "news_features", "description": "11 FinBERT sentiment statistics, T-1 aligned, 52/55 names covered", "dataType": "sc:Float"},
+        {"@type": "cr:Field", "@id": "stock-days/social_features", "name": "social_features", "description": "17 StockTwits day-level aggregates + has-data flag; coverage ends 2022-12-30", "dataType": "sc:Float"},
+        {"@type": "cr:Field", "@id": "stock-days/macro_features", "name": "macro_features", "description": "5 federal series at publication dates + FOMC flag", "dataType": "sc:Float"}
+      ]
+    }
+  ]
+}
