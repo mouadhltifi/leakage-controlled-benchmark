@@ -21,7 +21,8 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 MANIFEST = ROOT / "MANIFEST.sha256"
-COVERED = ("src", "scripts", "configs", "tables")
+COVERED = ("src", "scripts", "configs", "tables",
+           "results", "audits", "experiments", "examples")
 SKIP_PARTS = {"__pycache__", ".pytest_cache", ".DS_Store"}
 
 

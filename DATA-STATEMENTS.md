@@ -34,6 +34,11 @@
   cannot relicense. Our derived numeric features are non-reconstructive;
   the NC clause is honored by shipping extraction code + pointer so users
   obtain FNSPID under its own terms. Attribution: Dong et al. (2024).
+  The sentence-embedding features are day-mean-pooled, PCA-reduced, and
+  non-invertible — the same aggregate class as the sentiment statistics
+  (no article is recoverable from them), which is the basis for the
+  CC-BY-4.0 grant on the shipped feature values as distinct from the
+  NC-governed corpus.
 
 ## 3. Social (StockTwits-derived aggregates)
 
@@ -95,6 +100,11 @@
    results pin `OMP_NUM_THREADS=2` — thread count alters floating-point
    summation order, shifting single runs while ensemble means hold).
 3. The historical core grid was produced by the study's first-generation
-   codebase and bridged to the shipped harness by a **validated equivalence
-   gate** (±0.005 MCC at the mean level; the gate report ships in the
-   artifact). Reference tables carry a per-block provenance column.
+   codebase and bridged to the shipped harness by a **mean-level
+   equivalence gate**: means agree within 0.0013 MCC (inside the ±0.005
+   band), but per-fold agreement is coarser and the shipped gate report is
+   marked `Result: FAILED` on the stricter ±0.015 per-fold band (F1:
+   −0.0160) — which is exactly why no reference row mixes codebases (every
+   reference row is harness-native in a single pinned state). Reference-table
+   provenance is stated in each table's caption (and the anchors table's
+   Source column).

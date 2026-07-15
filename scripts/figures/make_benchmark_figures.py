@@ -87,7 +87,7 @@ def fig_selection():
     ax.text(398, (best + at_sel) / 2,
             f"+{best - at_sel:.3f} this run\n+{mean_gap:.3f} mean of 8",
             fontsize=6.8, color=INK, ha="right", va="center")
-    ax.set_xlabel("training epoch (released pipeline, one run)", fontsize=7.2)
+    ax.set_xlabel("training epoch (instrumented run of the released pipeline)", fontsize=7.2)
     ax.set_ylabel("test-set MCC", fontsize=7.2)
     ax.set_xlim(0, 400)
     ax.set_ylim(-0.10, 0.155)

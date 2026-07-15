@@ -113,9 +113,12 @@ def main() -> int:
     conforms = None
     if "n_test" in sub.columns:
         exp = expected_n_test()
-        bad = {int(f): (int(n), exp.get(int(f)))
-               for f, n in sub.groupby("fold_idx")["n_test"].first().items()
-               if exp.get(int(f)) is not None and int(n) != exp[int(f)]}
+        # check EVERY row per fold, not just the first — a submission whose
+        # non-first rows carry a wrong n_test must not pass conformance
+        bad = {int(f): (sorted({int(x) for x in g}), exp.get(int(f)))
+               for f, g in sub.groupby("fold_idx")["n_test"]
+               if exp.get(int(f)) is not None
+               and any(int(x) != exp[int(f)] for x in g)}
         conforms = not bad
 
     supported = mean_delta > 0 and p_bonf < 0.05 and n_folds == 5

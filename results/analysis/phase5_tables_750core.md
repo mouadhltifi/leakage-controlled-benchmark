@@ -1,15 +1,16 @@
-<!--
-HISTORICAL PROVENANCE (thesis-era, 2026-02). This is a generated dump of
-the study-grid tables. Its literature-comparison annotations are SUPERSEDED
-by audits/census/CENSUS.md, audits/camef/, and
-results/analysis/msgca_diagnostic_rerun.json. In particular: the CAMEF split
-is positional/file-order, NOT "chronological (temporal, no leakage)" as an
-annotation below states (see the paper, Demonstration 2); MSGCA's published
-number is 0.1112 (any 0.1157 here is this file's own seed-42 rerun best);
-and the "953% / cherry-picking" framing is thesis-era, not the paper's
-non-adversarial register. Cited paths like experiments/phase4r/... are
-thesis-tree, not artifact paths. Read the audit dirs for the current record.
--->
+> **⚠ HISTORICAL PROVENANCE (thesis-era, 2026-02) — READ FIRST.**
+> This is a generated dump of the study-grid tables. Its
+> literature-comparison annotations below are **SUPERSEDED** by
+> `audits/census/CENSUS.md`, `audits/camef/`, and
+> `results/analysis/msgca_diagnostic_rerun.json`. In particular: the CAMEF
+> split is **positional/file-order**, NOT "chronological (temporal, no
+> leakage)" as an annotation below states (see the paper, Demonstration 2);
+> MSGCA's published number is **0.1112** (any 0.1157 here is this file's own
+> seed-42 rerun best); and the "953% / cherry-picking" framing is thesis-era,
+> not the paper's non-adversarial register. Cited paths like
+> `experiments/phase4r/...` are thesis-tree, not artifact paths. Read the
+> audit dirs for the current record.
+
 Loading data...
   Loaded 240 rows from ablation_ff.csv
   Loaded 135 rows from ablation_news_ff.csv

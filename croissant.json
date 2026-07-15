@@ -29,28 +29,28 @@
   "citeAs": "See CITATION.cff",
   "distribution": [
     {
-      "@type": "cr:FileObject",
+      "@type": "cr:FileSet",
       "@id": "results",
       "name": "results",
       "description": "Committed reference results (CSV): direction/volatility grids, leakage-free macro re-runs, harness-native single-state reference cells, sector-graph equivalence arms, naive anchors, audit diagnostics.",
       "encodingFormat": "text/csv",
-      "contentUrl": "results/"
+      "includes": "results/**/*.csv"
     },
     {
-      "@type": "cr:FileObject",
+      "@type": "cr:FileSet",
       "@id": "macro-raw",
       "name": "macro-raw",
       "description": "Public-domain FRED federal series (business-day resampled, original and publication-lag-corrected) + FOMC dates.",
       "encodingFormat": "application/x-parquet",
-      "contentUrl": "data/raw/macro/"
+      "includes": "data/raw/macro/**/*.parquet"
     },
     {
-      "@type": "cr:FileObject",
+      "@type": "cr:FileSet",
       "@id": "derived-features",
       "name": "derived-features",
-      "description": "Per-stock-day derived feature tables for the five source families (DOI-archived deposit on acceptance; regeneration scripts included in this repository).",
+      "description": "Per-stock-day derived feature tables for the five source families. NOT materialized in this repository: DOI-archived deposit on acceptance; until then regenerate via the scripts in this repository (see DATA-STATEMENTS.md for per-source terms and regeneration).",
       "encodingFormat": "application/x-parquet",
-      "contentUrl": "DATA-STATEMENTS.md"
+      "includes": "data/processed/**/*.parquet"
     }
   ],
   "recordSet": [
@@ -58,7 +58,7 @@
       "@type": "cr:RecordSet",
       "@id": "stock-days",
       "name": "stock-days",
-      "description": "~124k per-stock-day rows (55 tickers x 2,239 trading days); primary label = next-day direction under a symmetric 0.5% dead-zone applied to train/validation/test alike; secondary label = next-day realized volatility; five expanding chronological folds with July-to-June test windows from 2019-07-01 to 2023-12-31 (the last a six-month stub).",
+      "description": "~111k per-stock-day rows (55 tickers x 2,011 feature days, 2016-01-04 to 2023-12-28; prices fetched from 2015-02-03 warm up the trailing indicators); primary label = next-day direction under a symmetric 0.5% dead-zone applied to train/validation/test alike; secondary label = next-day realized volatility; five expanding chronological folds with July-to-June test windows from 2019-07-01 to 2023-12-31 (the last a six-month stub).",
       "field": [
         {"@type": "cr:Field", "@id": "stock-days/ticker", "name": "ticker", "dataType": "sc:Text"},
         {"@type": "cr:Field", "@id": "stock-days/date", "name": "date", "dataType": "sc:Date"},
