@@ -67,9 +67,14 @@ step by step in **`ECONOMIC-CONTEXT.md`**.
    to ~0.04 MCC through summation order while ensemble means hold — the
    reference results pin `OMP_NUM_THREADS=2`).
 3. The historical core grid was produced by the study's first-generation
-   codebase and bridged to this harness by a validated equivalence gate
-   (±0.005 MCC at the mean level; the gate report ships in
-   `experiments/`). Reference tables carry a per-block provenance column.
+   codebase and bridged to this harness by an equivalence gate whose
+   report ships as generated in `experiments/equivalence/`: mean-level
+   agreement passes (−0.0013 MCC against a ±0.005 band); per-fold
+   agreement is coarser (up to ≈0.016, with one fold marginally outside
+   the gate's ±0.015 per-fold band). That coarseness is exactly why no
+   reference number mixes codebases: every reference row is
+   harness-native in a single pinned state, and the historical grid is
+   provenance, not a source of reference rows.
 
 ## Citing
 

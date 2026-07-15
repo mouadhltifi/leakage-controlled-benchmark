@@ -31,6 +31,14 @@ import tempfile
 import time
 from pathlib import Path
 
+# Pin the thread configuration BEFORE torch/numpy import: the reference
+# results (and the artifact's determinism claim) are scoped to the pinned
+# environment including thread count — thread count changes floating-point
+# summation order and moves single-config fold means by up to ~0.015 MCC
+# while grand means hold. The gate must run under the same pin it certifies.
+for _v in ("OMP_NUM_THREADS", "MKL_NUM_THREADS", "OPENBLAS_NUM_THREADS"):
+    os.environ.setdefault(_v, "2")
+
 # Make ``mmfp`` importable: the packages live under ``<root>/src``
 # (this script is at ``<root>/scripts/audits/``).
 _SCRIPT_DIR = Path(__file__).resolve().parent
