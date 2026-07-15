@@ -58,7 +58,7 @@
       "@type": "cr:RecordSet",
       "@id": "stock-days",
       "name": "stock-days",
-      "description": "~124k per-stock-day rows (55 tickers x 2,239 trading days); primary label = next-day direction under a symmetric 0.5% dead-zone applied to train/validation/test alike; secondary label = next-day realized volatility; five expanding chronological folds with test years 2019-2023.",
+      "description": "~124k per-stock-day rows (55 tickers x 2,239 trading days); primary label = next-day direction under a symmetric 0.5% dead-zone applied to train/validation/test alike; secondary label = next-day realized volatility; five expanding chronological folds with July-to-June test windows from 2019-07-01 to 2023-12-31 (the last a six-month stub).",
       "field": [
         {"@type": "cr:Field", "@id": "stock-days/ticker", "name": "ticker", "dataType": "sc:Text"},
         {"@type": "cr:Field", "@id": "stock-days/date", "name": "date", "dataType": "sc:Date"},

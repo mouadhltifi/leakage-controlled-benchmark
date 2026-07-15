@@ -10,18 +10,20 @@ does). Nothing else counts as "beating the benchmark".
 
 | Fixed | Value |
 |---|---|
-| Universe | 55 liquid US large-caps (11 sectors × 5 names; tickers in the datasheet) |
+| Universe | 55 liquid US large-caps (11 sectors × 5 names; the full ticker list is in `DATASHEET.md` and `src/mmfp/data/universe.py`) |
 | Window | 2015-02-03 → 2023-12-31 |
-| Folds | 5 expanding chronological folds; test years 2019, 2020, 2021, 2022, 2023 (one per fold, `fold_idx` 0–4) |
+| Folds | 5 expanding chronological folds (`fold_idx` 0–4), July-to-June test windows: F0 2019-07-01→2020-06-30 · F1 2020-07-01→2021-06-30 · F2 2021-07-01→2022-06-30 · F3 2022-07-01→2023-06-30 · F4 2023-07-01→2023-12-31 (six-month stub). Train expands from 2015-02-03 to each fold's `train_end` = the day before `test_start`. Source of truth: `FOLD_BOUNDARIES` in `src/mmfp/data/assemble.py` |
 | Validation | the last 20% of each fold's training window **by calendar** — model and epoch selection read only this; the test set is read once per run |
 | Seeds | 42, 123, 456 (≥3 required; these three pair exactly with the shipped baseline) |
 | Labels | next-day direction under the symmetric 0.5% dead-zone (applied to train/val/test alike); secondary: next-day realized volatility |
 | Features | availability-timed five-source tables (schema: `DATASHEET.md`, `croissant.json`); text is T−1 aligned, macro enters at publication dates. Data via the DOI deposit (on acceptance) or regeneration per `DATA-STATEMENTS.md` |
 | Metric | MCC on the primary task |
 
-Exact per-fold boundaries are assembled by the harness (`src/mmfp`); every
-shipped result row records its `n_train`/`n_val`/`n_test` so the assembly is
-checkable. A challenger may run inside the harness (implement a model against
+Every shipped result row records its `n_train`/`n_val`/`n_test`, so the
+assembly is checkable; if your submission includes `n_test`,
+`evaluate_submission.py` verifies it against the frozen folds and flags any
+mismatch (a misaligned split otherwise produces a normal-looking but
+meaningless claim). A challenger may run inside the harness (implement a model against
 `src/mmfp`'s config interface — see `configs/mmfp/`) or outside it, provided
 every row of the design above is honored and declared.
 
@@ -84,7 +86,10 @@ declared k, descriptive pooled d, and the verdict:
 
 A worked example (a shipped price+news configuration replayed as if it were
 an external challenger, evaluated like-for-like against the ff baseline
-arm) lives in `examples/demo_submission/` with its committed claim block.
+arm via `--baseline-arch ff`) lives in `examples/demo_submission/` with its
+committed claim block. Note the committed claim uses that like-for-like
+mode; the bare default pairs against the stronger shipped arm and reads
+lower.
 
 ## Releasing (Levels 2–3)
 

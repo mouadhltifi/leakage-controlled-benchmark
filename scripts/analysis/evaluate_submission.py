@@ -46,6 +46,16 @@ def load_baseline(arch: str) -> pd.DataFrame:
     return (base.groupby(["fold_idx", "seed"], as_index=False)["mcc"].max())
 
 
+def expected_n_test() -> dict[int, int]:
+    """Per-fold test-set sizes implied by the frozen folds (from the
+    shipped baseline rows; identical for every conforming assembly)."""
+    frames = [pd.read_csv(p) for p in sorted(ROOT.glob(BASELINE_GLOB))]
+    base = pd.concat(frames, ignore_index=True)
+    base = base[base["experiment_name"].str.startswith(BASELINE_PREFIX)]
+    return base.groupby("fold_idx")["n_test"].agg(
+        lambda s: int(s.mode().iloc[0])).to_dict()
+
+
 def fold_block_ci(cells: pd.DataFrame) -> tuple[float, float]:
     """Percentile CI of the mean delta, resampling folds (blocks)."""
     rng = np.random.default_rng(BOOT_SEED)
@@ -100,8 +110,18 @@ def main() -> int:
     lo, hi = fold_block_ci(merged)
     d = mean_delta / merged["delta"].std(ddof=1) if len(merged) > 1 else float("nan")
 
+    conforms = None
+    if "n_test" in sub.columns:
+        exp = expected_n_test()
+        bad = {int(f): (int(n), exp.get(int(f)))
+               for f, n in sub.groupby("fold_idx")["n_test"].first().items()
+               if exp.get(int(f)) is not None and int(n) != exp[int(f)]}
+        conforms = not bad
+
     supported = mean_delta > 0 and p_bonf < 0.05 and n_folds == 5
     verdict = "SUPPORTED" if supported else "WITHIN THE REFERENCE NULL"
+    if conforms is False:
+        verdict += "  [ASSEMBLY MISMATCH -- n_test disagrees with the frozen folds; claim not comparable]"
 
     print(f"challenger        : {name}")
     print(f"baseline          : shipped tuned price-only "
@@ -114,6 +134,9 @@ def main() -> int:
     print(f"p_fold (n={n_folds})     : {p_fold:.3f}")
     print(f"p_bonf (k={a.k})     : {p_bonf:.3f}")
     print(f"pooled d (n={len(merged)}, descriptive): {d:+.3f}")
+    if conforms is not None:
+        print(f"fold conformance  : "
+              f"{'OK (n_test matches the frozen folds)' if conforms else 'FAILED -- ' + str(bad)}")
     print(f"VERDICT           : {verdict}")
     if not seed_matched:
         print("NOTE: rule 1 expects seeds 42/123/456 matched to the baseline.")

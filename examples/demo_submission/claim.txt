@@ -7,4 +7,5 @@ dMCC (mean)       : +0.0033
 p_fold (n=5)     : 0.384
 p_bonf (k=1)     : 0.384
 pooled d (n=15, descriptive): +0.205
+fold conformance  : OK (n_test matches the frozen folds)
 VERDICT           : WITHIN THE REFERENCE NULL

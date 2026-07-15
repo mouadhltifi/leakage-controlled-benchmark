@@ -46,6 +46,10 @@
 - **Basis:** StockTwits' terms prohibit redistribution/extraction and there
   is no rehydration endpoint; messages carry author copyright. Day-level
   aggregates over ≥dozens of messages are non-reconstructive statistics.
+- **Regeneration:** none — unlike price, macro, and graph, the social
+  features are use-as-shipped: the upstream corpus cannot be re-pulled, so
+  independent regeneration from raw messages is not possible. Audits of the
+  social source verify the shipped aggregates, not their derivation.
 - **Removal on request:** following the StockEmotions precedent — if
   StockTwits or a rights-holder objects to any aggregate, we will remove or
   further coarsen the affected columns; contact the maintainers (README).

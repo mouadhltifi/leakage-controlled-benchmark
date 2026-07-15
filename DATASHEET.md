@@ -19,6 +19,20 @@
 - **Instances:** per-stock-day feature rows for **55 US large-cap equities**
   (11 sectors × 5, most-liquid selection), business days
   **2015-02-03 → 2023-12-31** (≈124k stock-days), plus graph structures.
+- **Universe (55 tickers, by GICS-era sector; the released sector labels are
+  FF12 — see DATA-STATEMENTS):** IT: AAPL MSFT NVDA AVGO ORCL · Health:
+  UNH JNJ LLY ABBV MRK · Financials: BRK-B JPM V MA BAC · Cons. Discr.:
+  AMZN TSLA HD MCD NKE · Comm.: GOOGL META NFLX DIS CMCSA · Industrials:
+  GE CAT UNP RTX HON · Staples: PG KO PEP COST WMT · Energy: XOM CVX COP
+  SLB EOG · Utilities: NEE SO DUK SRE AEP · Materials: LIN APD SHW FCX
+  NEM · Real Estate: PLD AMT CCI EQIX SPG. (Canonical list:
+  `src/mmfp/data/universe.py`.)
+- **Folds (expanding train; July-to-June test windows;
+  `FOLD_BOUNDARIES` in `src/mmfp/data/assemble.py`):**
+  F0 test 2019-07-01→2020-06-30 · F1 2020-07-01→2021-06-30 ·
+  F2 2021-07-01→2022-06-30 · F3 2022-07-01→2023-06-30 ·
+  F4 2023-07-01→2023-12-31 (six-month stub). Validation = the last 20% of
+  each fold's training window by calendar.
 - **Feature families:**
   1. **Price** — returns (1/5/20d), 10 technical indicators, rolling-normalized
      variants, next-day label components.
