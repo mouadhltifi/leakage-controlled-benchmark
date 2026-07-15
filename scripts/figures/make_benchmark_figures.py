@@ -37,6 +37,8 @@ plt.rcParams.update({
     "font.size": 7.5, "axes.edgecolor": INK, "axes.linewidth": 0.6,
     "xtick.color": INK, "ytick.color": INK, "text.color": INK,
     "axes.labelcolor": INK, "font.family": "sans-serif",
+    # TrueType, not Type-3: ACM TAPS rejects Type-3 fonts at camera-ready
+    "pdf.fonttype": 42, "ps.fonttype": 42,
 })
 
 CAMEF = {"checkpoint": 0.000431, "retrain_random": 0.00249,
