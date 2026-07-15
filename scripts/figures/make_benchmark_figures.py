@@ -103,7 +103,7 @@ def fig_selection():
 def fig_split():
     fig, ax = plt.subplots(figsize=(3.2, 1.35))
     labels = ["released checkpoint,\nauthors' own test",
-              "shipped-default retrain,\nrandom split (as shipped)",
+              "shipped-default retrain,\nnon-temporal split (as shipped)",
               "same retrain,\nchronological split"]
     vals = [CAMEF["checkpoint"], CAMEF["retrain_random"], CAMEF["retrain_chrono"]]
     colors = [SLATE, SLATE, ORANGE]

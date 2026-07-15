@@ -26,8 +26,8 @@
      block) and PCA-reduced embedding features, derived from FNSPID-tagged
      articles (52/55 names covered; zero-filled elsewhere).
   3. **Social** — per-stock-day StockTwits aggregates: counts, bull/bear
-     ratios, mean sentiment + has-data flag (18 inputs); coverage ends
-     2022-12-30, the 2023 gap is explicit.
+     ratios, mean sentiment (17 aggregates) + a has-data flag; coverage
+     ends 2022-12-30, the 2023 gap is explicit.
   4. **Macro** — five federal FRED series resampled to business days, in
      original and **publication-lag-corrected** variants (+ FOMC dates);
      volatility features are price-derived (no CBOE VIX redistribution).

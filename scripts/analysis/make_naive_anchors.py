@@ -95,9 +95,7 @@ ANCHOR_ORDER = [
 ]
 
 DEFAULT_JSON = ROOT / "results" / "analysis" / "naive_anchors.json"
-DEFAULT_TEX = Path(
-    "/Users/mouadh/Thesis/thesis/kdd/tables/naive_anchors.tex"
-)
+DEFAULT_TEX = ROOT / "tables" / "naive_anchors.tex"
 
 
 # --------------------------------------------------------------------------- #

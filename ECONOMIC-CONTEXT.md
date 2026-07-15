@@ -32,8 +32,9 @@ resolvable delta is ≈ 0.145 × 0.02 ≈ **+0.003 MCC**. Every stricter unit
 only *larger* deltas, so +0.003 is the design's floor of visibility:
 nothing smaller is detectable under any reading the paper entertains.
 
-Accuracy translation: on the dead-zoned labels, for a balanced predictor
-MCC ≈ 2·(balanced accuracy) − 1, so
+Accuracy translation: on the dead-zoned labels, for a predictor whose
+predicted class rates match the actual class rates, MCC ≈ 2·(balanced
+accuracy) − 1, so
 
     balanced accuracy = (1 + MCC) / 2 = (1 + 0.003) / 2 = 50.15%.
 
