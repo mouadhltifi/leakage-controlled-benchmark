@@ -46,7 +46,11 @@ The reporting rules, condensed (they mirror the paper's §2–§3):
    effects are estimation reports, not certifications.
 8. **Partial coverage** — configurations consuming the social source (ends
    2022-12-30) report the primary contrast on all folds AND restricted to
-   fully covered folds (`--restrict-folds 0,1,2,3`).
+   folds whose test windows begin within coverage
+   (`--restrict-folds 0,1,2,3`; note F3's window runs to 2023-06 so its
+   second half is uncovered, F4 lies entirely past coverage. The genuinely
+   fully covered restriction is F0–F2; report it too if the verdict is
+   close).
 
 ## Submission file format
 
@@ -74,7 +78,13 @@ shipped baseline arm** (conservative). If your model belongs to a declared
 architecture family, pass `--baseline-arch ff` or `--baseline-arch lstm` for
 like-for-like. The script prints the claim block: per-fold deltas, ΔMCC,
 fold-block bootstrap 95% CI, p_fold (n=5), Bonferroni-corrected p at your
-declared k, descriptive pooled d, and the verdict:
+declared k, descriptive pooled d, and the verdict.
+
+Also read your absolute per-fold MCC against the shipped anchors
+(`results/analysis/naive_anchors.json`): the bar C1 enforces is a *tuned*
+price-only model, not the strongest possible one, and a simple untuned
+logistic-price anchor sits descriptively above it (+0.014 pooled). If your
+model does not clear that anchor, say so. The verdict:
 
 - **SUPPORTED** — positive delta with corrected fold-level significance
   (rules 1–6 honored). This is a Level-1 claim until released (Level 2) and

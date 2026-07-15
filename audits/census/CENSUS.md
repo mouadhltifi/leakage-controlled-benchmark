@@ -40,7 +40,7 @@
 - **C1 (price-only baseline tuned comparably): 0 REPORTED.** A price-only/technical-only baseline is *present* in **8/8**, but **0/8** state that baselines were tuned comparably to the proposed model → all 8 scored **P**. MSGCA states the opposite explicitly ("baseline hyperparameters set as the numbers reported in the original papers").
 - **C2 (chronological split AND availability-timed features): 1 REPORTED in full** (StockNet). Breaking the conjunction apart: a **chronological split is reported by 6/8** (all but CAMEF and MSMF); the **text/macro availability-timing half is reported by only 1/8** (StockNet's trading-day alignment). Adv-ALSTM reports the split but is single-source.
 - **C3 (validation set insulated from test): 6 REPORTED** (StockNet, Adv-ALSTM, MSGCA, CAMEF, CMTF, HoT); **2 NOT** (MSMF, STONK).
-- **C4 (multiplicity-corrected significance): 0 REPORTED.** In fact **0/8 report any significance test at all** (no t-test, McNemar, CI, or bootstrap), so multiplicity correction is moot.
+- **C4 (multiplicity-corrected significance): 0 REPORTED.** In fact **0/8 report any significance test at all** (no t-test, McNemar, CI, or bootstrap), so multiplicity correction is moot. The strongest quantification of run-to-run variability among the eight is MSGCA's, which reports a per-seed spread only — "0.1112 ± 0.0037" over five seeds (Table IV), a standard deviation, not a significance test. No other system reports even that.
 - **C5 (liquid/efficient universe justification): 4 REPORTED** (StockNet, Adv-ALSTM, MSGCA, CAMEF), **2 PARTIAL** (CMTF, STONK), **2 NOT** (MSMF, HoT).
 
 ### The conjunction

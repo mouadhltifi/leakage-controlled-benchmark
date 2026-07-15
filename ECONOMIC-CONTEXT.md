@@ -45,17 +45,22 @@ the always-up anchor scores 0.528 raw with MCC 0.0; see
 
 ## 3. "Sits below any plausible round-trip cost"
 
-Per round trip, the gross expected edge at the floor is bounded by
+A sign-of-prediction long/short bet with P(correct) = q on a decisive day
+of magnitude m earns expected P&L = (2q − 1)·m per round trip. For a
+balanced predictor MCC = 2q − 1 (section 2's identity), so
 
-    (balanced accuracy − 0.5) × E[|next-day move| given a decisive day]
-    = 0.0015 × E[|move|].
+    E[gross edge per round trip] = MCC × E[|next-day move| given a decisive day]
+                                 = 0.003 × E[|move|].
 
-For this to reach even **one basis point**, the mean decisive-day move
-would need to exceed 6.7% (0.0015 × 0.067 = 1.0 × 10⁻⁴) — an order of
-magnitude above liquid large-cap daily norms. Realistic round-trip costs
-for liquid US large-caps are ≈1–5 bps. The floor-sized edge is therefore
-economically invisible before costs are even estimated precisely, which
-is why the benchmark's claims are informational, never trading advice.
+(The earlier `(balanced accuracy − 0.5)` form double-discounts: it equals
+MCC/2, half the correct coefficient.) At large-cap decisive-day norms
+E[|move|] ≈ 1–1.5%, the floor-sized edge is ≈0.3–0.5 bp. For it to reach
+even **one basis point**, the mean decisive-day move would need to exceed
+3.3% (0.003 × 0.033 = 1.0 × 10⁻⁴) — several times liquid large-cap daily
+norms. Realistic round-trip costs for liquid US large-caps are ≈1–5 bps.
+The floor-sized edge is therefore economically invisible before costs are
+even estimated precisely, which is why the benchmark's claims are
+informational, never trading advice.
 
 ## Scope
 
