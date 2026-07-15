@@ -106,15 +106,24 @@ def fig_split():
     vals = [CAMEF["checkpoint"], CAMEF["retrain_random"], CAMEF["retrain_chrono"]]
     colors = [SLATE, SLATE, ORANGE]
     y = [2, 1, 0]
-    ax.barh(y, vals, height=0.55, color=colors, zorder=3)
+    # dot plot, not bars: bar length is meaningless on a log axis (no zero
+    # baseline); position carries the value. Labels stay short and inside
+    # the axes so the tight bbox equals the axes and the figure fills the
+    # column at true size; the editorial reading lives in the caption.
+    for yi, v, c in zip(y, vals, colors):
+        ax.plot([v], [yi], marker="o", ms=6.5, color=c, zorder=3)
+        ax.axhline(yi, color=GRID, lw=0.5, zorder=1)
     ax.set_xscale("log")
+    ax.set_xticks([1e-3, 1e-1, 1e1, 1e3])
     ax.axvline(CAMEF["reported"], color=GREY, ls=(0, (4, 3)), lw=0.9, zorder=2)
-    ax.text(CAMEF["reported"], 2.62, "reported 0.000489", fontsize=6.4,
-            color=INK, ha="center")
-    for yi, v, t in zip(y, vals, ["0.00043 — reproduces",
-                                  "0.0025",
-                                  "≈15 — the shipped random split was load-bearing"]):
-        ax.text(v * 1.6, yi, t, va="center", fontsize=6.8, color=INK)
+    ax.text(CAMEF["reported"] * 1.35, 2.58, "reported 0.000489", fontsize=6.4,
+            color=INK, ha="left")
+    for yi, v, t, ha in zip(y, vals,
+                            ["0.00043 — reproduces", "0.0025", "≈15"],
+                            ["left", "left", "right"]):
+        xt = v * 1.9 if ha == "left" else v / 1.9
+        ax.text(xt, yi, t, va="center", ha=ha, fontsize=6.8, color=INK)
+    ax.set_ylim(-0.5, 2.9)
     ax.set_yticks(y)
     ax.set_yticklabels(labels, fontsize=6.6)
     ax.set_xlabel("test MSE (log scale)", fontsize=7.2)
