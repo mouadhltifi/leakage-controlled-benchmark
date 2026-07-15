@@ -1,0 +1,10 @@
+challenger        : demo_price_news_ff
+baseline          : shipped tuned price-only (ff arm)
+cells paired      : 15  (folds: [np.int64(0), np.int64(1), np.int64(2), np.int64(3), np.int64(4)])
+per-fold mean dMCC: F0:+0.0151  F1:+0.0057  F2:-0.0024  F3:+0.0019  F4:-0.0038
+dMCC (mean)       : +0.0033
+95% CI fold-block : [-0.0019, +0.0098]   (10,000 resamples)
+p_fold (n=5)     : 0.384
+p_bonf (k=1)     : 0.384
+pooled d (n=15, descriptive): +0.205
+VERDICT           : WITHIN THE REFERENCE NULL

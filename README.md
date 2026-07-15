@@ -36,6 +36,15 @@ Every reported reference number regenerates from the committed result files
 in `results/`. `REPRODUCE.md` documents the full from-scratch path
 (environment, data regeneration, re-runs, and the two audits).
 
+## Submitting a model
+
+The I/O contract — frozen folds, seeds, label rule, the submission CSV
+schema, and the claim computation — is **`SUBMITTING.md`**. The claim block
+comes from `scripts/analysis/evaluate_submission.py`; a worked end-to-end
+example (a shipped configuration replayed as an external challenger, with
+its committed claim) is `examples/demo_submission/`. Pre-registration for
+the pristine post-2023 window: `MAINTENANCE.md`.
+
 ## What ships, what does not
 
 The release is **feature-level by construction** — derived numeric features
