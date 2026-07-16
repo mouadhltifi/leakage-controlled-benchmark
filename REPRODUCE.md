@@ -4,6 +4,12 @@ Two tiers: the **headline path** (no GPU, no large data, minutes) and the
 **full from-scratch path** (GPU, data fetch, days). Most reviewers want the
 headline path.
 
+Before either path, fixity: `python3 scripts/verify_integrity.py` checks the
+300-file `MANIFEST.sha256` covering the reproduction tree (code, configs,
+tables, results, audits, experiments, examples) and the materialized raw
+inputs (`data/raw/macro/`); top-level docs, LICENSE, and `croissant.json`
+sit outside its scope (see the manifest's header line).
+
 ## 0. Environment
 
 - **Python 3.11+** (the config system uses the stdlib `tomllib`). Verified on

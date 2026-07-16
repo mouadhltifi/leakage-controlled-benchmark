@@ -22,8 +22,15 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 MANIFEST = ROOT / "MANIFEST.sha256"
 COVERED = ("src", "scripts", "configs", "tables",
-           "results", "audits", "experiments", "examples")
+           "results", "audits", "experiments", "examples",
+           "data/raw/macro")
 SKIP_PARTS = {"__pycache__", ".pytest_cache", ".DS_Store"}
+SCOPE_HEADER = (
+    "# Scope: the reproduction tree (code, configs, tables, results, audits,"
+    " experiments, examples) plus the materialized raw inputs"
+    " (data/raw/macro). Excluded: top-level docs, LICENSE, croissant.json,"
+    " and this manifest itself. Verify: python3 scripts/verify_integrity.py"
+)
 
 
 def covered_files() -> list[Path]:
@@ -51,7 +58,7 @@ def main() -> int:
 
     if a.generate:
         lines = [f"{sha256(p)}  {p.relative_to(ROOT)}" for p in covered_files()]
-        MANIFEST.write_text("\n".join(lines) + "\n")
+        MANIFEST.write_text(SCOPE_HEADER + "\n" + "\n".join(lines) + "\n")
         print(f"wrote {MANIFEST.name}: {len(lines)} files")
         return 0
 
@@ -59,6 +66,8 @@ def main() -> int:
         sys.exit("MANIFEST.sha256 missing — run --generate at release time")
     recorded = {}
     for line in MANIFEST.read_text().splitlines():
+        if not line.strip() or line.startswith("#"):
+            continue
         digest, rel = line.split(None, 1)
         recorded[rel] = digest
     ok = modified = 0
