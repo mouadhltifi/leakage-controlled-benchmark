@@ -19,7 +19,7 @@
 - **Instances:** per-stock-day feature rows for **55 US large-cap equities**
   (11 sectors × 5, most-liquid selection), business days
   with features spanning **2016-01-04 → 2023-12-28** (2,011 feature days,
-  ≈111k stock-days; prices are fetched from 2015-02-03 to warm up the
+  ≈111k stock-days; prices are fetched from 2015-01-02 (design start 2015-02-03; the shipped fetch over-covers it) to warm up the
   trailing technical indicators), plus graph structures.
 - **Universe (55 tickers, by GICS-era sector; the released sector labels are
   FF12 — see DATA-STATEMENTS):** IT: AAPL MSFT NVDA AVGO ORCL · Health:

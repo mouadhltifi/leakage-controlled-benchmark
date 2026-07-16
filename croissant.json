@@ -7,9 +7,9 @@
   },
   "@type": "sc:Dataset",
   "@id": "leakage-controlled-benchmark",
-  "conformsTo": "http://mlcommons.org/croissant/1.0",
+  "dct:conformsTo": "http://mlcommons.org/croissant/1.0 (descriptive; full loader conformance with the DOI deposit -- see description)",
   "name": "leakage-controlled-benchmark-multi-source-stock-prediction",
-  "description": "Protocol-locked benchmark for multi-source next-day stock prediction: availability-timed derived feature datasets for five source families (price technical indicators, news sentiment statistics, social media day-level aggregates, publication-lagged macroeconomic series, public sector graphs) over 55 liquid US large-caps, 2015-02-03 to 2023-12-31, with five expanding chronological folds, a tuned price-only reference baseline, naive/classical anchors, and reference results from 2,468 controlled runs. Raw third-party text and proprietary classifications are not redistributed (see DATA-STATEMENTS.md).",
+  "description": "Protocol-locked benchmark for multi-source next-day stock prediction: availability-timed derived feature datasets for five source families (price technical indicators, news sentiment statistics, social media day-level aggregates, publication-lagged macroeconomic series, public sector graphs) over 55 liquid US large-caps, feature rows 2016-01-04 to 2023-12-28 (prices from 2015-01-02 warm up the indicators), with five expanding chronological folds, a tuned price-only reference baseline, naive/classical anchors, and reference results from 2,468 runs (2,151 controlled). Raw third-party text and proprietary classifications are not redistributed (see DATA-STATEMENTS.md). NOTE: full Croissant 1.0 loader conformance (official context, per-field source mappings, checksums) lands with the DOI feature deposit on acceptance; until then this record is descriptive metadata.",
   "license": [
     "https://opensource.org/licenses/MIT",
     "https://creativecommons.org/licenses/by/4.0/"
@@ -58,7 +58,7 @@
       "@type": "cr:RecordSet",
       "@id": "stock-days",
       "name": "stock-days",
-      "description": "~111k per-stock-day rows (55 tickers x 2,011 feature days, 2016-01-04 to 2023-12-28; prices fetched from 2015-02-03 warm up the trailing indicators); primary label = next-day direction under a symmetric 0.5% dead-zone applied to train/validation/test alike; secondary label = next-day realized volatility; five expanding chronological folds with July-to-June test windows from 2019-07-01 to 2023-12-31 (the last a six-month stub).",
+      "description": "~111k per-stock-day rows (55 tickers x 2,011 feature days, 2016-01-04 to 2023-12-28; prices fetched from 2015-01-02 warm up the trailing indicators); primary label = next-day direction under a symmetric 0.5% dead-zone applied to train/validation/test alike; secondary label = next-day realized volatility; five expanding chronological folds with July-to-June test windows from 2019-07-01 to 2023-12-31 (the last a six-month stub).",
       "field": [
         {"@type": "cr:Field", "@id": "stock-days/ticker", "name": "ticker", "dataType": "sc:Text"},
         {"@type": "cr:Field", "@id": "stock-days/date", "name": "date", "dataType": "sc:Date"},

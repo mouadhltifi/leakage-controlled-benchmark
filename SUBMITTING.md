@@ -11,8 +11,8 @@ does). Nothing else counts as "beating the benchmark".
 | Fixed | Value |
 |---|---|
 | Universe | 55 liquid US large-caps (11 sectors × 5 names; the full ticker list is in `DATASHEET.md` and `src/mmfp/data/universe.py`) |
-| Window | 2015-02-03 → 2023-12-31 |
-| Folds | 5 expanding chronological folds (`fold_idx` 0–4), July-to-June test windows: F0 2019-07-01→2020-06-30 · F1 2020-07-01→2021-06-30 · F2 2021-07-01→2022-06-30 · F3 2022-07-01→2023-06-30 · F4 2023-07-01→2023-12-31 (six-month stub). Train expands from 2015-02-03 to each fold's `train_end` = the day before `test_start`. Source of truth: `FOLD_BOUNDARIES` in `src/mmfp/data/assemble.py` |
+| Window | Feature rows 2016-01-04 → 2023-12-28 (prices from 2015-01-02 serve only as indicator warm-up) |
+| Folds | 5 expanding chronological folds (`fold_idx` 0–4), July-to-June test windows: F0 2019-07-01→2020-06-30 · F1 2020-07-01→2021-06-30 · F2 2021-07-01→2022-06-30 · F3 2022-07-01→2023-06-30 · F4 2023-07-01→2023-12-31 (six-month stub). Train expands from 2016-01-04 (the 2015 price history is indicator warm-up only, never training rows) to each fold's `train_end` = the day before `test_start`. Source of truth: `FOLD_BOUNDARIES` and `TRAIN_START` in `src/mmfp/data/assemble.py` |
 | Validation | the last 20% of each fold's training window **by calendar** — model and epoch selection read only this; the test set is read once per run |
 | Seeds | 42, 123, 456 (≥3 required; these three pair exactly with the shipped baseline) |
 | Labels | next-day direction under the symmetric 0.5% dead-zone (applied to train/val/test alike); secondary: next-day realized volatility |
@@ -92,7 +92,7 @@ model does not clear that anchor, say so. The verdict:
   "claimed-unaudited" until then.
 - **WITHIN THE REFERENCE NULL** — everything else. This is the reference
   outcome: no combination of news, social, macro, or graph features has
-  cleared it (2,468 controlled runs).
+  cleared it (2,468 runs; 2,151 controlled).
 
 A worked example (a shipped price+news configuration replayed as if it were
 an external challenger, evaluated like-for-like against the ff baseline
