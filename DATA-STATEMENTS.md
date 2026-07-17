@@ -28,7 +28,9 @@
 - **Ships:** per-stock-day sentiment feature blocks (FinBERT 3-class
   statistics) and sentence-embedding features (PCA-reduced), plus the full
   extraction pipeline (code) and a pointer to the upstream dataset.
-- **Does not ship:** any article text, headline, or per-article record.
+- **Does not ship:** any article text or headline; the per-article table
+  (`news_per_article_sentiments.parquet`) carries numeric sentiment
+  scores, counts, and ordering only — no text, no identifiers.
 - **Basis:** FNSPID is released CC-BY-NC-4.0, and the underlying article
   text carries the original publishers' copyright, which the FNSPID authors
   cannot relicense. Our derived numeric features are non-reconstructive;
@@ -66,13 +68,18 @@
   with their publication-lag-corrected variants, plus FOMC meeting dates.
   "Citation requested" per FRED terms (U.S.-government works, public
   domain).
-- **VIX:** the released volatility features are **price-derived realized
-  volatility computed from the benchmark's own return series** — the
-  CBOE-proprietary VIX series (FRED VIXCLS, "Copyrighted: Citation
-  Required") is not redistributed. The loader accepts a user-supplied
-  VIXCLS extract for exact replication of any VIX-dependent variant.
-- **Basis:** federal series are public domain; VIX is CBOE property —
-  substitution severs the dependency entirely.
+- **VIX:** the deposit **ships the business-day VIXCLS extract as
+  shipped-and-consumed by the reference runs** — the raw level in
+  `data/raw/macro/` and `data/processed/features/macro_features.parquet`,
+  and the normalized `vix_norm` in every assembled h5 macro block. FRED
+  lists VIXCLS as "Copyrighted: Citation Required" (Cboe); it is cited
+  here and in the datasheet. The benchmark's *realized-volatility target*
+  is price-derived and independent of VIX.
+- **Basis:** federal series are public domain; VIXCLS is Cboe-copyrighted
+  and redistributed as a small cited extract. The loader also accepts a
+  user-supplied VIXCLS extract, so a text-only re-fetch
+  (`scripts/data/fetch_fred.py`) reproduces the series without relying on
+  the shipped copy.
 
 ## 5. Sector structure (public classification)
 

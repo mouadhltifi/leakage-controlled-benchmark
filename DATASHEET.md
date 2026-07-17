@@ -41,13 +41,16 @@
   2. **News** — per-stock-day FinBERT 3-class sentiment statistics (11-dim
      block) and PCA-reduced embedding features, derived from FNSPID-tagged
      articles (53/55 names have >=1 tagged article; HON and RTX are
-     uncovered and zero-filled).
+     uncovered and zero-filled; LIN is covered but near-empty, 2
+     article-days across the window).
   3. **Social** — per-stock-day StockTwits aggregates: counts, bull/bear
      ratios, mean sentiment (17 aggregates) + a has-data flag; coverage
      ends 2022-12-30, the 2023 gap is explicit.
   4. **Macro** — five federal FRED series resampled to business days, in
      original and **publication-lag-corrected** variants (+ FOMC dates);
-     volatility features are price-derived (no CBOE VIX redistribution).
+     the deposit ships the VIXCLS (Cboe VIX) business-day extract with
+     citation, consumed by the reference runs; the realized-volatility
+     TARGET is price-derived.
   5. **Graph** — 55×55 same-sector adjacency from **public SIC→Fama-French-12
      labels** and rolling-correlation dynamic graphs (20-day, price-derived).
 - **Labels:** next-day direction (sign of log return, symmetric 0.5%

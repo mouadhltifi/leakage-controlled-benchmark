@@ -1,5 +1,11 @@
 # A4 Publishability Vetting Audit
 
+> **Provenance of the two retest CSVs:** `a4_seed_retest_sameday.csv` is the
+> SAME-DAY-macro vetting arm this audit's per-seed table describes (the arm the
+> paper's replication footnote quotes: mean +0.013, d=+0.397, 8/8 seeds,
+> p_bonf=0.131 at k=8); `a4_seed_retest.csv` is the availability-timed
+> (publication-lag) re-run of the same seeds. Do not mix arms across protocols.
+
 **Context**: v3 M8 found A4 (price+macro) beats v3 A7 baseline with `d=+0.861` (large effect), `p_bonf=0.039` (k=8). Per the pre-registered protocol, any positive result requires 4-point vetting before being claimed as a contribution.
 
 Status by check:

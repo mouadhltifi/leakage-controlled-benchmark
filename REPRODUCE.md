@@ -166,6 +166,13 @@ python scripts/run_v3_m8_ablation.py        # full 9-config (135 runs; ~10-15 h 
 python scripts/run_v3_a4_seed_retest.py     # A4 8-seed vetting (demotes A4)
 ```
 
+`results/v3/m8_ablation/a4_seed_retest.csv` is the availability-timed
+(publication-lag) re-run; the paper's replication footnote quotes the
+SAME-DAY vetting arm, which regenerates from
+`results/v3/m8_ablation/a4_seed_retest_sameday.csv` (per-seed table in
+`a4_vetting_audit.md`). Do not pair the lagged retest seeds with the
+same-day M8 seeds — that mixes protocols.
+
 ### 3d. Macro publication-lag re-run
 
 The leakage-free macro results are **already committed** under `results/macrolag/`

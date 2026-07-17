@@ -71,7 +71,7 @@ def main():
         ("Price", "10 indicators"),
         ("News", "day-level sentiment"),
         ("Social", "17 aggregates"),
-        ("Macro", "5 federal series"),
+        ("Macro", "6 series"),
         ("Graph", "sector + correlation"),
     ]
     tile_h, gap = 4.2, 1.0
@@ -112,9 +112,9 @@ def main():
     # ---- ladder rows (bottom-up), claim enters Level 1 --------------------
     lx, lw_ = 64.0, 34.5
     rows = [
-        (5.8, "Level 1 · reported", "numbers in a paper", None),
-        (13.4, "Level 2 · auditable", "code, config, seeds released", None),
-        (21.0, "Level 3 · audited", "independent re-run + conformance read",
+        (8.8, "Level 1 · reported", "numbers in a paper", None),
+        (16.4, "Level 2 · auditable", "code, config, seeds released", None),
+        (24.0, "Level 3 · audited", "independent re-run + conformance read",
          "→ established"),
     ]
     rh = 5.6
@@ -131,15 +131,15 @@ def main():
             ax.text(lx + lw_ - 7.3, ybot + rh - 1.65, tag, fontsize=5.9,
                     va="center", ha="center", color="white", fontweight="bold",
                     zorder=4)
-    for y0, y1 in ((11.4, 13.4), (19.0, 21.0)):
+    for y0, y1 in ((14.4, 16.4), (22.0, 24.0)):
         arrow(ax, lx + lw_ / 2, y0, lx + lw_ / 2, y1, lw=0.8, ms=6)
 
     # ---- claim arrow: harness -> Level 1 ----------------------------------
-    arrow(ax, 54.4, 8.6, 63.8, 8.6, lw=1.2, ms=8)
-    ax.text(59.1, 10.3, "the claim", fontsize=6.0, ha="center", color=INK,
+    arrow(ax, 54.4, 11.6, 63.8, 11.6, lw=1.2, ms=8)
+    ax.text(59.1, 13.3, "the claim", fontsize=6.0, ha="center", color=INK,
             fontweight="bold")
-    ax.text(58.2, 6.5, "paired per-fold Δ\nvs the tuned floor", fontsize=4.7,
-            ha="center", va="center", color=GREY)
+    ax.text(55.6, 7.2, "paired per-fold Δ vs the tuned floor", fontsize=6.5,
+            ha="left", va="center", color=GREY)
 
     # ---- priced-violation strip (renderer-measured placement) -------------
     box(ax, 1.5, 0.2, 97.0, 3.2, ORANGE_FILL, ORANGE, lw=0.7, r=0.5)
