@@ -185,8 +185,8 @@ def fig_msgca():
     fig.tight_layout()
     fig.savefig(f"{OUT}/msgca-diagnostic.pdf", bbox_inches="tight")
     plt.close(fig)
-    print("wrote msgca-diagnostic.pdf repro=%s honest=%s" %
-          ([round(v, 3) for v in repro], [round(v, 3) for v in honest]))
+    print("wrote msgca-diagnostic.pdf repro=%s val_selected=%s" %
+          ([round(v, 3) for v in repro], [round(v, 3) for v in val_selected]))
 
 
 def fig_news_by_fold():

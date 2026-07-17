@@ -19,9 +19,10 @@ kaggle.json
 # Generated figures (regenerate with scripts/figures/make_paper_figures.py)
 figures/*.pdf
 
-# Derived/fetched data — kept OUT of the repo to stay lean for double-blind upload
-# (anonymous.4open.science / GitHub). It is regenerable or fetchable per
-# data/README.md + REPRODUCE.md; the committed result CSVs in results/ already
+# Derived/fetched data — kept OUT of the git history to keep clones lean; the
+# derived-feature deposit ships alongside the repository (see data/README.md for
+# the build order and DATA-STATEMENTS.md for per-source terms) and is
+# DOI-archived on acceptance. The committed result CSVs in results/ already
 # reproduce every headline number and figure.
 data/external/
 data/interim/

@@ -108,6 +108,16 @@ def main() -> int:
     t, p_fold = stats.ttest_1samp(fold_means, 0.0)
     p_bonf = min(1.0, float(p_fold) * a.k)
     lo, hi = fold_block_ci(merged)
+    # Fold-mean t interval: the certifying scale. A five-block percentile
+    # bootstrap undercovers at n=5 (roughly 84% actual coverage), so its
+    # exclusions are descriptive; this interval is the one consistent with
+    # p_fold and the verdict logic.
+    if n_folds > 1:
+        t_lo, t_hi = stats.t.interval(
+            0.95, n_folds - 1,
+            loc=float(fold_means.mean()), scale=float(fold_means.sem()))
+    else:
+        t_lo = t_hi = float("nan")
     d = mean_delta / merged["delta"].std(ddof=1) if len(merged) > 1 else float("nan")
 
     conforms = None
@@ -133,7 +143,8 @@ def main() -> int:
     print("per-fold mean dMCC: "
           + "  ".join(f"F{int(f)}:{v:+.4f}" for f, v in fold_means.items()))
     print(f"dMCC (mean)       : {mean_delta:+.4f}")
-    print(f"95% CI fold-block : [{lo:+.4f}, {hi:+.4f}]   (10,000 resamples)")
+    print(f"95% CI fold-block : [{lo:+.4f}, {hi:+.4f}]   (10,000 resamples; descriptive)")
+    print(f"95% CI fold-t     : [{t_lo:+.4f}, {t_hi:+.4f}]   (t on {n_folds} fold means; certifying scale)")
     print(f"p_fold (n={n_folds})     : {p_fold:.3f}")
     print(f"p_bonf (k={a.k})     : {p_bonf:.3f}")
     print(f"pooled d (n={len(merged)}, descriptive): {d:+.3f}")
@@ -149,6 +160,7 @@ def main() -> int:
             "seed_matched": seed_matched, "n_cells": len(merged),
             "fold_means": {int(k): float(v) for k, v in fold_means.items()},
             "delta_mcc": mean_delta, "ci95": [lo, hi],
+            "ci95_fold_t": [float(t_lo), float(t_hi)],
             "p_fold": float(p_fold), "k": a.k, "p_bonf": p_bonf,
             "pooled_d": float(d), "verdict": verdict}, indent=2))
     return 0
