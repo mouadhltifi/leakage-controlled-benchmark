@@ -23,12 +23,13 @@ ROOT = Path(__file__).resolve().parents[1]
 MANIFEST = ROOT / "MANIFEST.sha256"
 COVERED = ("src", "scripts", "configs", "tables",
            "results", "audits", "experiments", "examples",
-           "data/raw/macro")
+           "data/raw/macro", "data/processed")
 SKIP_PARTS = {"__pycache__", ".pytest_cache", ".DS_Store"}
 SCOPE_HEADER = (
     "# Scope: the reproduction tree (code, configs, tables, results, audits,"
     " experiments, examples) plus the materialized raw inputs"
-    " (data/raw/macro). Excluded: top-level docs, LICENSE, croissant.json,"
+    " (data/raw/macro) and the derived-feature deposit (data/processed)."
+    " Excluded: top-level docs, LICENSE, croissant.json,"
     " and this manifest itself. Verify: python3 scripts/verify_integrity.py"
 )
 

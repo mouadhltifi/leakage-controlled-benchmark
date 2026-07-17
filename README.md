@@ -33,8 +33,8 @@ python scripts/analysis/analyze_macrolag.py
 ```
 
 Every reference-table and audit number regenerates from the committed
-result files in `results/` (the naive-anchor table additionally needs the
-feature deposit; its committed JSON carries the values). `REPRODUCE.md`
+result files in `results/`, and the naive-anchor table from the committed
+feature tables in `data/processed/` (its committed JSON carries the values). `REPRODUCE.md`
 documents the full from-scratch path (environment, data regeneration,
 re-runs, and the two audits).
 

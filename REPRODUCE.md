@@ -133,13 +133,14 @@ CAMEF_REPO=/path/to/CAMEF python scripts/audits/camef_split_audit.py
 
 ### 3a. Data
 
-Fetch / regenerate the inputs per `data/README.md`. Only the public-domain FRED
-macro parquet ships; the derived feature parquets, graphs, and assembled HDF5
-datasets the drivers consume are gitignored and **not** in the artifact, so you
-must regenerate them first (thin fetch stubs are in `scripts/data/`). Once the
-feature data is in place the classifier ablation (price/macro/social/graph) runs
-locally; the news configs additionally need the FNSPID embeddings regenerated
-from the upstream corpus.
+The derived feature parquets, graphs, and assembled HDF5 datasets the drivers
+consume are **committed** under `data/processed/` (layout and provenance:
+`data/README.md`; hashes: `MANIFEST.sha256`), so the re-runs below work from a
+plain clone. Rebuilding that deposit itself from raw sources is the
+deep-verification path: fetch/regenerate per `data/README.md` (thin fetch stubs
+in `scripts/data/`; raw prices and the news/social corpora are not
+redistributable, and the news configs need the FNSPID embeddings regenerated
+from the upstream corpus).
 
 ### 3b. The classifier (v2) ablation
 

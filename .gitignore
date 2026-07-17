@@ -19,12 +19,11 @@ kaggle.json
 # Generated figures (regenerate with scripts/figures/make_paper_figures.py)
 figures/*.pdf
 
-# Derived/fetched data — kept OUT of the git history to keep clones lean; the
-# derived-feature deposit ships alongside the repository (see data/README.md for
-# the build order and DATA-STATEMENTS.md for per-source terms) and is
-# DOI-archived on acceptance. The committed result CSVs in results/ already
-# reproduce every headline number and figure.
+# Raw/intermediate data — not shipped. Raw prices and raw third-party text are
+# not redistributable (see DATA-STATEMENTS.md); intermediates are regenerable.
+# The derived-feature deposit data/processed/ IS committed (licensing-clean
+# layer, covered by MANIFEST.sha256) and is additionally DOI-archived on
+# acceptance; see data/README.md for layout and build order.
 data/external/
 data/interim/
 data/raw/prices/
-data/processed/
