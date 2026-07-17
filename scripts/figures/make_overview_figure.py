@@ -88,7 +88,7 @@ def main():
     box(ax, 22.0, 4.6, 32.2, 25.0, SLATE_FILL, SLATE, lw=0.9, r=1.0)
     ax.text(38.0, 27.6, "PROTOCOL-LOCKED HARNESS", fontsize=6.6, ha="center",
             va="center", color=SLATE, fontweight="bold")
-    ax.text(38.0, 25.8, "55 names · 5 chronological folds · fixed labels",
+    ax.text(38.0, 25.8, "55 names · 5 chronological folds · 2015–2023",
             fontsize=5.2, ha="center", va="center", color=GREY)
     controls = [
         ("C1", "tuned price-only reference floor"),
@@ -131,6 +131,8 @@ def main():
     arrow(ax, 54.4, 8.6, 63.8, 8.6, lw=1.2, ms=8)
     ax.text(59.1, 10.3, "the claim", fontsize=6.0, ha="center", color=INK,
             fontweight="bold")
+    ax.text(58.2, 6.5, "paired per-fold Δ\nvs the tuned floor", fontsize=4.7,
+            ha="center", va="center", color=GREY)
 
     # ---- priced-violation strip (renderer-measured placement) -------------
     box(ax, 1.5, 0.2, 97.0, 3.2, ORANGE_FILL, ORANGE, lw=0.7, r=0.5)
