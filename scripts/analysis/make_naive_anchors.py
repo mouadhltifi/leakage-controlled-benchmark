@@ -282,6 +282,9 @@ def main() -> int:
         tex_lines.append(
             f"{a} & {mcc_mean[a]:+.3f} & {acc_mean[a]:.3f} & computed \\\\\n"
         )
+    # \bottomrule ships inside the fragment: \input-in-tabular breaks when
+    # the rule follows the \input (matches the three sibling generators)
+    tex_lines.append("\\bottomrule\n")
     tex_path = Path(args.texout)
     wrote_tex = False
     if tex_path.parent.is_dir():
