@@ -86,9 +86,12 @@ def main():
 
     # ---- harness box with control gates ---------------------------------
     box(ax, 22.0, 4.6, 32.2, 25.0, SLATE_FILL, SLATE, lw=0.9, r=1.0)
-    ax.text(38.0, 27.6, "PROTOCOL-LOCKED HARNESS", fontsize=6.6, ha="center",
-            va="center", color=SLATE, fontweight="bold")
-    ax.text(38.0, 25.8, "55 names · 5 chronological folds · 2015–2023",
+    box(ax, 22.0, 26.2, 32.2, 3.4, SLATE, SLATE, lw=0.9, r=1.0)
+    ax.add_patch(plt.Rectangle((22.0, 26.2), 32.2, 1.4, fc=SLATE, ec=SLATE,
+                               lw=0, zorder=2))
+    ax.text(38.0, 28.1, "PROTOCOL-LOCKED HARNESS", fontsize=6.6, ha="center",
+            va="center", color="white", fontweight="bold")
+    ax.text(38.0, 25.3, "55 names · 5 chronological folds · 2015–2023",
             fontsize=5.2, ha="center", va="center", color=GREY)
     controls = [
         ("C1", "tuned price-only reference floor"),
@@ -100,10 +103,11 @@ def main():
     ch, cgap = 3.35, 0.72
     for i, (cid, txt) in enumerate(controls):
         y = 24.6 - ch - i * (ch + cgap)
-        box(ax, 23.6, y, 28.8, ch, "white", SLATE, lw=0.6, r=0.5)
-        ax.text(25.4, y + ch / 2, cid, fontsize=6.2, va="center", ha="center",
-                color=SLATE, fontweight="bold")
-        ax.text(27.2, y + ch / 2, txt, fontsize=5.7, va="center", color=INK)
+        box(ax, 23.2, y, 29.6, ch, "white", SLATE, lw=0.6, r=0.5)
+        box(ax, 23.8, y + 0.45, 3.2, ch - 0.9, SLATE, SLATE, lw=0.5, r=0.4, z=3)
+        ax.text(25.4, y + ch / 2, cid, fontsize=6.0, va="center", ha="center",
+                color="white", fontweight="bold", zorder=4)
+        ax.text(28.0, y + ch / 2, txt, fontsize=5.6, va="center", color=INK)
 
     # ---- ladder rows (bottom-up), claim enters Level 1 --------------------
     lx, lw_ = 64.0, 34.5
@@ -122,8 +126,11 @@ def main():
         ax.text(lx + 1.6, ybot + 1.5, sub, fontsize=5.5, va="center",
                 color=INK)
         if tag:
-            ax.text(lx + lw_ - 1.6, ybot + rh - 1.6, tag, fontsize=6.2,
-                    va="center", ha="right", color=INK, fontweight="bold")
+            box(ax, lx + lw_ - 13.4, ybot + rh - 2.8, 12.2, 2.3, SLATE, SLATE,
+                lw=0.5, r=0.6, z=3)
+            ax.text(lx + lw_ - 7.3, ybot + rh - 1.65, tag, fontsize=5.9,
+                    va="center", ha="center", color="white", fontweight="bold",
+                    zorder=4)
     for y0, y1 in ((11.4, 13.4), (19.0, 21.0)):
         arrow(ax, lx + lw_ / 2, y0, lx + lw_ / 2, y1, lw=0.8, ms=6)
 
@@ -146,12 +153,17 @@ def main():
     rend = fig.canvas.get_renderer()
     inv = ax.transData.inverted()
     x = 3.2
-    for s, c, w, fs in items:
+    for i, (s, c, w, fs) in enumerate(items):
         txt = ax.text(x, 1.8, s, fontsize=fs, color=c, va="center",
-                      fontweight=w)
+                      fontweight=w, zorder=4)
         bb = txt.get_window_extent(renderer=rend)
         (x0d, _), (x1d, _) = inv.transform([[bb.x0, 0], [bb.x1, 0]])
-        x += (x1d - x0d) + 2.4
+        wdt = x1d - x0d
+        if i > 0:
+            box(ax, x - 0.8, 0.55, wdt + 1.6, 2.5, "white", ORANGE, lw=0.5,
+                r=0.5, z=3)
+            txt.set_zorder(5)
+        x += wdt + 2.3
     if x - 2.4 > 98.0:
         print(f"WARN: strip overflows to x={x - 2.4:.1f}")
 
