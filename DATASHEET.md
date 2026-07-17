@@ -40,7 +40,8 @@
      variants, next-day label components.
   2. **News** — per-stock-day FinBERT 3-class sentiment statistics (11-dim
      block) and PCA-reduced embedding features, derived from FNSPID-tagged
-     articles (52/55 names covered; zero-filled elsewhere).
+     articles (53/55 names have >=1 tagged article; HON and RTX are
+     uncovered and zero-filled).
   3. **Social** — per-stock-day StockTwits aggregates: counts, bull/bear
      ratios, mean sentiment (17 aggregates) + a has-data flag; coverage
      ends 2022-12-30, the 2023 gap is explicit.
@@ -79,7 +80,7 @@
   (impossible by construction — day-level aggregates only).
 - **Known limitations:** single universe (liquid US large-caps — adversarial
   to the multi-source claim by design); daily horizon; social coverage gap
-  in 2023; news coverage 52/55 names; sector labels are FF12-derived (the
+  in 2023; news coverage 53/55 names (HON, RTX uncovered); sector labels are FF12-derived (the
   GICS-vs-FF12 equivalence table ships in the appendix/repo).
 
 ## Distribution
