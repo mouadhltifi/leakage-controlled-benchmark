@@ -75,6 +75,10 @@ def fig_selection():
     ax.plot(ep, test, color=SLATE, lw=0.6, alpha=0.35, zorder=2)
     ax.plot(ep, run_max, color=ORANGE, lw=1.5, zorder=4)
     ax.axhline(at_sel, color=SLATE, lw=1.4, zorder=3)
+    ax.plot([best_ep], [best], marker="o", ms=4.5, color=ORANGE, zorder=6)
+    ax.plot([sel], [at_sel], marker="o", ms=4.5, color=SLATE, zorder=6)
+    ax.text(246, 0.030, "per-epoch test MCC", fontsize=6.0, color=GREY,
+            ha="right", zorder=5)
     ax.axhline(0, color=GREY, lw=0.6, ls=(0, (3, 3)), zorder=1)
     ax.annotate(f"C3 relaxed: report max over epochs → {best:.3f}",
                 xy=(best_ep, best), xytext=(52, 0.135), fontsize=6.8,
@@ -87,7 +91,7 @@ def fig_selection():
     ax.text(398, (best + at_sel) / 2,
             f"+{best - at_sel:.3f} this run\n+{mean_gap:.3f} mean of 8",
             fontsize=6.8, color=INK, ha="right", va="center")
-    ax.set_xlabel("training epoch (instrumented run of the released pipeline)", fontsize=7.2)
+    ax.set_xlabel("training epoch", fontsize=7.2)
     ax.set_ylabel("test-set MCC", fontsize=7.2)
     ax.set_xlim(0, 400)
     ax.set_ylim(-0.10, 0.155)
@@ -102,11 +106,11 @@ def fig_selection():
 
 def fig_split():
     fig, ax = plt.subplots(figsize=(3.2, 1.35))
-    labels = ["released checkpoint,\nauthors' own test",
-              "shipped-default retrain,\nnon-temporal split (as shipped)",
-              "same retrain,\nchronological split"]
+    labels = ["checkpoint,\nauthors' own eval",
+              "retrain,\nshipped split",
+              "retrain,\nchronological split"]
     vals = [CAMEF["checkpoint"], CAMEF["retrain_random"], CAMEF["retrain_chrono"]]
-    colors = [SLATE, SLATE, ORANGE]
+    colors = [SLATE, ORANGE, SLATE]
     y = [2, 1, 0]
     # dot plot, not bars: bar length is meaningless on a log axis (no zero
     # baseline); position carries the value. Labels stay short and inside
@@ -115,21 +119,31 @@ def fig_split():
     for yi, v, c in zip(y, vals, colors):
         ax.plot([v], [yi], marker="o", ms=6.5, color=c, zorder=3)
         ax.axhline(yi, color=GRID, lw=0.5, zorder=1)
+    # the price, drawn: same recipe, only the split changes
+    ax.annotate("", xy=(CAMEF["retrain_chrono"], 0.0),
+                xytext=(CAMEF["retrain_random"], 1.0),
+                arrowprops=dict(arrowstyle="-|>", mutation_scale=8,
+                                color=ORANGE, lw=1.0,
+                                connectionstyle="angle,angleA=0,angleB=90,rad=4"),
+                zorder=2)
+    ax.text(0.32, 0.62, "same recipe,\nsplit made chronological",
+            fontsize=5.8, color=ORANGE, ha="center", va="center",
+            linespacing=1.25, zorder=4)
     ax.set_xscale("log")
-    ax.set_xticks([1e-3, 1e-1, 1e1, 1e3])
+    ax.set_xticks([1e-3, 1e-2, 1e-1, 1e0, 1e1, 1e2])
     ax.axvline(CAMEF["reported"], color=GREY, ls=(0, (4, 3)), lw=0.9, zorder=2)
     ax.text(CAMEF["reported"] * 1.35, 2.58, "reported 0.000489", fontsize=6.4,
             color=INK, ha="left")
     for yi, v, t, ha in zip(y, vals,
-                            ["0.00043 — reproduces", "0.0025", "≈15"],
-                            ["left", "left", "right"]):
-        xt = v * 1.9 if ha == "left" else v / 1.9
+                            ["0.000431 — reproduces", "0.0025", "≈15"],
+                            ["left", "left", "left"]):
+        xt = v * 1.9
         ax.text(xt, yi, t, va="center", ha=ha, fontsize=6.8, color=INK)
     ax.set_ylim(-0.5, 2.9)
     ax.set_yticks(y)
     ax.set_yticklabels(labels, fontsize=6.6)
     ax.set_xlabel("test MSE (log scale)", fontsize=7.2)
-    ax.set_xlim(1.2e-4, 9e3)
+    ax.set_xlim(1.2e-4, 3e2)
     ax.grid(axis="x", color=GRID, lw=0.4, zorder=0)
     ax.tick_params(axis="y", length=0)
     despine(ax, keep=("bottom",))
