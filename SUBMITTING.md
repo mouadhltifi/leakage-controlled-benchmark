@@ -16,7 +16,7 @@ does). Nothing else counts as "beating the benchmark".
 | Validation | the last 20% of each fold's training window **by calendar** — model and epoch selection read only this; the test set is read once per run |
 | Seeds | 42, 123, 456 (≥3 required; these three pair exactly with the shipped baseline) |
 | Labels | next-day direction under the symmetric 0.5% dead-zone (applied to train/val/test alike); secondary: next-day realized volatility |
-| Features | availability-timed five-source tables (schema: `DATASHEET.md`, `croissant.json`); text is T−1 aligned, macro enters at publication dates. Data ships committed under `data/processed/` (hashes in `MANIFEST.sha256`; also DOI-archived on acceptance); regeneration per `DATA-STATEMENTS.md` |
+| Features | availability-timed five-source tables (schema: `DATASHEET.md`, `croissant.json`); text is T−1 aligned, macro enters at publication dates. Data ships committed under `data/processed/` (hashes in `MANIFEST.sha256`; also DOI-archived on Zenodo); regeneration per `DATA-STATEMENTS.md` |
 | Metric | MCC on the primary task |
 
 Every shipped result row records its `n_train`/`n_val`/`n_test`, so the

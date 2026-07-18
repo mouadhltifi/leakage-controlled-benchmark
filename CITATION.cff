@@ -1,6 +1,7 @@
 cff-version: 1.2.0
 message: "If you use this benchmark, harness, or its reference results, please cite the accompanying paper."
-title: "A Leakage-Controlled Evaluation Protocol and Benchmark for Multi-Source Stock Prediction"
+title: "An Evaluation Protocol and Benchmark for Multi-Source Stock Prediction"
+doi: "10.5281/zenodo.21431362"
 type: software
 authors:
   - family-names: Ltifi
@@ -59,4 +60,4 @@ references:
     year: 2025
     doi: "10.1145/3711896.3736872"
     notes: "KDD 2025. Upstream code: https://github.com/lakebodhi/CAMEF."
-version: 1.0.0-submission
+version: 1.0.1

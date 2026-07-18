@@ -88,9 +88,10 @@
 
 ## Distribution
 
-- GitHub (code + committed results + small public-domain inputs) and, on
-  acceptance, an archival DOI deposit (Zenodo) of the derived feature
-  tables. Code MIT; derived feature tables CC-BY-4.0; per-source terms in
+- GitHub (code + committed results + small public-domain inputs) and an
+  archival DOI deposit on Zenodo (concept DOI 10.5281/zenodo.21431362,
+  always resolving to the latest version) of the derived feature tables.
+  Code MIT; derived feature tables CC-BY-4.0; per-source terms in
   `DATA-STATEMENTS.md`.
 
 ## Maintenance

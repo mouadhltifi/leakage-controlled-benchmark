@@ -41,7 +41,7 @@ exactly these tables; `MANIFEST.sha256` fixes their hashes.
 
 | Layer | Ships? | Why / how to get it |
 |---|---|---|
-| Derived features (`data/processed/`) | **Yes — committed in-repo** (hashes in `MANIFEST.sha256`; DOI-archived on acceptance) | Feature-level, non-invertible derivations; the licensing-clean layer (DATA-STATEMENTS.md) |
+| Derived features (`data/processed/`) | **Yes — committed in-repo** (hashes in `MANIFEST.sha256`; DOI-archived on Zenodo) | Feature-level, non-invertible derivations; the licensing-clean layer (DATA-STATEMENTS.md) |
 | FRED macro (`data/raw/macro/`) | Yes, committed | US-government public domain |
 | Raw prices | No | `python scripts/data/fetch_prices.py` (yfinance, ticker list inside) |
 | Raw news text (FNSPID) | No — cannot be redistributed | Obtain from the upstream FNSPID release; see DATA-STATEMENTS.md §2 |
