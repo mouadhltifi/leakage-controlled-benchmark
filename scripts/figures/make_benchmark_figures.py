@@ -8,7 +8,13 @@ register):
                        one MSGCA training run, the released rule's running
                        maximum vs the validation-selected readout.
   fig-split.pdf      — the cost of relaxing C2 (chronological splits):
-                       CAMEF three-step audit, horizontal log bars.
+                       CAMEF three-step audit, horizontal log dot plot.
+  fig-forest.pdf     — the reference floor drawn: paired dMCC + fold-block
+                       bootstrap CIs per configuration (Table 3's rows).
+  fig-timeline.pdf   — coverage/fold timeline: five family lanes, warm-up,
+                       expanding folds with calendar-tail validation.
+  fig-sectorband.pdf — FF12-vs-GICS deltas against the pre-registered
+                       +/-0.005 equivalence band (Appendix B).
 
 Data: results/analysis/msgca_diagnostic_rerun_history.json (per-epoch
 histories, shipped) and the audited CAMEF constants (audits/camef/).
@@ -104,6 +110,167 @@ def fig_selection():
           f"val_selected={at_sel:.4f}@ep{sel} gap=+{best-at_sel:.4f} mean8=+{mean_gap:.4f}")
 
 
+
+
+FOREST = [  # tables/ref_direction_v2.tex, verbatim
+    ("P+N",     +0.0022, -0.0033, +0.0076, False, None),
+    ("P+M",     -0.0035, -0.0198, +0.0110, False, None),
+    ("P+S",     -0.0047, -0.0081, -0.0015, True,  "harm"),
+    ("P+G",     +0.0090, +0.0004, +0.0176, True,  "lean (§4.1)"),
+    ("P+N+M",   -0.0142, -0.0268, -0.0051, True,  "harm"),
+    ("P+M+S",   -0.0032, -0.0199, +0.0077, False, None),
+    ("P+M+G",   -0.0017, -0.0234, +0.0165, False, None),
+    ("P+N+M+S", -0.0054, -0.0154, +0.0021, False, None),
+]
+
+
+def fig_forest():
+    fig, ax = plt.subplots(figsize=(3.2, 1.95))
+    n = len(FOREST)
+    for i, (name, d, lo, hi, excl, flag) in enumerate(FOREST):
+        y = n - 1 - i
+        ax.plot([lo, hi], [y, y], color=SLATE, lw=1.1, zorder=3,
+                solid_capstyle="butt")
+        for x in (lo, hi):
+            ax.plot([x, x], [y - 0.16, y + 0.16], color=SLATE, lw=1.1,
+                    zorder=3)
+        ax.plot([d], [y], marker="o", ms=4.6, mfc=SLATE if excl else "white",
+                mec=SLATE, mew=1.0, zorder=4)
+        if flag:
+            if hi < 0:
+                ax.text(lo - 0.0012, y, flag, fontsize=6.0, color=INK,
+                        va="center", ha="right")
+            else:
+                ax.text(hi + 0.0012, y, flag, fontsize=6.0, color=INK,
+                        va="center", ha="left")
+    ax.axvline(0, color=INK, lw=0.8, zorder=2)
+    ax.set_yticks(range(n))
+    ax.set_yticklabels([r[0] for r in reversed(FOREST)], fontsize=6.6)
+    ax.set_xlabel("paired ΔMCC vs. the tuned price-only baseline",
+                  fontsize=7.0)
+    ax.set_xlim(-0.030, 0.024)
+    ax.set_ylim(-1.6, n - 0.4)
+    ax.text(-0.029, -1.25,
+            "no configuration clears the corrected bar "
+            "(all $p_{\\mathrm{bonf}} \\geq 0.57$)",
+            fontsize=6.2, color=INK, style="italic", va="center")
+    ax.grid(axis="x", color=GRID, lw=0.4, zorder=0)
+    ax.tick_params(axis="y", length=0)
+    despine(ax, keep=("bottom",))
+    fig.tight_layout(pad=0.3)
+    fig.savefig(OUT / "fig-forest.pdf", bbox_inches="tight")
+    plt.close(fig)
+    print("LEDGER fig-forest: 8 rows; zero-excluding = P+S, P+G, P+N+M")
+
+
+TRAIN0 = 2016.01     # 2016-01-04 feature start
+FOLDS = [  # (test_start, test_end, regime)  July-June windows
+    (2019.50, 2020.50, "COVID crash"),
+    (2020.50, 2021.50, "recovery"),
+    (2021.50, 2022.50, "bull-to-bear"),
+    (2022.50, 2023.50, "2022 bear"),
+    (2023.50, 2024.00, "2023 rally"),
+]
+LANES = [  # (name, start, end, note)
+    ("Price",  2015.00, 2024.00, None),
+    ("News",   2015.00, 2023.96, "53/55 names"),
+    ("Social", 2015.00, 2022.99, "ends 2022-12-30"),
+    ("Macro",  2015.00, 2024.00, None),
+    ("Graph",  2015.00, 2024.00, None),
+]
+TRAIN_C, VAL_C = "#dbe4ea", "#9fb4c0"
+
+
+def fig_timeline():
+    fig, ax = plt.subplots(figsize=(3.2, 2.05))
+    yl = 12.6                       # family lanes occupy y 9.0..12.6
+    for i, (name, s, e, note) in enumerate(LANES):
+        y = yl - 0.9 * i
+        ax.barh(y, e - s, left=s, height=0.52, color=SLATE, zorder=3)
+        if e < 2024.0:              # explicit gap, neutral hatch
+            ax.barh(y, 2024.0 - e, left=e, height=0.52, fc="white",
+                    ec=GREY, lw=0.5, hatch="////", zorder=2)
+        ax.text(2014.86, y, name, fontsize=6.0, ha="right", va="center",
+                color=INK)
+        if note:
+            ax.text(e - 0.12, y, note, fontsize=5.2, ha="right",
+                    va="center", color="white", zorder=4)
+    # warm-up band (prices from 2015-01-02 warm the trailing indicators)
+    ax.axvspan(2015.0, TRAIN0, ymin=0.0, ymax=1.0, fc=GRID, alpha=0.45,
+               zorder=1)
+    ax.text(2015.5, 13.75, "warm-up", fontsize=5.6, color=GREY, ha="center",
+            va="center")
+    # fold ribbons: expanding train, calendar-tail val (last 20%), test
+    for i, (ts, te, regime) in enumerate(FOLDS):
+        y = 6.5 - 0.9 * i
+        v0 = ts - 0.2 * (ts - TRAIN0)
+        ax.barh(y, v0 - TRAIN0, left=TRAIN0, height=0.52, color=TRAIN_C,
+                zorder=3)
+        ax.barh(y, ts - v0, left=v0, height=0.52, color=VAL_C, zorder=3)
+        ax.barh(y, te - ts, left=ts, height=0.52, color=SLATE, zorder=3)
+        ax.text(2014.86, y, f"F{i}", fontsize=6.0, ha="right", va="center",
+                color=INK)
+        ax.text(te + 0.12, y, regime, fontsize=5.2, ha="left", va="center",
+                color=GREY)
+    ax.set_xlim(2013.7, 2026.4)
+    ax.set_ylim(1.6, 14.6)
+    ax.set_xticks([2015, 2017, 2019, 2021, 2023])
+    ax.set_xticklabels(["2015", "2017", "2019", "2021", "2023"],
+                       fontsize=6.4)
+    ax.set_yticks([])
+    # inline swatch legend between the two blocks
+    ly = 7.85
+    for x0, c, lab in ((2016.01, TRAIN_C, "train (expanding)"),
+                       (2019.7, VAL_C, "validation (calendar tail)"),
+                       (2024.2, SLATE, "test")):
+        ax.barh(ly, 0.32, left=x0, height=0.42, color=c, zorder=3)
+        ax.text(x0 + 0.48, ly, lab, fontsize=5.2, color=GREY, ha="left",
+                va="center")
+    despine(ax, keep=("bottom",))
+    fig.tight_layout(pad=0.3)
+    fig.savefig(OUT / "fig-timeline.pdf", bbox_inches="tight")
+    plt.close(fig)
+    print("LEDGER fig-timeline: 5 lanes, 5 folds, warm-up 2015->2016-01")
+
+
+SECTOR = [  # tables/appendix_sector.tex: config, arch, delta(FF12-GICS)
+    ("P+G · FF",     +0.0102),
+    ("P+G · LSTM",   +0.0051),
+    ("P+M+G · FF",   +0.0015),
+    ("P+M+G · LSTM", -0.0033),
+]
+
+
+def fig_sectorband():
+    fig, ax = plt.subplots(figsize=(3.2, 1.25))
+    ax.axvspan(-0.005, 0.005, fc=SLATE, alpha=0.10, zorder=1)
+    ax.axvline(0, color=INK, lw=0.8, zorder=2)
+    n = len(SECTOR)
+    for i, (name, d) in enumerate(SECTOR):
+        y = n - 1 - i
+        ax.plot([d], [y], marker="o", ms=5.5, color=SLATE, zorder=4)
+        ax.axhline(y, color=GRID, lw=0.5, zorder=0)
+    ax.annotate("outside the pre-registered band:\nequivalence FAILED",
+                xy=(0.0102, 3), xytext=(0.0125, 1.55), fontsize=6.0,
+                color=INK, ha="left", va="center", linespacing=1.25,
+                arrowprops=dict(arrowstyle="-", color=SLATE, lw=0.6))
+    ax.text(0.0048, 3.62, "±0.005 band", fontsize=5.6, color=GREY,
+            ha="right", va="bottom")
+    ax.set_yticks(range(n))
+    ax.set_yticklabels([r[0] for r in reversed(SECTOR)], fontsize=6.6)
+    ax.set_xlabel("ΔMCC, released FF12 graph − proprietary GICS",
+                  fontsize=7.0)
+    ax.set_xlim(-0.0075, 0.0215)
+    ax.set_ylim(-0.6, 4.3)
+    ax.grid(axis="x", color=GRID, lw=0.4, zorder=0)
+    ax.tick_params(axis="y", length=0)
+    despine(ax, keep=("bottom",))
+    fig.tight_layout(pad=0.3)
+    fig.savefig(OUT / "fig-sectorband.pdf", bbox_inches="tight")
+    plt.close(fig)
+    print("LEDGER fig-sectorband: 4 rows; P+G FF +0.0102 outside +/-0.005")
+
+
 def fig_split():
     fig, ax = plt.subplots(figsize=(3.2, 1.35))
     labels = ["checkpoint,\nauthors' own eval",
@@ -158,3 +325,6 @@ def fig_split():
 if __name__ == "__main__":
     fig_selection()
     fig_split()
+    fig_forest()
+    fig_timeline()
+    fig_sectorband()
