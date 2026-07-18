@@ -27,6 +27,7 @@ from pathlib import Path
 import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
+from matplotlib.patches import FancyArrowPatch
 import numpy as np
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -274,43 +275,44 @@ def fig_sectorband():
 
 
 def fig_split():
-    fig, ax = plt.subplots(figsize=(3.2, 1.35))
-    labels = ["checkpoint,\nauthors' own eval",
-              "retrain,\nshipped split",
-              "retrain,\nchronological split"]
-    vals = [CAMEF["checkpoint"], CAMEF["retrain_random"], CAMEF["retrain_chrono"]]
-    colors = [SLATE, ORANGE, SLATE]
+    # Option A (R15, author-approved): taller than the old 1.35in so labels
+    # breathe; each value carries a one-word verdict; the collapse (orange)
+    # and the clean elbow show "same recipe, only the split changed".
+    # Dot plot, not bars: bar length is meaningless on a log axis (no zero
+    # baseline); position carries the value.
+    fig, ax = plt.subplots(figsize=(3.3, 1.9))
+    rows = [("checkpoint,\nauthors' own eval", CAMEF["checkpoint"], SLATE,
+             "0.000431 — reproduces"),
+            ("retrain,\nshipped split", CAMEF["retrain_random"], SLATE,
+             "0.0025 — matches"),
+            ("retrain,\nchronological split", CAMEF["retrain_chrono"], ORANGE,
+             "≈15 — collapses")]
     y = [2, 1, 0]
-    # dot plot, not bars: bar length is meaningless on a log axis (no zero
-    # baseline); position carries the value. Labels stay short and inside
-    # the axes so the tight bbox equals the axes and the figure fills the
-    # column at true size; the editorial reading lives in the caption.
-    for yi, v, c in zip(y, vals, colors):
-        ax.plot([v], [yi], marker="o", ms=6.5, color=c, zorder=3)
+    for yi, (lab, v, c, txt) in zip(y, rows):
         ax.axhline(yi, color=GRID, lw=0.5, zorder=1)
-    # the price, drawn: same recipe, only the split changes
-    ax.annotate("", xy=(CAMEF["retrain_chrono"], 0.0),
-                xytext=(CAMEF["retrain_random"], 1.0),
-                arrowprops=dict(arrowstyle="-|>", mutation_scale=8,
-                                color=ORANGE, lw=1.0,
-                                connectionstyle="angle,angleA=0,angleB=90,rad=4"),
-                zorder=2)
-    ax.text(0.32, 0.62, "same recipe,\nsplit made chronological",
-            fontsize=5.8, color=ORANGE, ha="center", va="center",
-            linespacing=1.25, zorder=4)
+        ax.plot([v], [yi], marker="o", ms=6.5, color=c, zorder=4)
+        ax.text(v * 1.9, yi + 0.22, txt, va="bottom", ha="left",
+                fontsize=6.6, color=INK, zorder=5)
+    # reported reference: subtle line + label RIGHT-ALIGNED just left of the
+    # line so the line never cuts through the text
+    ax.axvline(CAMEF["reported"], color=GREY, ls=(0, (4, 3)), lw=0.9, zorder=2)
+    ax.text(CAMEF["reported"] * 0.82, 2.5, "reported\n0.000489", fontsize=5.6,
+            color=GREY, ha="right", va="center", linespacing=1.15, zorder=3)
+    # the price, drawn: one clean elbow from the shipped dot down to the
+    # chronological dot (same recipe, only the split changed)
+    arr = FancyArrowPatch((CAMEF["retrain_random"], 0.82),
+                          (CAMEF["retrain_chrono"], 0.18),
+                          connectionstyle="angle,angleA=-90,angleB=180,rad=6",
+                          arrowstyle="-|>", mutation_scale=8, color=ORANGE,
+                          lw=1.0, zorder=3)
+    ax.add_patch(arr)
+    ax.text(0.09, 0.5, "same recipe,\nsplit made chronological", fontsize=5.8,
+            color=ORANGE, ha="center", va="center", linespacing=1.2, zorder=5)
     ax.set_xscale("log")
     ax.set_xticks([1e-3, 1e-2, 1e-1, 1e0, 1e1, 1e2])
-    ax.axvline(CAMEF["reported"], color=GREY, ls=(0, (4, 3)), lw=0.9, zorder=2)
-    ax.text(CAMEF["reported"] * 1.35, 2.58, "reported 0.000489", fontsize=6.4,
-            color=INK, ha="left")
-    for yi, v, t, ha in zip(y, vals,
-                            ["0.000431 — reproduces", "0.0025", "≈15"],
-                            ["left", "left", "left"]):
-        xt = v * 1.9
-        ax.text(xt, yi, t, va="center", ha=ha, fontsize=6.8, color=INK)
-    ax.set_ylim(-0.5, 2.9)
+    ax.set_ylim(-0.55, 3.1)
     ax.set_yticks(y)
-    ax.set_yticklabels(labels, fontsize=6.6)
+    ax.set_yticklabels([r[0] for r in rows], fontsize=6.6)
     ax.set_xlabel("test MSE (log scale)", fontsize=7.2)
     ax.set_xlim(1.2e-4, 3e2)
     ax.grid(axis="x", color=GRID, lw=0.4, zorder=0)
