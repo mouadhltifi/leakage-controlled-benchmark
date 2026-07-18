@@ -1,19 +1,21 @@
 #!/usr/bin/env python3
 """The paper's overview figure (Figure 1) — the instrument, drawn.
 
-Schematic, no data. Built from an explicit design spec (v16 rebuild):
+Schematic, no data. Built from an explicit design spec (v16 rebuild;
+v26 removes the priced-violation strip — its content lives in §4 /
+Table 5 / Figs. 3-4, and an overview does one job):
   grid    x: margin 1.5 | tiles 1.5-17.0 | gutter 17-21.5 (family arrows)
           | harness 21.5-54.5 | gutter 54.5-67.5 (the claim) | ladder
-          67.5-98.5 | margin 1.5.  y: strip 0.2-3.6 | gap | content band
-          5.2-30.6 shared by ALL columns (tops and bottoms aligned) |
-          headers 32.6 / 34.6.
-  type    4 sizes: 6.8 band title / 6.2 labels+headers / 5.6 body /
-          5.2 fine print. Bold marks identity, never body text.
+          67.5-98.5 | margin 1.5.  y: content band 5.2-30.6 shared by
+          ALL columns (tops and bottoms aligned) | headers 32.6 / 34.6.
+  type    4 sizes: 7.4 band title / 6.6 labels+headers / 6.0 body /
+          5.4 fine print. Bold marks identity, never body text.
   weight  borders 0.7 (emphasis 1.0, chips 0.55); arrows 0.6/0.9/1.3.
   radius  0.8 outer boxes, 0.45 inner chips/badges.
-  color   slate = machinery, orange = violation price only, grey = fine
-          print, white-on-slate = the two brackets (band title,
-          established chip).
+  color   slate = machinery (all-slate since v26: orange is reserved
+          for violations and none are depicted), grey = fine print,
+          white-on-slate = the two brackets (band title, established
+          chip).
 
 Set OVERVIEW_VARIANT=B for the ladder-in-panel candidate.
 """
@@ -52,7 +54,6 @@ X_TIL0, X_TIL1 = 1.5, 17.0
 X_HAR0, X_HAR1 = 21.5, 54.5
 X_LAD0, X_LAD1 = 67.5, 98.5
 Y_BAND0, Y_BAND1 = 5.2, 30.6
-Y_STRIP0, Y_STRIP1 = 0.2, 3.6
 
 
 def box(ax, x, y, w, h, fc, ec, lw=W_BOX, r=R_OUT, z=2):
@@ -72,7 +73,7 @@ def main():
     variant = os.environ.get("OVERVIEW_VARIANT", "A").upper()
     fig, ax = plt.subplots(figsize=(7.05, 3.02))
     ax.set_xlim(0, 100)
-    ax.set_ylim(0, 37.2)
+    ax.set_ylim(4.4, 37.2)   # v26: band bottom is the canvas bottom (strip removed)
     ax.axis("off")
 
     # ---- column headers (each centered over its column) -------------------
@@ -196,56 +197,6 @@ def main():
     ax.text(gx, y_claim + 3.6, "paired per-fold Δ\nvs the tuned floor",
             fontsize=F_FINE, ha="center", va="center", color=GREY,
             linespacing=1.35)
-
-    # ---- priced-violation strip: measured, then justified ------------------
-    box(ax, X_TIL0, Y_STRIP0, X_LAD1 - X_TIL0, Y_STRIP1 - Y_STRIP0,
-        ORANGE_FILL, ORANGE, lw=W_BOX, r=R_IN)
-    y_mid = (Y_STRIP0 + Y_STRIP1) / 2
-    items = [
-        ("RELAXING A CONTROL, PRICED", ORANGE, "bold", 5.8, False, None),
-        ("+0.04–0.07 MCC within a run", INK, "normal", 5.3, True, "C3"),
-        ("test MSE 0.0025 → ≈15", INK, "normal", 5.3, True, "C2"),
-        ("a spurious +0.014 gain", INK, "normal", 5.3, True, "C1"),
-    ]
-    fig.canvas.draw()
-    rend = fig.canvas.get_renderer()
-    inv = ax.transData.inverted()
-
-    def width(s, fs, w):
-        t = ax.text(0, -5, s, fontsize=fs, fontweight=w)
-        bb = t.get_window_extent(renderer=rend)
-        (x0d, _), (x1d, _) = inv.transform([[bb.x0, 0], [bb.x1, 0]])
-        t.remove()
-        return x1d - x0d
-
-    pad = 0.9
-    bw = 3.0                                # mini C-badge width
-    widths = [width(s, fs, w) for s, _, w, fs, _, _ in items]
-    chip_extra = [(2 * pad + bw + 0.6) if chip else 0 for *_, chip, _ in items]
-    x_start = X_TIL0 + 1.7
-    x_end = X_LAD1 - 1.7
-    total = sum(widths) + sum(chip_extra)
-    slack = x_end - x_start - total
-    gw = [1.7, 0.65, 0.65]                 # label|chip, chip|chip, chip|chip
-    gaps = [slack * g / sum(gw) for g in gw]
-    x = x_start
-    for j, ((s, c, w, fs, chip, cid), wd) in enumerate(zip(items, widths)):
-        if chip:
-            cw_ = wd + 2 * pad + bw + 0.6
-            box(ax, x, y_mid - 1.25, cw_, 2.5, "white", ORANGE,
-                lw=W_CHIP, r=R_IN, z=3)
-            box(ax, x + 0.55, y_mid - 0.95, bw, 1.9, SLATE, SLATE,
-                lw=W_CHIP, r=R_IN, z=4)
-            ax.text(x + 0.55 + bw / 2, y_mid - 0.09, cid, fontsize=5.2,
-                    ha="center", va="center", color="white",
-                    fontweight="bold", zorder=5)
-            ax.text(x + 0.55 + bw + 0.6, y_mid, s, fontsize=fs, color=c,
-                    va="center", fontweight=w, zorder=4)
-            x += cw_ + (gaps[j] if j < len(gaps) else 0)
-        else:
-            ax.text(x, y_mid, s, fontsize=fs, color=c, va="center",
-                    fontweight=w, zorder=4)
-            x += wd + (gaps[j] if j < len(gaps) else 0)
 
     suffix = "" if variant == "A" else "-B"
     fig.savefig(OUT / f"fig-overview{suffix}.pdf", bbox_inches="tight",

@@ -83,8 +83,8 @@ def fig_selection():
     ax.axhline(at_sel, color=SLATE, lw=1.4, zorder=3)
     ax.plot([best_ep], [best], marker="o", ms=4.5, color=ORANGE, zorder=6)
     ax.plot([sel], [at_sel], marker="o", ms=4.5, color=SLATE, zorder=6)
-    ax.text(246, 0.030, "per-epoch test MCC", fontsize=6.0, color=GREY,
-            ha="right", zorder=5)
+    ax.text(8, 0.022, "per-epoch\ntest MCC", fontsize=6.0, color=GREY,
+            ha="left", va="bottom", linespacing=1.35, zorder=5)
     ax.axhline(0, color=GREY, lw=0.6, ls=(0, (3, 3)), zorder=1)
     ax.annotate(f"C3 relaxed: report max over epochs → {best:.3f}",
                 xy=(best_ep, best), xytext=(52, 0.135), fontsize=6.8,
@@ -112,22 +112,24 @@ def fig_selection():
 
 
 
-FOREST = [  # tables/ref_direction_v2.tex, verbatim
-    ("P+N",     +0.0022, -0.0033, +0.0076, False, None),
-    ("P+M",     -0.0035, -0.0198, +0.0110, False, None),
-    ("P+S",     -0.0047, -0.0081, -0.0015, True,  "harm"),
-    ("P+G",     +0.0090, +0.0004, +0.0176, True,  "lean (§4.1)"),
-    ("P+N+M",   -0.0142, -0.0268, -0.0051, True,  "harm"),
-    ("P+M+S",   -0.0032, -0.0199, +0.0077, False, None),
-    ("P+M+G",   -0.0017, -0.0234, +0.0165, False, None),
-    ("P+N+M+S", -0.0054, -0.0154, +0.0021, False, None),
+FOREST = [  # tables/ref_direction_v2.tex, verbatim; last field = flag side
+    ("P+N",     +0.0022, -0.0033, +0.0076, False, None, None),
+    ("P+M",     -0.0035, -0.0198, +0.0110, False, None, None),
+    ("P+S",     -0.0047, -0.0081, -0.0015, True,  "harm", "left"),
+    ("P+G",     +0.0090, +0.0004, +0.0176, True,  "lean (§4.1)", "right"),
+    # P+N+M's low whisker sits at the axis edge: flag goes right of the
+    # high whisker or it collides with the row label in the tick gutter
+    ("P+N+M",   -0.0142, -0.0268, -0.0051, True,  "harm", "right"),
+    ("P+M+S",   -0.0032, -0.0199, +0.0077, False, None, None),
+    ("P+M+G",   -0.0017, -0.0234, +0.0165, False, None, None),
+    ("P+N+M+S", -0.0054, -0.0154, +0.0021, False, None, None),
 ]
 
 
 def fig_forest():
     fig, ax = plt.subplots(figsize=(3.2, 1.95))
     n = len(FOREST)
-    for i, (name, d, lo, hi, excl, flag) in enumerate(FOREST):
+    for i, (name, d, lo, hi, excl, flag, side) in enumerate(FOREST):
         y = n - 1 - i
         ax.plot([lo, hi], [y, y], color=SLATE, lw=1.1, zorder=3,
                 solid_capstyle="butt")
@@ -137,7 +139,7 @@ def fig_forest():
         ax.plot([d], [y], marker="o", ms=4.6, mfc=SLATE if excl else "white",
                 mec=SLATE, mew=1.0, zorder=4)
         if flag:
-            if hi < 0:
+            if side == "left":
                 ax.text(lo - 0.0012, y, flag, fontsize=6.0, color=INK,
                         va="center", ha="right")
             else:
