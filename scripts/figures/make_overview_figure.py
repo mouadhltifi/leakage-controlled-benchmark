@@ -38,7 +38,7 @@ ORANGE = "#c2571a"
 ORANGE_FILL = "#fdf3ec"
 GREY = "#8a8a8a"
 
-F_BAND, F_LABEL, F_BODY, F_FINE = 6.8, 6.2, 5.6, 5.2
+F_BAND, F_LABEL, F_BODY, F_FINE = 7.4, 6.6, 6.0, 5.4
 W_CHIP, W_BOX, W_EMPH = 0.55, 0.7, 1.0
 R_OUT, R_IN = 0.8, 0.45
 
@@ -70,7 +70,7 @@ def arrow(ax, x0, y0, x1, y1, color=SLATE, lw=0.9, z=3, ms=7):
 
 def main():
     variant = os.environ.get("OVERVIEW_VARIANT", "A").upper()
-    fig, ax = plt.subplots(figsize=(7.05, 2.62))
+    fig, ax = plt.subplots(figsize=(7.05, 3.02))
     ax.set_xlim(0, 100)
     ax.set_ylim(0, 37.2)
     ax.axis("off")
@@ -122,7 +122,7 @@ def main():
     inset = 1.1
     ax.text(X_HAR0 + inset, Y_BAND1 - band_h - 1.15,
             "55 names · 5 chronological folds · 2015–2023",
-            fontsize=F_FINE, ha="left", va="center", color=GREY, zorder=3)
+            fontsize=5.2, ha="left", va="center", color=GREY, zorder=3)
 
     controls = [
         ("C1", "tuned price-only reference floor"),
@@ -156,7 +156,7 @@ def main():
     rows = [
         ("Level 1 · reported", "numbers in a paper", None),
         ("Level 2 · auditable", "code, config, seeds released", None),
-        ("Level 3 · audited", "independent re-run + conformance read",
+        ("Level 3 · audited", "independent re-run\n+ conformance read",
          "→ established"),
     ]
     r_gap = 3.1
@@ -173,11 +173,11 @@ def main():
         ax.text(lad_x0 + 1.6, ybot + 1.8, sub, fontsize=F_BODY,
                 va="center", color=INK, zorder=4)
         if tag:
-            cw, chh = 12.4, 2.4
+            cw, chh = 11.8, 2.5
             cx = lad_x1 - 1.6 - cw
-            cy = ybot + r_h - 1.8 - chh / 2
+            cy = ybot + 1.15
             box(ax, cx, cy, cw, chh, SLATE, SLATE, lw=W_CHIP, r=R_IN, z=4)
-            ax.text(cx + cw / 2, ybot + r_h - 1.8, tag, fontsize=F_BODY,
+            ax.text(cx + cw / 2, cy + chh / 2 - 0.05, tag, fontsize=5.8,
                     va="center", ha="center", color="white",
                     fontweight="bold", zorder=5)
     xc = (lad_x0 + lad_x1) / 2
@@ -189,7 +189,7 @@ def main():
     y_claim = row_y[0] + r_h / 2
     arrow(ax, X_HAR1 + 0.2, y_claim, X_LAD0 - 0.2, y_claim, lw=1.6, ms=9)
     gx = (X_HAR1 + X_LAD0) / 2
-    box(ax, gx - 4.4, y_claim - 1.35, 8.8, 2.7, "white", SLATE, lw=W_EMPH,
+    box(ax, gx - 4.8, y_claim - 1.45, 9.6, 2.9, "white", SLATE, lw=W_EMPH,
         r=R_IN, z=4)
     ax.text(gx, y_claim - 0.11, "the claim", fontsize=F_LABEL, ha="center",
             va="center", color=INK, fontweight="bold", zorder=5)
@@ -202,10 +202,10 @@ def main():
         ORANGE_FILL, ORANGE, lw=W_BOX, r=R_IN)
     y_mid = (Y_STRIP0 + Y_STRIP1) / 2
     items = [
-        ("RELAXING A CONTROL, PRICED", ORANGE, "bold", F_BODY, False, None),
-        ("+0.04–0.07 MCC within a run", INK, "normal", 5.2, True, "C3"),
-        ("test MSE 0.0025 → ≈15", INK, "normal", 5.2, True, "C2"),
-        ("a spurious +0.014 gain", INK, "normal", 5.2, True, "C1"),
+        ("RELAXING A CONTROL, PRICED", ORANGE, "bold", 5.8, False, None),
+        ("+0.04–0.07 MCC within a run", INK, "normal", 5.3, True, "C3"),
+        ("test MSE 0.0025 → ≈15", INK, "normal", 5.3, True, "C2"),
+        ("a spurious +0.014 gain", INK, "normal", 5.3, True, "C1"),
     ]
     fig.canvas.draw()
     rend = fig.canvas.get_renderer()
