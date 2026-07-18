@@ -1,16 +1,25 @@
 #!/usr/bin/env python3
 """The paper's overview figure (Figure 1) — the instrument, drawn.
 
-Schematic, no data: five availability-timed source families enter the
-protocol-locked harness whose five controls (C1-C5) gate the evaluation
-path end to end; the harness emits the claim (paired delta vs the tuned
-price-only floor, fold-level corrected intervals), which lands at audit
-Level 1 and climbs the graduated standard to "established". The orange
-strip prices the demonstrated violations of Section 4 - same visual
-voice as fig-selection/fig-split (slate machinery, orange violation).
+Schematic, no data. Built from an explicit design spec (v16 rebuild):
+  grid    x: margin 1.5 | tiles 1.5-17.0 | gutter 17-21.5 (family arrows)
+          | harness 21.5-54.5 | gutter 54.5-67.5 (the claim) | ladder
+          67.5-98.5 | margin 1.5.  y: strip 0.2-3.6 | gap | content band
+          5.2-30.6 shared by ALL columns (tops and bottoms aligned) |
+          headers 32.6 / 34.6.
+  type    4 sizes: 6.8 band title / 6.2 labels+headers / 5.6 body /
+          5.2 fine print. Bold marks identity, never body text.
+  weight  borders 0.7 (emphasis 1.0, chips 0.55); arrows 0.6/0.9/1.3.
+  radius  0.8 outer boxes, 0.45 inner chips/badges.
+  color   slate = machinery, orange = violation price only, grey = fine
+          print, white-on-slate = the two brackets (band title,
+          established chip).
+
+Set OVERVIEW_VARIANT=B for the ladder-in-panel candidate.
 """
 from __future__ import annotations
 
+import os
 from pathlib import Path
 
 import matplotlib
@@ -29,44 +38,56 @@ ORANGE = "#c2571a"
 ORANGE_FILL = "#fdf3ec"
 GREY = "#8a8a8a"
 
+F_BAND, F_LABEL, F_BODY, F_FINE = 6.8, 6.2, 5.6, 5.2
+W_CHIP, W_BOX, W_EMPH = 0.55, 0.7, 1.0
+R_OUT, R_IN = 0.8, 0.45
+
 plt.rcParams.update({
-    "font.size": 7.0, "text.color": INK, "font.family": "sans-serif",
+    "font.size": F_BODY, "text.color": INK, "font.family": "sans-serif",
     "pdf.fonttype": 42, "ps.fonttype": 42,
 })
 
+# grid
+X_TIL0, X_TIL1 = 1.5, 17.0
+X_HAR0, X_HAR1 = 21.5, 54.5
+X_LAD0, X_LAD1 = 67.5, 98.5
+Y_BAND0, Y_BAND1 = 5.2, 30.6
+Y_STRIP0, Y_STRIP1 = 0.2, 3.6
 
-def box(ax, x, y, w, h, fc, ec, lw=0.7, r=0.8, z=2):
+
+def box(ax, x, y, w, h, fc, ec, lw=W_BOX, r=R_OUT, z=2):
     b = FancyBboxPatch((x, y), w, h, boxstyle=f"round,pad=0,rounding_size={r}",
                        fc=fc, ec=ec, lw=lw, zorder=z)
     ax.add_patch(b)
     return b
 
 
-def arrow(ax, x0, y0, x1, y1, color=SLATE, lw=1.0, z=3, ms=7):
+def arrow(ax, x0, y0, x1, y1, color=SLATE, lw=0.9, z=3, ms=7):
     a = FancyArrowPatch((x0, y0), (x1, y1), arrowstyle="-|>", mutation_scale=ms,
                         color=color, lw=lw, zorder=z, shrinkA=0, shrinkB=0)
     ax.add_patch(a)
 
 
 def main():
-    fig, ax = plt.subplots(figsize=(7.05, 2.52))
+    variant = os.environ.get("OVERVIEW_VARIANT", "A").upper()
+    fig, ax = plt.subplots(figsize=(7.05, 2.62))
     ax.set_xlim(0, 100)
-    ax.set_ylim(0, 36)
+    ax.set_ylim(0, 37.2)
     ax.axis("off")
 
-    # ---- column headers -------------------------------------------------
+    # ---- column headers (each centered over its column) -------------------
     heads = [
-        (8.5, "FIVE SOURCE FAMILIES", "availability-timed features"),
-        (38.0, "EVALUATION PROTOCOL, FIXED IN CODE", "five controls, enforced jointly"),
-        (83.3, "GRADUATED AUDIT STANDARD", "what it takes for a gain to count"),
+        (X_TIL0, "SOURCE FAMILIES", "availability-timed features"),
+        (X_HAR0, "EVALUATION PROTOCOL", "five controls, enforced jointly, fixed in code"),
+        (X_LAD0, "GRADUATED AUDIT STANDARD", "what it takes for a gain to count"),
     ]
     for x, t, s in heads:
-        ax.text(x, 34.7, t, fontsize=6.3, color=SLATE, ha="center",
+        ax.text(x, 34.6, t, fontsize=F_LABEL, color=SLATE, ha="left",
                 va="center", fontweight="bold")
-        ax.text(x, 33.0, s, fontsize=5.8, color=GREY, ha="center",
+        ax.text(x, 32.6, s, fontsize=F_FINE, color=GREY, ha="left",
                 va="center", style="italic")
 
-    # ---- source family tiles --------------------------------------------
+    # ---- source family tiles (fill the band exactly) ----------------------
     fams = [
         ("Price", "10 indicators"),
         ("News", "day-level sentiment"),
@@ -74,25 +95,35 @@ def main():
         ("Macro", "6 series"),
         ("Graph", "sector + correlation"),
     ]
-    tile_h, gap = 4.04, 1.2
+    n = len(fams)
+    t_gap = 1.2
+    t_h = (Y_BAND1 - Y_BAND0 - (n - 1) * t_gap) / n
     for i, (name, sub) in enumerate(fams):
-        y = 29.6 - tile_h - i * (tile_h + gap)
-        box(ax, 1.5, y, 15.2, tile_h, "white", SLATE, lw=0.6, r=0.5)
-        ax.text(2.9, y + tile_h / 2 + 0.85, name, fontsize=6.3, va="center",
-                fontweight="bold", color=INK)
-        ax.text(2.9, y + tile_h / 2 - 1.05, sub, fontsize=5.3, va="center",
-                color=GREY)
-        arrow(ax, 16.9, y + tile_h / 2, 21.6, y + tile_h / 2, lw=0.6, ms=5)
+        y = Y_BAND1 - t_h - i * (t_h + t_gap)
+        box(ax, X_TIL0, y, X_TIL1 - X_TIL0, t_h, "white", SLATE, lw=W_BOX, r=R_IN)
+        ax.text(X_TIL0 + 1.4, y + t_h / 2 + 0.85, name, fontsize=F_LABEL,
+                va="center", fontweight="bold", color=INK)
+        ax.text(X_TIL0 + 1.4, y + t_h / 2 - 1.05, sub, fontsize=F_FINE,
+                va="center", color=GREY)
+        arrow(ax, X_TIL1 + 0.2, y + t_h / 2, X_HAR0 - 0.2, y + t_h / 2,
+              lw=0.6, ms=5)
 
-    # ---- harness box with control gates ---------------------------------
-    box(ax, 22.0, 4.6, 32.2, 25.0, SLATE_FILL, SLATE, lw=0.9, r=1.0)
-    box(ax, 22.0, 26.2, 32.2, 3.4, SLATE, SLATE, lw=0.9, r=1.0)
-    ax.add_patch(plt.Rectangle((22.0, 26.2), 32.2, 1.4, fc=SLATE, ec=SLATE,
-                               lw=0, zorder=2))
-    ax.text(38.0, 28.1, "PROTOCOL-LOCKED HARNESS", fontsize=6.6, ha="center",
-            va="center", color="white", fontweight="bold")
-    ax.text(38.0, 25.3, "55 names · 5 chronological folds · 2015–2023",
-            fontsize=5.2, ha="center", va="center", color=GREY)
+    # ---- harness: emphasis container with slate header band ---------------
+    box(ax, X_HAR0, Y_BAND0, X_HAR1 - X_HAR0, Y_BAND1 - Y_BAND0,
+        SLATE_FILL, SLATE, lw=W_EMPH, r=R_OUT)
+    band_h = 3.4
+    box(ax, X_HAR0, Y_BAND1 - band_h, X_HAR1 - X_HAR0, band_h, SLATE, SLATE,
+        lw=W_EMPH, r=R_OUT)
+    ax.add_patch(plt.Rectangle((X_HAR0, Y_BAND1 - band_h), X_HAR1 - X_HAR0,
+                               band_h / 2, fc=SLATE, ec=SLATE, lw=0, zorder=2))
+    ax.text((X_HAR0 + X_HAR1) / 2 - 0.11, Y_BAND1 - band_h / 2 - 0.13, "PROTOCOL-LOCKED HARNESS",
+            fontsize=F_BAND, ha="center", va="center", color="white",
+            fontweight="bold", zorder=3)
+    inset = 1.1
+    ax.text(X_HAR0 + inset, Y_BAND1 - band_h - 1.15,
+            "55 names · 5 chronological folds · 2015–2023",
+            fontsize=F_FINE, ha="left", va="center", color=GREY, zorder=3)
+
     controls = [
         ("C1", "tuned price-only reference floor"),
         ("C2", "availability-timed chronology"),
@@ -100,75 +131,126 @@ def main():
         ("C4", "fold-level corrected statistics"),
         ("C5", "liquid-universe scope"),
     ]
-    ch, cgap = 3.35, 0.72
+    c_top = Y_BAND1 - band_h - 2.3
+    c_bot = Y_BAND0 + 0.9
+    c_gap = 0.8
+    c_h = (c_top - c_bot - (n - 1) * c_gap) / n
     for i, (cid, txt) in enumerate(controls):
-        y = 24.6 - ch - i * (ch + cgap)
-        box(ax, 23.2, y, 29.6, ch, "white", SLATE, lw=0.6, r=0.5)
-        box(ax, 23.8, y + 0.45, 3.2, ch - 0.9, SLATE, SLATE, lw=0.5, r=0.4, z=3)
-        ax.text(25.4, y + ch / 2, cid, fontsize=6.0, va="center", ha="center",
-                color="white", fontweight="bold", zorder=4)
-        ax.text(28.0, y + ch / 2, txt, fontsize=5.6, va="center", color=INK)
+        y = c_top - c_h - i * (c_h + c_gap)
+        box(ax, X_HAR0 + inset, y, (X_HAR1 - X_HAR0) - 2 * inset, c_h,
+            "white", SLATE, lw=W_CHIP, r=R_IN, z=3)
+        box(ax, X_HAR0 + inset + 0.55, y + 0.45, 3.1, c_h - 0.9, SLATE, SLATE,
+            lw=W_CHIP, r=R_IN, z=4)
+        ax.text(X_HAR0 + inset + 2.1, y + c_h / 2 - 0.11, cid, fontsize=F_BODY,
+                va="center", ha="center", color="white", fontweight="bold",
+                zorder=5)
+        ax.text(X_HAR0 + inset + 4.5, y + c_h / 2, txt, fontsize=F_BODY,
+                va="center", color=INK, zorder=5)
 
-    # ---- ladder rows (bottom-up), claim enters Level 1 --------------------
-    lx, lw_ = 68.2, 30.3
+    # ---- audit ladder (fills the band; B adds a peer container) -----------
+    lad_x0, lad_x1 = X_LAD0, X_LAD1
+    if variant == "B":
+        box(ax, X_LAD0, Y_BAND0, X_LAD1 - X_LAD0, Y_BAND1 - Y_BAND0,
+            "#f7f9fa", SLATE, lw=W_BOX, r=R_OUT)
+        lad_x0, lad_x1 = X_LAD0 + 1.0, X_LAD1 - 1.0
     rows = [
-        (4.6, "Level 1 · reported", "numbers in a paper", None),
-        (14.0, "Level 2 · auditable", "code, config, seeds released", None),
-        (23.4, "Level 3 · audited", "independent re-run + conformance read",
+        ("Level 1 · reported", "numbers in a paper", None),
+        ("Level 2 · auditable", "code, config, seeds released", None),
+        ("Level 3 · audited", "independent re-run + conformance read",
          "→ established"),
     ]
-    rh = 6.2
-    for ybot, lvl, sub, tag in rows:
-        box(ax, lx, ybot, lw_, rh, "white", SLATE,
-            lw=1.0 if tag else 0.7, r=0.6)
-        ax.text(lx + 1.6, ybot + rh - 1.8, lvl, fontsize=6.1, va="center",
-                color=SLATE, fontweight="bold")
-        ax.text(lx + 1.6, ybot + 1.7, sub, fontsize=5.5, va="center",
-                color=INK)
+    r_gap = 3.1
+    band_h_l = (Y_BAND1 - Y_BAND0) if variant == "A" else (Y_BAND1 - Y_BAND0 - 2.0)
+    y_base = Y_BAND0 if variant == "A" else Y_BAND0 + 1.0
+    r_h = (band_h_l - 2 * r_gap) / 3
+    row_y = {i: y_base + i * (r_h + r_gap) for i in range(3)}
+    for i, (lvl, sub, tag) in enumerate(rows):
+        ybot = row_y[i]
+        box(ax, lad_x0, ybot, lad_x1 - lad_x0, r_h, "white", SLATE,
+            lw=W_EMPH if tag else W_BOX, r=R_IN, z=3)
+        ax.text(lad_x0 + 1.6, ybot + r_h - 1.8, lvl, fontsize=F_LABEL,
+                va="center", color=SLATE, fontweight="bold", zorder=4)
+        ax.text(lad_x0 + 1.6, ybot + 1.8, sub, fontsize=F_BODY,
+                va="center", color=INK, zorder=4)
         if tag:
-            box(ax, lx + lw_ - 12.4, ybot + rh - 2.95, 11.6, 2.25, SLATE, SLATE,
-                lw=0.5, r=0.6, z=3)
-            ax.text(lx + lw_ - 6.6, ybot + rh - 1.82, tag, fontsize=5.6,
-                    va="center", ha="center", color="white", fontweight="bold",
-                    zorder=4)
-    for y0, y1 in ((10.8, 14.0), (20.2, 23.4)):
-        arrow(ax, lx + lw_ / 2, y0, lx + lw_ / 2, y1, lw=0.8, ms=6)
+            cw, chh = 12.4, 2.4
+            cx = lad_x1 - 1.6 - cw
+            cy = ybot + r_h - 1.8 - chh / 2
+            box(ax, cx, cy, cw, chh, SLATE, SLATE, lw=W_CHIP, r=R_IN, z=4)
+            ax.text(cx + cw / 2, ybot + r_h - 1.8, tag, fontsize=F_BODY,
+                    va="center", ha="center", color="white",
+                    fontweight="bold", zorder=5)
+    xc = (lad_x0 + lad_x1) / 2
+    for i in (0, 1):
+        arrow(ax, xc, row_y[i] + r_h + 0.15, xc, row_y[i + 1] - 0.15,
+              lw=1.1, ms=6)
 
-    # ---- claim arrow: harness -> Level 1 ----------------------------------
-    arrow(ax, 54.4, 7.7, 68.0, 7.7, lw=1.2, ms=8)
-    ax.text(61.2, 10.2, "the claim", fontsize=6.4, ha="center", color=INK,
-            fontweight="bold")
-    ax.text(61.2, 5.4, "paired per-fold Δ\nvs the tuned floor", fontsize=5.8,
-            ha="center", va="center", color=GREY)
+    # ---- the claim: one anchored group at Level-1 mid ----------------------
+    y_claim = row_y[0] + r_h / 2
+    arrow(ax, X_HAR1 + 0.2, y_claim, X_LAD0 - 0.2, y_claim, lw=1.6, ms=9)
+    gx = (X_HAR1 + X_LAD0) / 2
+    box(ax, gx - 4.4, y_claim - 1.35, 8.8, 2.7, "white", SLATE, lw=W_EMPH,
+        r=R_IN, z=4)
+    ax.text(gx, y_claim - 0.11, "the claim", fontsize=F_LABEL, ha="center",
+            va="center", color=INK, fontweight="bold", zorder=5)
+    ax.text(gx, y_claim + 3.6, "paired per-fold Δ\nvs the tuned floor",
+            fontsize=F_FINE, ha="center", va="center", color=GREY,
+            linespacing=1.35)
 
-    # ---- priced-violation strip (renderer-measured placement) -------------
-    box(ax, 1.5, 0.2, 97.0, 3.2, ORANGE_FILL, ORANGE, lw=0.7, r=0.5)
+    # ---- priced-violation strip: measured, then justified ------------------
+    box(ax, X_TIL0, Y_STRIP0, X_LAD1 - X_TIL0, Y_STRIP1 - Y_STRIP0,
+        ORANGE_FILL, ORANGE, lw=W_BOX, r=R_IN)
+    y_mid = (Y_STRIP0 + Y_STRIP1) / 2
     items = [
-        ("RELAXING A CONTROL, PRICED", ORANGE, "bold", 5.6),
-        ("skip C3 → +0.04–0.07 MCC in-run", INK, "normal", 5.2),
-        ("skip C2 → MSE 0.0025 → ≈15", INK, "normal", 5.2),
-        ("untuned C1 → spurious +0.014", INK, "normal", 5.2),
+        ("RELAXING A CONTROL, PRICED", ORANGE, "bold", F_BODY, False, None),
+        ("+0.04–0.07 MCC within a run", INK, "normal", 5.2, True, "C3"),
+        ("test MSE 0.0025 → ≈15", INK, "normal", 5.2, True, "C2"),
+        ("a spurious +0.014 gain", INK, "normal", 5.2, True, "C1"),
     ]
     fig.canvas.draw()
     rend = fig.canvas.get_renderer()
     inv = ax.transData.inverted()
-    x = 3.2
-    for i, (s, c, w, fs) in enumerate(items):
-        txt = ax.text(x, 1.8, s, fontsize=fs, color=c, va="center",
-                      fontweight=w, zorder=4)
-        bb = txt.get_window_extent(renderer=rend)
-        (x0d, _), (x1d, _) = inv.transform([[bb.x0, 0], [bb.x1, 0]])
-        wdt = x1d - x0d
-        if i > 0:
-            box(ax, x - 0.8, 0.55, wdt + 1.6, 2.5, "white", ORANGE, lw=0.5,
-                r=0.5, z=3)
-            txt.set_zorder(5)
-        x += wdt + 2.3
-    if x - 2.4 > 98.0:
-        print(f"WARN: strip overflows to x={x - 2.4:.1f}")
 
-    fig.savefig(OUT / "fig-overview.pdf", bbox_inches="tight", pad_inches=0.02)
-    print("wrote", OUT / "fig-overview.pdf")
+    def width(s, fs, w):
+        t = ax.text(0, -5, s, fontsize=fs, fontweight=w)
+        bb = t.get_window_extent(renderer=rend)
+        (x0d, _), (x1d, _) = inv.transform([[bb.x0, 0], [bb.x1, 0]])
+        t.remove()
+        return x1d - x0d
+
+    pad = 0.9
+    bw = 3.0                                # mini C-badge width
+    widths = [width(s, fs, w) for s, _, w, fs, _, _ in items]
+    chip_extra = [(2 * pad + bw + 0.6) if chip else 0 for *_, chip, _ in items]
+    x_start = X_TIL0 + 1.7
+    x_end = X_LAD1 - 1.7
+    total = sum(widths) + sum(chip_extra)
+    slack = x_end - x_start - total
+    gw = [1.7, 0.65, 0.65]                 # label|chip, chip|chip, chip|chip
+    gaps = [slack * g / sum(gw) for g in gw]
+    x = x_start
+    for j, ((s, c, w, fs, chip, cid), wd) in enumerate(zip(items, widths)):
+        if chip:
+            cw_ = wd + 2 * pad + bw + 0.6
+            box(ax, x, y_mid - 1.25, cw_, 2.5, "white", ORANGE,
+                lw=W_CHIP, r=R_IN, z=3)
+            box(ax, x + 0.55, y_mid - 0.95, bw, 1.9, SLATE, SLATE,
+                lw=W_CHIP, r=R_IN, z=4)
+            ax.text(x + 0.55 + bw / 2, y_mid - 0.09, cid, fontsize=5.2,
+                    ha="center", va="center", color="white",
+                    fontweight="bold", zorder=5)
+            ax.text(x + 0.55 + bw + 0.6, y_mid, s, fontsize=fs, color=c,
+                    va="center", fontweight=w, zorder=4)
+            x += cw_ + (gaps[j] if j < len(gaps) else 0)
+        else:
+            ax.text(x, y_mid, s, fontsize=fs, color=c, va="center",
+                    fontweight=w, zorder=4)
+            x += wd + (gaps[j] if j < len(gaps) else 0)
+
+    suffix = "" if variant == "A" else "-B"
+    fig.savefig(OUT / f"fig-overview{suffix}.pdf", bbox_inches="tight",
+                pad_inches=0.02)
+    print("wrote", OUT / f"fig-overview{suffix}.pdf", f"(variant {variant})")
 
 
 if __name__ == "__main__":
