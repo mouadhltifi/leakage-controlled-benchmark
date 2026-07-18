@@ -58,7 +58,7 @@ def main():
     heads = [
         (8.5, "FIVE SOURCE FAMILIES", "availability-timed features"),
         (38.0, "EVALUATION PROTOCOL, FIXED IN CODE", "five controls, enforced jointly"),
-        (81.0, "GRADUATED AUDIT STANDARD", "what it takes for a gain to count"),
+        (83.3, "GRADUATED AUDIT STANDARD", "what it takes for a gain to count"),
     ]
     for x, t, s in heads:
         ax.text(x, 34.7, t, fontsize=6.3, color=SLATE, ha="center",
@@ -74,7 +74,7 @@ def main():
         ("Macro", "6 series"),
         ("Graph", "sector + correlation"),
     ]
-    tile_h, gap = 4.2, 1.0
+    tile_h, gap = 4.04, 1.2
     for i, (name, sub) in enumerate(fams):
         y = 29.6 - tile_h - i * (tile_h + gap)
         box(ax, 1.5, y, 15.2, tile_h, "white", SLATE, lw=0.6, r=0.5)
@@ -110,36 +110,36 @@ def main():
         ax.text(28.0, y + ch / 2, txt, fontsize=5.6, va="center", color=INK)
 
     # ---- ladder rows (bottom-up), claim enters Level 1 --------------------
-    lx, lw_ = 64.0, 34.5
+    lx, lw_ = 68.2, 30.3
     rows = [
-        (8.8, "Level 1 · reported", "numbers in a paper", None),
-        (16.4, "Level 2 · auditable", "code, config, seeds released", None),
-        (24.0, "Level 3 · audited", "independent re-run + conformance read",
+        (4.6, "Level 1 · reported", "numbers in a paper", None),
+        (14.0, "Level 2 · auditable", "code, config, seeds released", None),
+        (23.4, "Level 3 · audited", "independent re-run + conformance read",
          "→ established"),
     ]
-    rh = 5.6
+    rh = 6.2
     for ybot, lvl, sub, tag in rows:
         box(ax, lx, ybot, lw_, rh, "white", SLATE,
             lw=1.0 if tag else 0.7, r=0.6)
-        ax.text(lx + 1.6, ybot + rh - 1.6, lvl, fontsize=6.1, va="center",
+        ax.text(lx + 1.6, ybot + rh - 1.8, lvl, fontsize=6.1, va="center",
                 color=SLATE, fontweight="bold")
-        ax.text(lx + 1.6, ybot + 1.5, sub, fontsize=5.5, va="center",
+        ax.text(lx + 1.6, ybot + 1.7, sub, fontsize=5.5, va="center",
                 color=INK)
         if tag:
-            box(ax, lx + lw_ - 13.4, ybot + rh - 2.8, 12.2, 2.3, SLATE, SLATE,
+            box(ax, lx + lw_ - 12.4, ybot + rh - 2.95, 11.6, 2.25, SLATE, SLATE,
                 lw=0.5, r=0.6, z=3)
-            ax.text(lx + lw_ - 7.3, ybot + rh - 1.65, tag, fontsize=5.9,
+            ax.text(lx + lw_ - 6.6, ybot + rh - 1.82, tag, fontsize=5.6,
                     va="center", ha="center", color="white", fontweight="bold",
                     zorder=4)
-    for y0, y1 in ((14.4, 16.4), (22.0, 24.0)):
+    for y0, y1 in ((10.8, 14.0), (20.2, 23.4)):
         arrow(ax, lx + lw_ / 2, y0, lx + lw_ / 2, y1, lw=0.8, ms=6)
 
     # ---- claim arrow: harness -> Level 1 ----------------------------------
-    arrow(ax, 54.4, 11.6, 63.8, 11.6, lw=1.2, ms=8)
-    ax.text(59.1, 13.3, "the claim", fontsize=6.0, ha="center", color=INK,
+    arrow(ax, 54.4, 7.7, 68.0, 7.7, lw=1.2, ms=8)
+    ax.text(61.2, 10.2, "the claim", fontsize=6.4, ha="center", color=INK,
             fontweight="bold")
-    ax.text(55.6, 7.2, "paired per-fold Δ vs the tuned floor", fontsize=6.5,
-            ha="left", va="center", color=GREY)
+    ax.text(61.2, 5.4, "paired per-fold Δ\nvs the tuned floor", fontsize=5.8,
+            ha="center", va="center", color=GREY)
 
     # ---- priced-violation strip (renderer-measured placement) -------------
     box(ax, 1.5, 0.2, 97.0, 3.2, ORANGE_FILL, ORANGE, lw=0.7, r=0.5)
