@@ -79,7 +79,7 @@ def main():
     # ---- column headers (each centered over its column) -------------------
     heads = [
         (X_TIL0, "SOURCE FAMILIES", "availability-timed features"),
-        (X_HAR0, "EVALUATION PROTOCOL", "five controls, enforced jointly, fixed in code"),
+        (X_HAR0, "EVALUATION PROTOCOL", "four controls + a fixed universe, enforced in code"),
         (X_LAD0, "GRADUATED AUDIT STANDARD", "what it takes for a gain to count"),
     ]
     for x, t, s in heads:
@@ -130,7 +130,7 @@ def main():
         ("C2", "availability-timed chronology"),
         ("C3", "selection never reads the test set"),
         ("C4", "fold-level corrected statistics"),
-        ("C5", "liquid-universe scope"),
+        ("C5", "scope: the fixed liquid universe"),
     ]
     c_top = Y_BAND1 - band_h - 2.3
     c_bot = Y_BAND0 + 0.9
@@ -157,7 +157,7 @@ def main():
     rows = [
         ("Level 1 · reported", "numbers in a paper", None),
         ("Level 2 · auditable", "code, config, seeds released", None),
-        ("Level 3 · audited", "independent re-run\n+ conformance read",
+        ("Level 3 · independently audited", "independent re-run\n+ conformance read",
          "→ established"),
     ]
     r_gap = 3.1
