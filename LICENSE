@@ -23,7 +23,11 @@ SOFTWARE.
 ---
 
 Data licensing: the derived-feature tables released with this benchmark are
-licensed CC-BY-4.0. Per-source terms, exclusions, and regeneration paths are
-stated in DATA-STATEMENTS.md; third-party raw data (news text, social
-messages, GICS classifications, CBOE VIX) is not redistributed and remains
-under its owners' terms.
+licensed CC-BY-4.0, with per-source terms preserved. One cited third-party
+series is carved out of that grant: the Cboe VIX close (FRED series VIXCLS)
+is redistributed as a small extract under FRED's "Copyrighted: Citation
+Required" terms with attribution to Cboe (DATA-STATEMENTS.md, "Macro").
+Other third-party raw data (news text, social messages, GICS
+classifications) is not redistributed and remains under its owners' terms.
+Per-source terms, exclusions, and regeneration paths are stated in
+DATA-STATEMENTS.md.

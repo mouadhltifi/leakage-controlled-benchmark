@@ -14,7 +14,9 @@ authors:
   - family-names: Pittorino
     given-names: Fabrizio
     affiliation: "Politecnico di Milano"
-license: MIT
+license:
+  - MIT
+  - CC-BY-4.0
 abstract: >-
   Evaluation protocol, harness, point-in-time feature datasets, and reference
   baselines for multi-source next-day stock prediction (55 US large-caps,
@@ -60,4 +62,4 @@ references:
     year: 2025
     doi: "10.1145/3711896.3736872"
     notes: "KDD 2025. Upstream code: https://github.com/lakebodhi/CAMEF."
-version: 1.0.1
+version: 1.0.2

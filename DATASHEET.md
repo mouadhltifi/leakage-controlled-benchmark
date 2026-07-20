@@ -69,8 +69,12 @@
 - Timing discipline: text features aligned T−1; macro series shifted to
   publication dates (CPI +30, unemployment +27, Fed Funds +23, GDP +88
   business days).
-- Preprocessing code ships in `src/` and `scripts/`; every derived table is
-  regenerable from upstream sources via documented scripts.
+- Preprocessing code ships in `src/` and `scripts/`; every derived table
+  except the StockTwits social aggregates is regenerable from upstream
+  sources via documented scripts. The social corpus is non-re-pullable
+  (DATA-STATEMENTS §3), so its shipped features are use-as-shipped,
+  integrity-guaranteed by their `MANIFEST.sha256` hashes rather than by
+  re-derivation.
 
 ## Uses
 

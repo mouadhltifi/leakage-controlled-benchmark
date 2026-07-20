@@ -10,8 +10,15 @@ make_reference_table_v2.py (same bootstrap: 10,000 resamples, seed 42).
 
 Usage:
     evaluate_submission.py SUBMISSION.csv [--k 1]
-        [--baseline-arch {ff,lstm,stronger}] [--restrict-folds 0,1,2,3]
+        [--baseline-arch {ff,lstm,envelope}] [--restrict-folds 0,1,2,3]
         [--json OUT.json]
+
+The default baseline is the per-(fold, seed) upper envelope of the two
+shipped arms (max over ff/lstm): a conservative bar, not a runnable
+model; pass --baseline-arch ff|lstm for like-for-like pairing. With
+--restrict-folds (coverage rule 8), certification requires the declared
+fold subset with at least four folds, and the verdict is tagged
+RESTRICTED COVERAGE.
 """
 from __future__ import annotations
 
@@ -42,7 +49,9 @@ def load_baseline(arch: str) -> pd.DataFrame:
     if arch in ("ff", "lstm"):
         base = base[base["arch"] == arch]
         return base[["fold_idx", "seed", "mcc"]]
-    # conservative default: the stronger shipped arm per (fold, seed)
+    # conservative default: the per-(fold, seed) upper ENVELOPE of the two
+    # shipped arms (max over ff/lstm) -- a test-selected bar, not a
+    # runnable model
     return (base.groupby(["fold_idx", "seed"], as_index=False)["mcc"].max())
 
 
@@ -73,23 +82,33 @@ def main() -> int:
     ap.add_argument("submission", type=Path)
     ap.add_argument("--k", type=int, default=1,
                     help="declared family size (configurations compared)")
-    ap.add_argument("--baseline-arch", default="stronger",
-                    choices=["ff", "lstm", "stronger"])
+    ap.add_argument("--baseline-arch", default="envelope",
+                    choices=["ff", "lstm", "envelope", "stronger"],
+                    help="ff|lstm = like-for-like; envelope (default) = "
+                         "per-cell max over both shipped arms ('stronger' "
+                         "is a deprecated alias for envelope)")
     ap.add_argument("--restrict-folds", default=None,
                     help="comma-separated fold_idx subset (coverage rule 8)")
     ap.add_argument("--json", type=Path, default=None)
     a = ap.parse_args()
 
+    if a.baseline_arch == "stronger":
+        a.baseline_arch = "envelope"
+
     sub = pd.read_csv(a.submission)
     need = {"challenger", "fold_idx", "seed", "mcc"}
     if not need.issubset(sub.columns):
         sys.exit(f"submission must have columns {sorted(need)}")
+    if sub.duplicated(subset=["fold_idx", "seed"]).any():
+        sys.exit("submission has duplicate (fold_idx, seed) rows -- the "
+                 "contract is one row per (fold, seed); see SUBMITTING.md")
     name = sub["challenger"].iloc[0]
     base = load_baseline(a.baseline_arch)
 
     merged = sub.merge(base, on=["fold_idx", "seed"], suffixes=("_sub", "_base"))
     seed_matched = True
-    if merged.empty or set(merged["fold_idx"]) != set(range(5)):
+    submitted_folds = {int(f) for f in sub["fold_idx"].unique()}
+    if merged.empty or {int(f) for f in merged["fold_idx"]} != submitted_folds:
         # fold-level fallback: pair fold means (rule 1 prefers seeds 42/123/456)
         seed_matched = False
         s = sub.groupby("fold_idx")["mcc"].mean()
@@ -104,7 +123,9 @@ def main() -> int:
 
     fold_means = merged.groupby("fold_idx")["delta"].mean()
     n_folds = len(fold_means)
-    mean_delta = float(merged["delta"].mean())
+    # fold-weighted headline, consistent with p_fold and the fold-t CI
+    # (identical to the cell mean on a balanced submission)
+    mean_delta = float(fold_means.mean())
     t, p_fold = stats.ttest_1samp(fold_means, 0.0)
     p_bonf = min(1.0, float(p_fold) * a.k)
     lo, hi = fold_block_ci(merged)
@@ -118,7 +139,8 @@ def main() -> int:
             loc=float(fold_means.mean()), scale=float(fold_means.sem()))
     else:
         t_lo = t_hi = float("nan")
-    d = mean_delta / merged["delta"].std(ddof=1) if len(merged) > 1 else float("nan")
+    sd = merged["delta"].std(ddof=1)
+    d = float(mean_delta / sd) if len(merged) > 1 and sd > 0 else float("nan")
 
     conforms = None
     if "n_test" in sub.columns:
@@ -131,15 +153,28 @@ def main() -> int:
                and any(int(x) != exp[int(f)] for x in g)}
         conforms = not bad
 
-    supported = mean_delta > 0 and p_bonf < 0.05 and n_folds == 5
+    # coverage gate: the full frozen grid by default; with --restrict-folds
+    # (rule 8), the declared subset with at least four folds certifies and
+    # the verdict is tagged as restricted
+    required = ({int(x) for x in a.restrict_folds.split(",")}
+                if a.restrict_folds else set(range(5)))
+    covered = {int(f) for f in fold_means.index}
+    coverage_ok = covered == required and n_folds >= (4 if a.restrict_folds else 5)
+    supported = mean_delta > 0 and p_bonf < 0.05 and coverage_ok
     verdict = "SUPPORTED" if supported else "WITHIN THE REFERENCE NULL"
+    if a.restrict_folds:
+        verdict += f"  [RESTRICTED COVERAGE -- folds {sorted(covered)} per rule 8]"
     if conforms is False:
         verdict += "  [ASSEMBLY MISMATCH -- n_test disagrees with the frozen folds; claim not comparable]"
 
+    arm_label = ("envelope of the ff/lstm arms -- per-cell max; a "
+                 "conservative bar, not a runnable model"
+                 if a.baseline_arch == "envelope" else f"{a.baseline_arch} arm")
     print(f"challenger        : {name}")
     print(f"baseline          : shipped tuned price-only "
-          f"({a.baseline_arch} arm){'' if seed_matched else '  [fold-mean pairing: seeds not matched]'}")
-    print(f"cells paired      : {len(merged)}  (folds: {sorted(merged['fold_idx'].unique())})")
+          f"({arm_label}){'' if seed_matched else '  [fold-mean pairing: seeds not matched]'}")
+    print(f"cells paired      : {len(merged)}  "
+          f"(folds: {[int(f) for f in sorted(merged['fold_idx'].unique())]})")
     print("per-fold mean dMCC: "
           + "  ".join(f"F{int(f)}:{v:+.4f}" for f, v in fold_means.items()))
     print(f"dMCC (mean)       : {mean_delta:+.4f}")

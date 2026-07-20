@@ -1,4 +1,4 @@
-# A Leakage-Controlled Evaluation Protocol and Benchmark for Multi-Source Stock Prediction
+# An Evaluation Protocol and Benchmark for Multi-Source Stock Prediction
 
 What would it take to believe that news, social media, macroeconomic series,
 or an inter-stock graph improves next-day stock prediction? This repository

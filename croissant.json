@@ -73,7 +73,7 @@
   }
  ],
  "datePublished": "2026",
- "version": "1.0.0-submission",
+ "version": "1.0.2",
  "keywords": [
   "evaluation protocol",
   "benchmark",
@@ -116,7 +116,7 @@
    "@type": "cr:FileObject",
    "@id": "macro-table",
    "name": "macro-table",
-   "description": "Business-day macro table: five federal series with normalized variants + FOMC-window flag, 2,347 days, 2015-01-01 to 2023-12-29.",
+   "description": "Business-day macro table: five federal series and the Cboe VIX close (VIXCLS, redistributed as a cited extract under FRED citation-required terms) with normalized variants + FOMC-window flag, 2,347 days, 2015-01-01 to 2023-12-29.",
    "contentUrl": "data/processed/features/macro_features.parquet",
    "encodingFormat": "application/x-parquet",
    "sha256": "5f667f45101ef7d7f0343be10513c91f4f644b0bac60b1dd500f822ca085ed02"

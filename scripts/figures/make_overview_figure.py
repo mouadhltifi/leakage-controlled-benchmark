@@ -126,7 +126,7 @@ def main():
             fontsize=5.2, ha="left", va="center", color=GREY, zorder=3)
 
     controls = [
-        ("C1", "tuned price-only reference floor"),
+        ("C1", "tuned price-only baseline"),
         ("C2", "availability-timed chronology"),
         ("C3", "selection never reads the test set"),
         ("C4", "fold-level corrected statistics"),
@@ -194,7 +194,7 @@ def main():
         r=R_IN, z=4)
     ax.text(gx, y_claim - 0.11, "the claim", fontsize=F_LABEL, ha="center",
             va="center", color=INK, fontweight="bold", zorder=5)
-    ax.text(gx, y_claim + 3.6, "paired per-fold Δ\nvs the tuned floor",
+    ax.text(gx, y_claim + 3.6, "paired per-fold Δ\nvs the tuned baseline",
             fontsize=F_FINE, ha="center", va="center", color=GREY,
             linespacing=1.35)
 
