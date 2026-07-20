@@ -14,9 +14,7 @@ authors:
   - family-names: Pittorino
     given-names: Fabrizio
     affiliation: "Politecnico di Milano"
-license:
-  - MIT
-  - CC-BY-4.0
+license: MIT
 abstract: >-
   Evaluation protocol, harness, availability-timed (release-lag aligned)
   feature datasets, and reference
@@ -25,7 +23,10 @@ abstract: >-
   result files regenerate every reference number with no download; the
   repository also documents from-scratch re-runs and two reproducibility
   audits that price individual protocol conditions (test-set model selection;
-  non-temporal split leakage).
+  non-temporal split leakage). Licensing: code MIT; derived feature tables
+  CC-BY-4.0 with per-source terms preserved (the Cboe VIX close is
+  redistributed as a cited extract under FRED citation-required terms) --
+  see LICENSE and DATA-STATEMENTS.md.
 keywords:
   - evaluation protocol
   - benchmark
@@ -63,4 +64,4 @@ references:
     year: 2025
     doi: "10.1145/3711896.3736872"
     notes: "KDD 2025. Upstream code: https://github.com/lakebodhi/CAMEF."
-version: 1.0.3
+version: 1.0.4
