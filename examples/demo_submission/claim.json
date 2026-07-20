@@ -21,7 +21,9 @@
   ],
   "p_fold": 0.15947811328532907,
   "k": 1,
+  "k_declared": true,
   "p_bonf": 0.15947811328532907,
+  "seed_contract_met": true,
   "pooled_d": -0.4539527365281824,
   "verdict": "WITHIN THE REFERENCE NULL"
 }

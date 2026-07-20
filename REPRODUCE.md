@@ -86,9 +86,12 @@ yourself you need the MSGCA authors' released code and their BigData22 caches:
 ```bash
 git clone https://github.com/changzong/MSGCA.git    # @ commit 253925d
 cd MSGCA
-# Run from INSIDE the clone so the script can import the authors' `model` and
-# `diagnostic_bias` modules and read data/bd22_stock/cache/. PYTHONPATH=. makes
-# the clone's own modules importable.
+cp /ABS/PATH/TO/scripts/audits/diagnostic_bias.py .   # the audit's data-prep shim (ships in this repo)
+# Run from INSIDE the clone so the rerun script can import the authors' `model`
+# module and read data/bd22_stock/cache/. PYTHONPATH=. makes the clone's modules
+# AND the copied shim importable. `diagnostic_bias.py` is OUR audit script (v1 of
+# this diagnostic), not upstream MSGCA code: it wraps the authors' own data
+# pipeline unchanged and adds the validation carve the counterfactual needs.
 PYTHONPATH=. python /ABS/PATH/TO/scripts/audits/msgca_diagnostic_rerun.py            # full (GPU-light)
 PYTHONPATH=. python /ABS/PATH/TO/scripts/audits/msgca_diagnostic_rerun.py --canary   # 5-epoch smoke
 ```
@@ -199,6 +202,30 @@ MACROLAG_OUT=/tmp/macrolag python scripts/audits/macro_lag/rerun_macro_lag.py --
 # Analyse the committed leakage-free deltas (same as §1c):
 python scripts/analysis/analyze_macrolag.py
 ```
+
+### 3e. The two sector-graph arms (Appendix B)
+
+The committed `data/processed/graphs/sector_adjacency.npy` **is the released
+FF12 graph** (133 edges) — the one the harness loads
+(`src/mmfp/data/assemble.py` → `load_static_adjacency`) and the one behind
+the FF12 arm (`results/sector/sector_ff12_*.csv`), which supplies the
+benchmark's graph reference rows. The GICS sensitivity arm
+(`results/sector/sector_gics_*.csv`) uses the same-sector partition of the
+universe's 11×5 construction; materialize it and re-run that arm with:
+
+```bash
+# derive the GICS-partition graph from the disclosed universe definition
+python scripts/data/kdd_sector_map.py --emit-gics
+#   -> data/processed/graphs/sector_adjacency_gics.npy
+# point the loader at it for the sensitivity re-run (see 3b for the runner),
+# or temporarily swap it into sector_adjacency.npy inside a scratch checkout.
+```
+
+`kdd_sector_map.py` (no flag) rebuilds the FF12 mapping from SEC EDGAR SIC
+codes and asserts it matches the committed graph. Note: the `graph_source`
+column in ALL sector CSVs records the config enum's legacy name
+(`static_gics`); arm identity is carried by the `experiment_name` prefix
+(`secff12_` / `secgics_`).
 
 ---
 

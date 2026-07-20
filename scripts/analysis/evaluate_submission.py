@@ -80,8 +80,9 @@ def fold_block_ci(cells: pd.DataFrame) -> tuple[float, float]:
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("submission", type=Path)
-    ap.add_argument("--k", type=int, default=1,
-                    help="declared family size (configurations compared)")
+    ap.add_argument("--k", type=int, default=None,
+                    help="declared family size (every configuration compared, "
+                         "rule 3); omitting it defaults to 1 with a warning")
     ap.add_argument("--baseline-arch", default="envelope",
                     choices=["ff", "lstm", "envelope", "stronger"],
                     help="ff|lstm = like-for-like; envelope (default) = "
@@ -94,6 +95,9 @@ def main() -> int:
 
     if a.baseline_arch == "stronger":
         a.baseline_arch = "envelope"
+    k_declared = a.k is not None
+    if not k_declared:
+        a.k = 1
 
     sub = pd.read_csv(a.submission)
     need = {"challenger", "fold_idx", "seed", "mcc"}
@@ -160,12 +164,27 @@ def main() -> int:
                 if a.restrict_folds else set(range(5)))
     covered = {int(f) for f in fold_means.index}
     coverage_ok = covered == required and n_folds >= (4 if a.restrict_folds else 5)
-    supported = mean_delta > 0 and p_bonf < 0.05 and coverage_ok
+    # seed-contract gate: certification requires the three contract seeds
+    # (42/123/456) paired at seed level in EVERY covered fold (rule 1) --
+    # a best-seed-per-fold selection must not certify through the tool
+    # whose purpose is policing selection
+    if seed_matched:
+        seeds_by_fold = merged.groupby("fold_idx")["seed"].agg(
+            lambda s: set(SEEDS).issubset({int(x) for x in s}))
+        seeds_ok = bool(seeds_by_fold.all())
+    else:
+        seeds_ok = False
+    supported = mean_delta > 0 and p_bonf < 0.05 and coverage_ok and seeds_ok
     verdict = "SUPPORTED" if supported else "WITHIN THE REFERENCE NULL"
     if a.restrict_folds:
         verdict += f"  [RESTRICTED COVERAGE -- folds {sorted(covered)} per rule 8]"
+    if not seeds_ok:
+        verdict += ("  [SEED CONTRACT NOT MET -- certification requires seeds "
+                    "42/123/456 paired per covered fold (rule 1)]")
     if conforms is False:
-        verdict += "  [ASSEMBLY MISMATCH -- n_test disagrees with the frozen folds; claim not comparable]"
+        supported = False
+        verdict = ("NOT COMPARABLE  [ASSEMBLY MISMATCH -- n_test disagrees "
+                   "with the frozen folds]")
 
     arm_label = ("envelope of the ff/lstm arms -- per-cell max; a "
                  "conservative bar, not a runnable model"
@@ -187,6 +206,9 @@ def main() -> int:
         print(f"fold conformance  : "
               f"{'OK (n_test matches the frozen folds)' if conforms else 'FAILED -- ' + str(bad)}")
     print(f"VERDICT           : {verdict}")
+    if not k_declared:
+        print("NOTE: family size not declared; defaulting to k=1 -- declare "
+              "the full set of configurations you compared (rule 3).")
     if not seed_matched:
         print("NOTE: rule 1 expects seeds 42/123/456 matched to the baseline.")
     if a.json:
@@ -196,7 +218,8 @@ def main() -> int:
             "fold_means": {int(k): float(v) for k, v in fold_means.items()},
             "delta_mcc": mean_delta, "ci95": [lo, hi],
             "ci95_fold_t": [float(t_lo), float(t_hi)],
-            "p_fold": float(p_fold), "k": a.k, "p_bonf": p_bonf,
+            "p_fold": float(p_fold), "k": a.k, "k_declared": k_declared,
+            "p_bonf": p_bonf, "seed_contract_met": seeds_ok,
             "pooled_d": float(d), "verdict": verdict}, indent=2))
     return 0
 

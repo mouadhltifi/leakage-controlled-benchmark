@@ -73,7 +73,7 @@
   }
  ],
  "datePublished": "2026",
- "version": "1.0.2",
+ "version": "1.0.3",
  "keywords": [
   "evaluation protocol",
   "benchmark",
@@ -83,7 +83,7 @@
   "multi-source data",
   "time series"
  ],
- "citeAs": "Mouadh Ltifi, Francesco Puoti, Fabrizio Pittorino. An Evaluation Protocol and Benchmark for Multi-Source Stock Prediction. 2026. https://github.com/mouadhltifi/leakage-controlled-benchmark",
+ "citeAs": "Mouadh Ltifi, Francesco Puoti, Fabrizio Pittorino. Auditing Multi-Source Stock Prediction: An Evaluation Protocol and Benchmark. 2026. https://github.com/mouadhltifi/leakage-controlled-benchmark",
  "distribution": [
   {
    "@type": "cr:FileObject",

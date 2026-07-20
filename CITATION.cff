@@ -1,6 +1,6 @@
 cff-version: 1.2.0
 message: "If you use this benchmark, harness, or its reference results, please cite the accompanying paper."
-title: "An Evaluation Protocol and Benchmark for Multi-Source Stock Prediction"
+title: "Auditing Multi-Source Stock Prediction: An Evaluation Protocol and Benchmark"
 doi: "10.5281/zenodo.21431362"
 type: software
 authors:
@@ -18,7 +18,8 @@ license:
   - MIT
   - CC-BY-4.0
 abstract: >-
-  Evaluation protocol, harness, point-in-time feature datasets, and reference
+  Evaluation protocol, harness, availability-timed (release-lag aligned)
+  feature datasets, and reference
   baselines for multi-source next-day stock prediction (55 US large-caps,
   2015-2023; price, news, social, macro, inter-stock graphs). The committed
   result files regenerate every reference number with no download; the
@@ -62,4 +63,4 @@ references:
     year: 2025
     doi: "10.1145/3711896.3736872"
     notes: "KDD 2025. Upstream code: https://github.com/lakebodhi/CAMEF."
-version: 1.0.2
+version: 1.0.3

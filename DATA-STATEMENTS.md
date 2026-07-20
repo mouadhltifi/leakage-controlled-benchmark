@@ -85,17 +85,30 @@
 
 - **Ships:** per-ticker sector labels derived from **SEC EDGAR SIC codes
   mapped to the Fama-French-12 industry scheme** (both public), the mapping
-  script (`kdd_sector_map.py` lineage), and the resulting 55×55 same-sector
-  adjacency; plus the dynamic rolling-correlation graphs' build code
-  (price-derived, no third-party dependency).
-- **Does not ship:** GICS sector assignments in any form — the ticker→GICS
-  mapping is S&P/MSCI proprietary licensed content, and a same-sector
-  adjacency derived from it still encodes the mapping.
+  script (`scripts/data/kdd_sector_map.py`), and the resulting 55×55
+  same-sector adjacency — the committed
+  `data/processed/graphs/sector_adjacency.npy` **is the FF12 graph** (133
+  edges), which the harness loads as the released static graph; plus the
+  dynamic rolling-correlation graphs' build code (price-derived, no
+  third-party dependency).
+- **Not redistributed:** the S&P/MSCI GICS taxonomy — its definitions,
+  hierarchy, and classification database. What the release necessarily
+  discloses is the universe's own construction: 55 large-caps chosen as 11
+  sectors × 5 names (`src/mmfp/data/universe.py`), whose sector memberships
+  are widely published facts about mega-cap issuers. The same-sector
+  partition implied by that construction (the GICS sensitivity arm) is
+  therefore derivable from the disclosed universe definition and is
+  materialized on demand (`kdd_sector_map.py --emit-gics`) rather than
+  committed as data; nothing in the released pipeline requires access to
+  the proprietary taxonomy.
 - **Equivalence:** the benchmark's reference results for graph
   configurations are reported under the public (FF12) sector graph, with a
   paired GICS-vs-FF12 equivalence table in the appendix (the two partitions
   differ materially — edge Jaccard 0.365 — so the equivalence is
-  established empirically, not assumed).
+  established empirically, not assumed). Note: the `graph_source` column in
+  the sector result CSVs records the config enum's legacy name
+  (`static_gics`) for both arms; arm identity is carried by the
+  `experiment_name` prefix (`secff12_` / `secgics_`).
 
 ## Provenance and reproducibility claims (exact scope)
 

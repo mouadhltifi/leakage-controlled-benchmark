@@ -1,10 +1,17 @@
 #!/usr/bin/env python3
-"""Ticker -> SIC (SEC EDGAR) -> Fama-French-12 sector; emit the 55x55 same-sector
-adjacency for the KDD benchmark release (GICS labels cannot ship - S&P/MSCI proprietary).
+"""Ticker -> SIC (SEC EDGAR) -> Fama-French-12 sector; build/verify the released
+55x55 same-sector adjacency (`data/processed/graphs/sector_adjacency.npy`, the
+FF12 graph -- the released taxonomy; see DATA-STATEMENTS.md "Sector structure").
 
-Self-check: rebuilds the GICS adjacency from mmfp's universe module in ALL_TICKERS
-order and asserts it matches data/processed/graphs/sector_adjacency.npy, so the
-FF12 comparison is guaranteed to be in the harness's row order.
+Default run: fetch SIC codes from SEC EDGAR, map to FF12, and assert the result
+matches the committed `sector_adjacency.npy` byte-for-byte structure (the
+release check), reporting the FF12-vs-GICS edge Jaccard.
+
+`--emit-gics`: additionally materialize `sector_adjacency_gics.npy` -- the
+same-sector partition implied by the universe's 11x5 sector-balanced
+construction (`src/mmfp/data/universe.py`) -- which the GICS sensitivity arm
+(`results/sector/sector_gics_*.csv`, Appendix B of the paper) consumes. It is
+derived from the disclosed universe definition, not committed as data.
 """
 import json
 import sys
@@ -14,11 +21,12 @@ from pathlib import Path
 
 import numpy as np
 
-sys.path.insert(0, "/Users/mouadh/Thesis/work")
+ROOT = Path(__file__).resolve().parents[2]
+sys.path.insert(0, str(ROOT / "src"))
 from mmfp.data.universe import ALL_TICKERS, STOCK_UNIVERSE  # noqa: E402
 
-GRAPHS = Path("/Users/mouadh/Thesis/work/data/processed/graphs")
-UA = {"User-Agent": "PoliMi thesis research (contact: mouadh.ltifi@hotmail.com)"}
+GRAPHS = ROOT / "data" / "processed" / "graphs"
+UA = {"User-Agent": "benchmark release reproduction (contact: mouadh.ltifi@hotmail.com)"}
 
 # Fama-French 12-industry definition by SIC range (Ken French data library).
 FF12_RANGES = [
@@ -69,22 +77,14 @@ def same_sector_adjacency(sector_of: dict) -> np.ndarray:
 
 
 def main() -> None:
-    # --- self-check: GICS adjacency from universe.py must equal the .npy on disk
     gics_of = {t: s for s, ts in STOCK_UNIVERSE.items() for t in ts}
     gics_adj = same_sector_adjacency(gics_of)
-    on_disk = np.load(GRAPHS / "sector_adjacency.npy")
-    if on_disk.shape != gics_adj.shape:
-        sys.exit(f"FATAL: shape mismatch disk {on_disk.shape} vs rebuilt {gics_adj.shape}")
-    if not np.array_equal((on_disk > 0).astype(np.float32) * (1 - np.eye(len(ALL_TICKERS), dtype=np.float32)),
-                          gics_adj):
-        # tolerate self-loops / dtype differences but not structural ones
-        diff = int(np.abs((on_disk > 0).astype(int) - (gics_adj > 0).astype(int)).sum())
-        off_diag = int(np.abs(((on_disk > 0).astype(int) - (gics_adj > 0).astype(int))[~np.eye(len(ALL_TICKERS), dtype=bool)].sum()))
-        print(f"WARNING: disk vs rebuilt GICS differ (total cells {diff}, off-diagonal {off_diag})")
-        if off_diag != 0:
-            sys.exit("FATAL: off-diagonal mismatch - row order assumption broken; stop.")
-        print("(diagonal-only difference - self-loops; proceeding)")
-    print(f"self-check OK: disk adjacency == GICS(universe.py) in ALL_TICKERS order (n={len(ALL_TICKERS)})")
+
+    if "--emit-gics" in sys.argv:
+        out = GRAPHS / "sector_adjacency_gics.npy"
+        np.save(out, gics_adj)
+        print(f"materialized the GICS sensitivity-arm graph from universe.py: "
+              f"{out} ({int(gics_adj.sum() // 2)} edges)")
 
     # --- ticker -> CIK -> SIC -> FF12
     cik_map = {e["ticker"]: f'{e["cik_str"]:010d}' for e in get("https://www.sec.gov/files/company_tickers.json").values()}
@@ -98,7 +98,20 @@ def main() -> None:
         ff12_of[t] = ff12(sic_of[t])
         time.sleep(0.15)
     ff12_adj = same_sector_adjacency(ff12_of)
-    np.save(GRAPHS / "sector_adjacency_ff12.npy", ff12_adj)
+
+    # --- release check: rebuilt FF12 must match the committed static graph
+    on_disk = np.load(GRAPHS / "sector_adjacency.npy")
+    if on_disk.shape != ff12_adj.shape:
+        sys.exit(f"FATAL: shape mismatch disk {on_disk.shape} vs rebuilt {ff12_adj.shape}")
+    mism = int(np.abs(((on_disk > 0).astype(int) - (ff12_adj > 0).astype(int))[
+        ~np.eye(len(ALL_TICKERS), dtype=bool)]).sum())
+    if mism:
+        print(f"WARNING: rebuilt FF12 differs from the committed sector_adjacency.npy "
+              f"in {mism} off-diagonal cells (EDGAR SIC codes can drift over time; "
+              f"the committed graph is the frozen release).")
+    else:
+        print(f"release check OK: rebuilt FF12 == committed sector_adjacency.npy "
+              f"(n={len(ALL_TICKERS)}, ALL_TICKERS order)")
 
     # --- report
     print("\nticker  SIC   FF12        GICS")
@@ -108,7 +121,6 @@ def main() -> None:
     both = np.logical_and(gics_adj > 0, ff12_adj > 0)
     either = np.logical_or(gics_adj > 0, ff12_adj > 0)
     print(f"\nGICS edges {ge} | FF12 edges {fe} | Jaccard {both.sum() / either.sum():.3f}")
-    print(f"saved: {GRAPHS / 'sector_adjacency_ff12.npy'}")
 
 
 if __name__ == "__main__":

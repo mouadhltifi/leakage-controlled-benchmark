@@ -203,11 +203,20 @@ class TestStaticAdjacency:
         not STATIC_ADJ_NPY.exists(),
         reason="Cached static adjacency NPY not present",
     )
-    def test_disk_matches_built(self) -> None:
-        """The cached NPY from v1 must equal the platform-built matrix."""
-        built = build_static_adjacency()
+    def test_disk_is_released_ff12_graph(self) -> None:
+        """The committed NPY is the RELEASED static graph (Fama-French-12
+        taxonomy, 133 edges), deliberately distinct from the in-code
+        GICS-partition build (110 edges, the sensitivity arm); the paired
+        comparison ships in results/sector/ (paper Appendix B)."""
         disk = load_static_adjacency()
-        np.testing.assert_array_equal(built, disk)
+        assert disk.shape == (55, 55)
+        np.testing.assert_array_equal(disk, disk.T)
+        np.testing.assert_array_equal(
+            np.diag(disk), np.zeros(55, dtype=np.float32))
+        assert int(disk.sum()) // 2 == 133  # FF12 same-sector edge count
+        built = build_static_adjacency()   # universe GICS partition
+        assert int(built.sum()) // 2 == 110
+        assert not np.array_equal(built, disk)
 
     def test_load_missing_file_raises(self, tmp_path: Path) -> None:
         with pytest.raises(FileNotFoundError):

@@ -1,14 +1,19 @@
-"""Static GICS sector adjacency builder.
+"""Static same-sector adjacency: released graph vs. universe partition.
 
-The static graph connects two stocks if they belong to the same GICS
-sector. All entries are ``0`` or ``1``; the matrix is symmetric with
-zero diagonal.
+Two distinct static graphs exist, deliberately:
 
-This loader computes the adjacency directly from the universe sector
-map, so it is deterministic and self-contained — no on-disk artifact is
-strictly required. For convenience, :func:`load_static_adjacency` can
-also read the cached ``sector_adjacency.npy`` written by the v1
-pipeline; the two paths agree by construction.
+* :func:`load_static_adjacency` reads the RELEASED static graph,
+  ``data/processed/graphs/sector_adjacency.npy`` — the Fama–French-12
+  taxonomy (133 edges), which the harness consumes
+  (``assemble.py``) and the benchmark's graph reference rows use.
+* :func:`build_static_adjacency` constructs the same-sector partition of
+  the universe's 11×5 sector-balanced construction (110 edges, GICS-era
+  membership) from the in-code map — the sensitivity arm
+  (``results/sector/sector_gics_*.csv``) and the historical grid.
+
+The two taxonomies differ materially (edge Jaccard 0.365); the paired
+FF12-vs-GICS comparison ships in ``results/sector/`` (paper Appendix B).
+All entries are ``0`` or ``1``; matrices are symmetric with zero diagonal.
 """
 
 from __future__ import annotations
@@ -52,9 +57,10 @@ def build_static_adjacency(tickers: list[str] | None = None) -> np.ndarray:
 
     Notes
     -----
-    The v1 pipeline wrote this matrix to
-    ``work/data/processed/graphs/sector_adjacency.npy``. Results agree
-    bit-for-bit with that file for the default ticker list.
+    This is the universe's GICS-partition graph (the sensitivity arm),
+    NOT the released FF12 graph committed at
+    ``data/processed/graphs/sector_adjacency.npy`` — see the module
+    docstring and DATA-STATEMENTS "Sector structure".
     """
     syms = list(tickers) if tickers is not None else list(ALL_TICKERS)
 
@@ -88,9 +94,10 @@ def load_static_adjacency(path: Path = STATIC_ADJ_NPY) -> np.ndarray:
     Returns
     -------
     numpy.ndarray
-        The cached ``(55, 55)`` float32 adjacency matrix. By
-        construction this is identical to
-        ``build_static_adjacency(ALL_TICKERS)``.
+        The released ``(55, 55)`` float32 static graph (Fama–French-12
+        same-sector adjacency, 133 edges) — deliberately distinct from
+        ``build_static_adjacency(ALL_TICKERS)``, the universe's GICS
+        partition.
 
     Raises
     ------

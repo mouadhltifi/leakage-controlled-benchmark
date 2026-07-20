@@ -77,7 +77,10 @@ FNSPID_CSV: Path = (
 #: StockTwits raw messages filtered to our 55 tickers.
 STOCKTWITS_PARQUET: Path = DATA_EXTERNAL / "stocktwits" / "stocktwits_our_tickers.parquet"
 
-#: Static GICS sector adjacency (55x55, float32).
+#: Static same-sector adjacency (55x55, float32) — the RELEASED graph:
+#: Fama-French-12 taxonomy (see DATA-STATEMENTS "Sector structure"). The
+#: GICS sensitivity arm is materialized on demand via
+#: ``scripts/data/kdd_sector_map.py --emit-gics``.
 STATIC_ADJ_NPY: Path = GRAPHS_DIR / "sector_adjacency.npy"
 
 #: Dynamic correlation snapshots directory (one ``graph_YYYY-MM-DD.npy`` per snapshot).
