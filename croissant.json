@@ -73,7 +73,7 @@
   }
  ],
  "datePublished": "2026",
- "version": "1.0.4",
+ "version": "1.0.5",
  "keywords": [
   "evaluation protocol",
   "benchmark",
@@ -83,7 +83,7 @@
   "multi-source data",
   "time series"
  ],
- "citeAs": "Mouadh Ltifi, Francesco Puoti, Fabrizio Pittorino. Auditing Multi-Source Stock Prediction: An Evaluation Protocol and Benchmark. 2026. https://github.com/mouadhltifi/leakage-controlled-benchmark",
+ "citeAs": "Mouadh Ltifi, Francesco Puoti, Fabrizio Pittorino. Auditing Multi-Source Stock Prediction: An Evaluation Protocol and Benchmark. 2026. https://github.com/mouadhltifi/leakage-controlled-benchmark (data DOI: 10.5281/zenodo.21431362)",
  "distribution": [
   {
    "@type": "cr:FileObject",
@@ -141,7 +141,7 @@
    "@type": "cr:FileSet",
    "@id": "derived-features",
    "name": "derived-features",
-   "description": "Per-stock-day derived feature tables for the five source families, committed under data/processed/features/ (licensing-clean derived layer; per-source terms in DATA-STATEMENTS.md).",
+   "description": "Per-stock-day derived feature tables for the five source families, committed under data/processed/features/ (raw-text-free derived layer, per-source terms preserved; see DATA-STATEMENTS.md).",
    "encodingFormat": "application/x-parquet",
    "includes": "data/processed/features/**/*.parquet"
   },

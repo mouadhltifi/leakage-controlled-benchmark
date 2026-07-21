@@ -21,9 +21,9 @@ figures/*.pdf
 
 # Raw/intermediate data — not shipped. Raw prices and raw third-party text are
 # not redistributable (see DATA-STATEMENTS.md); intermediates are regenerable.
-# The derived-feature deposit data/processed/ IS committed (licensing-clean
-# layer, covered by MANIFEST.sha256) and is additionally DOI-archived on
-# acceptance; see data/README.md for layout and build order.
+# The derived-feature deposit data/processed/ IS committed (raw-text-free
+# layer, per-source terms preserved; covered by MANIFEST.sha256) and is
+# DOI-archived on Zenodo (10.5281/zenodo.21431362); see data/README.md.
 data/external/
 data/interim/
 data/raw/prices/

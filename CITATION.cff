@@ -8,11 +8,14 @@ authors:
     given-names: Mouadh
     orcid: "https://orcid.org/0009-0007-7456-0472"
     affiliation: "Politecnico di Milano"
+    email: mouadh.ltifi@hotmail.com
   - family-names: Puoti
     given-names: Francesco
+    orcid: "https://orcid.org/0009-0006-4661-3613"
     affiliation: "Politecnico di Milano"
   - family-names: Pittorino
     given-names: Fabrizio
+    orcid: "https://orcid.org/0000-0002-1919-6141"
     affiliation: "Politecnico di Milano"
 license: MIT
 abstract: >-
@@ -64,4 +67,4 @@ references:
     year: 2025
     doi: "10.1145/3711896.3736872"
     notes: "KDD 2025. Upstream code: https://github.com/lakebodhi/CAMEF."
-version: 1.0.4
+version: 1.0.5

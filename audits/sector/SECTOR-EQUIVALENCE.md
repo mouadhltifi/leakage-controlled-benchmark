@@ -37,14 +37,18 @@ That is the paper's thesis (the verdict turns on evaluation choices) showing
 up in a place nobody looks. Framing caution: FF12 is "better" only in this
 grid/architecture; the claim is sensitivity, not superiority.
 
-## Pending (native A7, running now)
+## Resolved (harness-native A7 shipped)
 
-Whether FF12-A8 stays within the reference null vs price requires the
-harness-native A7 (90-run A3/A6/A7 concat re-run in flight,
-`work/experiments/phase4r/native_core/`). If FF12-A8-ff vs native-A7-ff were
-to clear the fold-level bar, that would be a *finding requiring its own
-scrutiny* (single-arch, single-config — the multiplicity and honest-unit
-rules apply to us first). Verdict to be appended here.
+The harness-native A7 completed and ships in `results/native_core/`; the
+verdict: **FF12-A8 stays within the reference null.** The paired
+price$+$graph-vs-baseline contrast reads $+0.009$ with fold-level
+$p{=}0.136$ (does not reject; the fold-$t$ interval spans zero), and under
+the grid's declared family it is $p_{\mathrm{bonf}}{=}1.0$; the GICS arm's
+same lean reads $-0.002$. No effect is promoted — the finding is the
+sensitivity itself (the taxonomy swap moves the ff arm by $+0.0102$ mean
+MCC, larger than most claimed multi-source effects), exactly as framed
+above. Paper: §4.1 (Table 2), §4.4, and Appendix B; data:
+`results/native_core/`, `results/sector/`.
 
 ## Drift diagnostic (context, not a gate)
 

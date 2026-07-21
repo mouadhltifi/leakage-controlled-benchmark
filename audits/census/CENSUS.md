@@ -1,8 +1,10 @@
-# Reporting Census — Five Evaluation Controls in Multi-Source Stock Prediction
+# Reporting Census — Five Reporting Dimensions in Multi-Source Stock Prediction
 
 **What this is:** A census of what each PAPER REPORTS in its own text (Methods/Experiments/Setup), verified against the primary source. It is **not** a census of what the code does. Our own audit findings (e.g. the MSGCA validation-selection inflation, the CAMEF epoch mismatch) are **excluded** — this counts only reporting.
 
-**The five controls**
+**The five reporting dimensions** (in the benchmark's protocol, C1–C4 are
+the four enforced safeguards and C5, universe justification, is a scope
+condition; the census scores all five as reporting dimensions)
 - **C1** — a price-only baseline *tuned comparably* to the proposed model.
 - **C2** — chronological train/test split **AND** availability-timed features (text/macro lagged to availability).
 - **C3** — model selection insulated from the test set (explicit validation set for selection/early stopping).

@@ -3,8 +3,9 @@
 
 Generate mode (maintainers, at release/tag time):
     python3 scripts/verify_integrity.py --generate
-writes MANIFEST.sha256 — one line per tracked file under src/, scripts/,
-configs/, tables/: "<sha256>  <path>".
+writes MANIFEST.sha256 — one line per tracked file under the covered
+tree (src/, scripts/, configs/, tables/, results/, audits/, experiments/,
+examples/, data/raw/macro/, data/processed/): "<sha256>  <path>".
 
 Verify mode (auditors; the default):
     python3 scripts/verify_integrity.py
@@ -25,6 +26,9 @@ COVERED = ("src", "scripts", "configs", "tables",
            "results", "audits", "experiments", "examples",
            "data/raw/macro", "data/processed")
 SKIP_PARTS = {"__pycache__", ".pytest_cache", ".DS_Store"}
+# Outputs that documented steps materialize on demand (REPRODUCE §3e);
+# never manifested, never reported as UNTRACKED.
+EXPECTED_UNTRACKED = {"data/processed/graphs/sector_adjacency_gics.npy"}
 SCOPE_HEADER = (
     "# Scope: the reproduction tree (code, configs, tables, results, audits,"
     " experiments, examples) plus the materialized raw inputs"
@@ -38,7 +42,8 @@ def covered_files() -> list[Path]:
     files = []
     for top in COVERED:
         for p in sorted((ROOT / top).rglob("*")):
-            if p.is_file() and not (set(p.parts) & SKIP_PARTS):
+            if (p.is_file() and not (set(p.parts) & SKIP_PARTS)
+                    and str(p.relative_to(ROOT)) not in EXPECTED_UNTRACKED):
                 files.append(p)
     return files
 

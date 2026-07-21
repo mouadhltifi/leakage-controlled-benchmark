@@ -1,22 +1,27 @@
-# An Evaluation Protocol and Benchmark for Multi-Source Stock Prediction
+# Auditing Multi-Source Stock Prediction: An Evaluation Protocol and Benchmark
+
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.21431362.svg)](https://doi.org/10.5281/zenodo.21431362)
 
 What would it take to believe that news, social media, macroeconomic series,
 or an inter-stock graph improves next-day stock prediction? This repository
-ships the answer as an instrument: an **evaluation protocol** (five
-conditions — a tuned price-only baseline; chronological splits with every
+ships the answer as an instrument: an **evaluation protocol** (four
+safeguards — a comparably tuned price-only baseline; chronological splits
+with every
 input lagged to availability; test-insulated model selection; corrected
-paired statistics at the honest unit; a universe adversarial to the claim),
+paired statistics at the honest unit — run on a fixed universe adversarial
+to the claim),
 the **harness** that enforces it end to end, **availability-timed
 (release-lag aligned) feature datasets** for five source families (price, news, social, macro, inter-stock
 graphs; 55 liquid US large-caps, 2015–2023), and **reference baselines**
 distilled from 2,468 runs (2,151 controlled). Under the protocol, no source
 combination beats the tuned price-only baseline — a reference null any future
 multi-source claim can be measured against. Two reproducibility audits price
-individual conditions: test-set model selection is worth +0.04 to +0.07 MCC
-within a run, and a non-temporal split that trains on the test period's
-future collapses when made chronological.
+individual safeguards: test-set model selection is worth +0.04 to +0.07 MCC
+within a run, and a released macro-event model's from-scratch retrain at its
+shipped default budget is stable under its non-temporal split but diverges
+under a chronological one (its published checkpoint reproduces).
 
-Each condition is textbook; the contribution is the enforced conjunction,
+Each safeguard is textbook; the contribution is the enforced conjunction,
 made cheap to adopt.
 
 ## Quick start (seconds, no GPU, no data download)
@@ -78,5 +83,14 @@ step by step in **`ECONOMIC-CONTEXT.md`**.
 
 ## Citing
 
-See `CITATION.cff`. The accompanying paper is under review at the KDD 2027
-Datasets & Benchmarks track (cycle 1).
+See `CITATION.cff`. The accompanying paper, *Auditing Multi-Source Stock
+Prediction: An Evaluation Protocol and Benchmark* (Ltifi, Puoti,
+Pittorino), is under review at the KDD 2027 Datasets & Benchmarks track
+(cycle 1). The derived-feature deposit is DOI-archived on Zenodo — concept
+DOI [10.5281/zenodo.21431362](https://doi.org/10.5281/zenodo.21431362),
+always resolving to the latest version.
+
+## Contact
+
+Corresponding author: Mouadh Ltifi (mouadh.ltifi@hotmail.com), or GitHub
+issues — including removal-on-request per `DATA-STATEMENTS.md`.

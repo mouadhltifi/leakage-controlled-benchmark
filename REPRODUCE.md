@@ -236,6 +236,10 @@ PYTHONPATH=src pytest src/mmfp/tests      # config / model / leakage / reproduci
 PYTHONPATH=src pytest src/forecast/tests
 ```
 
+Run them as the two separate invocations shown: the two trees reuse some
+test-module names, so a single combined collection (`pytest src`) fails on
+import collisions, not on substance.
+
 Most tests are data-independent; integration tests skip gracefully when the
 cached feature parquets are absent. `src/mmfp/tests/reproducibility/` asserts
 CPU bit-identical results under a fixed seed.

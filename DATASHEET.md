@@ -7,9 +7,10 @@
 ## Motivation
 
 - **Why created:** published multi-source stock-prediction results are
-  decided by evaluation conditions rather than by data. The benchmark exists
-  so that the five-condition evaluation protocol is cheap to adopt: aligned
-  point-in-time features for five source families, a harness that enforces
+  decided by evaluation choices rather than by data. The benchmark exists
+  so that the four-safeguard evaluation protocol (run on a fixed liquid
+  universe) is cheap to adopt: availability-timed features for five source
+  families, a harness that enforces
   the protocol, and reference baselines to measure new claims against.
 - **Who created / funded:** the authors (Politecnico di Milano); no external
   funding specific to the dataset.

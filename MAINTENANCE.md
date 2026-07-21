@@ -5,8 +5,9 @@
   on Zenodo (concept DOI 10.5281/zenodo.21431362, always resolving to the
   latest version); the repository links the DOI. The repository is the
   canonical index; the DOI deposit is the canonical data copy.
-- **Versioning.** Tagged releases (`v1.0` = the version evaluated in the
-  paper). Any change to data, labels, task definitions, or reference numbers
+- **Versioning.** Tagged releases; `CHANGELOG.md` records every tag (the
+  currently archived release accompanying the KDD submission is named
+  there). Any change to data, labels, task definitions, or reference numbers
   bumps the version and is CHANGELOG'd; reference results are always tied to
   a tag. The 2015–2023 window is **frozen** — maintenance means corrections
   and documentation, not silent extension. A window extension, if ever

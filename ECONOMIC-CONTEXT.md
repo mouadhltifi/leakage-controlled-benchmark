@@ -1,6 +1,7 @@
 # Economic context — derivation note
 
-The paper's economic-anchor sentence (§4.1) makes three quantitative
+The paper's economic-anchor sentence (§3.2, "Tasks, harness, and
+reference results") makes three quantitative
 claims. Each derives from released quantities; this note is the trail.
 
 ## 1. "Near 52% directional accuracy at a gross annualized Sharpe of ≈0.4–0.5"
