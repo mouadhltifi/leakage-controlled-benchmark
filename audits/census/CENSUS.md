@@ -2,6 +2,8 @@
 
 **What this is:** A census of what each PAPER REPORTS in its own text (Methods/Experiments/Setup), verified against the primary source. It is **not** a census of what the code does. Our own audit findings (e.g. the MSGCA validation-selection inflation, the CAMEF epoch mismatch) are **excluded** — this counts only reporting.
 
+**Selection protocol:** the eight core systems span the modality families of the multi-source literature (tweet, news, macro-event, image, report) among widely cited systems with released code or recoverable setups known at freeze time, plus one price-only reference (Adv-ALSTM); the two bonus tweet/news systems extend family coverage. This is a prominence-based convenience sample, not a systematic literature review — the census's claim is **existence** (zero of the eight report all five dimensions), not prevalence across the field.
+
 **The five reporting dimensions** (in the benchmark's protocol, C1–C4 are
 the four enforced safeguards and C5, universe justification, is a scope
 condition; the census scores all five as reporting dimensions)
