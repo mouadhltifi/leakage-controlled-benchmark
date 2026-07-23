@@ -79,7 +79,7 @@ def main():
     # ---- column headers (each centered over its column) -------------------
     heads = [
         (X_TIL0, "SOURCE FAMILIES", "availability-timed features"),
-        (X_HAR0, "EVALUATION PROTOCOL", "four controls + a fixed universe, enforced in code"),
+        (X_HAR0, "EVALUATION PROTOCOL", "four controls + a fixed universe, fixed in the release"),
         (X_LAD0, "GRADUATED AUDIT STANDARD", "what it takes for a gain to count"),
     ]
     for x, t, s in heads:
