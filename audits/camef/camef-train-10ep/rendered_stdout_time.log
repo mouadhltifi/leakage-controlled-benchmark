@@ -1,0 +1,1123 @@
+[{"stream_name":"stdout","time":1.17666901,"data":"=== CAMEF repro — SPLIT=time (flag=['--split-by-time']) epochs=10 ===\n"}
+,{"stream_name":"stdout","time":1.176720492,"data":"=== installing deps (authors' moment.yml; momentfm --no-deps to keep transformers 4.43.1) ===\n"}
+,{"stream_name":"stdout","time":1.1767269,"data":"\n"}
+,{"stream_name":"stdout","time":1.17673089,"data":"$ /usr/bin/python3 -m pip install -q gdown transformers==4.43.1 tokenizers==0.19.1 huggingface-hub==0.24.0 numpy\u003c2 accelerate==1.9.0 scikit-learn==1.5.0 sentencepiece==0.2.0\n"}
+,{"stream_name":"stdout","time":5.298788136,"data":"     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 43.7/43.7 kB 2.1 MB/s eta 0:00:00\n"}
+,{"stream_name":"stdout","time":6.431700682,"data":"     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 61.0/61.0 kB 3.8 MB/s eta 0:00:00\n"}
+,{"stream_name":"stdout","time":7.393179694,"data":"   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 9.4/9.4 MB 91.7 MB/s eta 0:00:00\n"}
+,{"stream_name":"stdout","time":7.444903214,"data":"   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 3.6/3.6 MB 97.7 MB/s eta 0:00:00\n"}
+,{"stream_name":"stdout","time":7.475992137,"data":"   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 419.0/419.0 kB 24.5 MB/s eta 0:00:00\n"}
+,{"stream_name":"stdout","time":7.502484013,"data":"   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 367.1/367.1 kB 25.0 MB/s eta 0:00:00\n"}
+,{"stream_name":"stdout","time":7.63754488,"data":"   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 13.1/13.1 MB 93.4 MB/s eta 0:00:00\n"}
+,{"stream_name":"stdout","time":7.670306257,"data":"   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.3/1.3 MB 64.8 MB/s eta 0:00:00\n"}
+,{"stream_name":"stdout","time":7.820139725,"data":"   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 18.0/18.0 MB 93.6 MB/s eta 0:00:00\n"}
+,{"stream_name":"stderr","time":27.890442983,"data":"ERROR: pip's dependency resolver does not currently take into account all the packages that are installed. This behaviour is the source of the following dependency conflicts.\n"}
+,{"stream_name":"stderr","time":27.890501452,"data":"bigframes 2.39.0 requires google-cloud-bigquery-storage\u003c3.0.0,\u003e=2.30.0, which is not installed.\n"}
+,{"stream_name":"stderr","time":27.890507653,"data":"datasets 5.0.0 requires huggingface-hub\u003c2.0,\u003e=0.25.0, but you have huggingface-hub 0.24.0 which is incompatible.\n"}
+,{"stream_name":"stderr","time":27.890512727,"data":"kaggle-environments 1.29.3 requires numpy\u003e=2.0, but you have numpy 1.26.4 which is incompatible.\n"}
+,{"stream_name":"stderr","time":27.890522685,"data":"tpot 1.1.0 requires scikit-learn\u003e=1.6, but you have scikit-learn 1.5.0 which is incompatible.\n"}
+,{"stream_name":"stderr","time":27.890526225,"data":"cesium 0.12.4 requires numpy\u003c3.0,\u003e=2.0, but you have numpy 1.26.4 which is incompatible.\n"}
+,{"stream_name":"stderr","time":27.890529859,"data":"category-encoders 2.9.0 requires scikit-learn\u003e=1.6.0, but you have scikit-learn 1.5.0 which is incompatible.\n"}
+,{"stream_name":"stderr","time":27.890533107,"data":"google-colab 1.0.0 requires jupyter-server==2.14.0, but you have jupyter-server 2.12.5 which is incompatible.\n"}
+,{"stream_name":"stderr","time":27.890545358,"data":"google-colab 1.0.0 requires pandas==2.2.2, but you have pandas 2.3.3 which is incompatible.\n"}
+,{"stream_name":"stderr","time":27.890548019,"data":"dopamine-rl 4.1.2 requires gym\u003c=0.25.2, but you have gym 0.26.2 which is incompatible.\n"}
+,{"stream_name":"stderr","time":27.890550429,"data":"jaxlib 0.7.2 requires numpy\u003e=2.0, but you have numpy 1.26.4 which is incompatible.\n"}
+,{"stream_name":"stderr","time":27.890552817,"data":"cupy-cuda12x 14.0.1 requires numpy\u003c2.6,\u003e=2.0, but you have numpy 1.26.4 which is incompatible.\n"}
+,{"stream_name":"stderr","time":27.890556235,"data":"moviepy 1.0.3 requires decorator\u003c5.0,\u003e=4.0.2, but you have decorator 5.3.1 which is incompatible.\n"}
+,{"stream_name":"stderr","time":27.890577704000002,"data":"opencv-python 4.13.0.92 requires numpy\u003e=2; python_version \u003e= \"3.9\", but you have numpy 1.26.4 which is incompatible.\n"}
+,{"stream_name":"stderr","time":27.890582453,"data":"umap-learn 0.5.12 requires scikit-learn\u003e=1.6, but you have scikit-learn 1.5.0 which is incompatible.\n"}
+,{"stream_name":"stderr","time":27.890586835,"data":"tobler 0.14.0 requires numpy\u003e=2.0, but you have numpy 1.26.4 which is incompatible.\n"}
+,{"stream_name":"stderr","time":27.89059107,"data":"diffusers 0.37.1 requires huggingface-hub\u003c2.0,\u003e=0.34.0, but you have huggingface-hub 0.24.0 which is incompatible.\n"}
+,{"stream_name":"stderr","time":27.890595237,"data":"jax 0.7.2 requires numpy\u003e=2.0, but you have numpy 1.26.4 which is incompatible.\n"}
+,{"stream_name":"stderr","time":27.890598881,"data":"opencv-python-headless 4.13.0.92 requires numpy\u003e=2; python_version \u003e= \"3.9\", but you have numpy 1.26.4 which is incompatible.\n"}
+,{"stream_name":"stderr","time":27.890602597,"data":"rasterio 1.5.0 requires numpy\u003e=2, but you have numpy 1.26.4 which is incompatible.\n"}
+,{"stream_name":"stderr","time":27.890607209,"data":"peft 0.19.1 requires huggingface_hub\u003e=0.25.0, but you have huggingface-hub 0.24.0 which is incompatible.\n"}
+,{"stream_name":"stderr","time":27.890610816,"data":"pytensor 2.38.2 requires numpy\u003e=2.0, but you have numpy 1.26.4 which is incompatible.\n"}
+,{"stream_name":"stderr","time":27.890614442,"data":"xarray-einstats 0.10.0 requires numpy\u003e=2.0, but you have numpy 1.26.4 which is incompatible.\n"}
+,{"stream_name":"stderr","time":27.890618016,"data":"tifffile 2026.4.11 requires numpy\u003e=2.0, but you have numpy 1.26.4 which is incompatible.\n"}
+,{"stream_name":"stderr","time":27.890621568,"data":"hdbscan 0.8.42 requires scikit-learn\u003e=1.6, but you have scikit-learn 1.5.0 which is incompatible.\n"}
+,{"stream_name":"stderr","time":27.890625112,"data":"opencv-contrib-python 4.13.0.92 requires numpy\u003e=2; python_version \u003e= \"3.9\", but you have numpy 1.26.4 which is incompatible.\n"}
+,{"stream_name":"stderr","time":27.89062884,"data":"shap 0.51.0 requires numpy\u003e=2, but you have numpy 1.26.4 which is incompatible.\n"}
+,{"stream_name":"stderr","time":27.890632338,"data":"gradio 5.50.0 requires huggingface-hub\u003c2.0,\u003e=0.33.5, but you have huggingface-hub 0.24.0 which is incompatible.\n"}
+,{"stream_name":"stdout","time":28.066260022,"data":"(exit 0, 27s)\n"}
+,{"stream_name":"stdout","time":28.066292519,"data":"\n"}
+,{"stream_name":"stdout","time":28.06629727,"data":"$ /usr/bin/python3 -m pip install -q --no-deps momentfm==0.1.4\n"}
+,{"stream_name":"stdout","time":29.341006945,"data":"(exit 0, 1s)\n"}
+,{"stream_name":"stdout","time":35.013083089,"data":"torch 2.10.0+cu128 cuda? True Tesla T4\n"}
+,{"stream_name":"stdout","time":35.671201531,"data":"transformers 4.43.1 numpy 1.26.4\n"}
+,{"stream_name":"stdout","time":36.684150799,"data":"momentfm ?\n"}
+,{"stream_name":"stdout","time":36.684175664,"data":"\n"}
+,{"stream_name":"stdout","time":36.684179888,"data":"=== staging CAMEF code (authors' repo, exact branch) ===\n"}
+,{"stream_name":"stdout","time":36.684183733,"data":"\n"}
+,{"stream_name":"stdout","time":36.684187075,"data":"$ git clone --depth 1 -b publish-camef-code https://github.com/lakebodhi/CAMEF.git /kaggle/working/CAMEF_repo\n"}
+,{"stream_name":"stderr","time":36.71310482,"data":"Cloning into '/kaggle/working/CAMEF_repo'...\n"}
+,{"stream_name":"stdout","time":41.120088342,"data":"(exit 0, 4s)\n"}
+,{"stream_name":"stdout","time":41.120129204,"data":"CAMEF code dir: /kaggle/working/CAMEF_repo/CAMEF exists: True\n"}
+,{"stream_name":"stdout","time":41.120454961,"data":"PATCHED dataloader.py: num_workers 15 -\u003e 2  (D1; Kaggle 2-vCPU)\n"}
+,{"stream_name":"stdout","time":41.120470069,"data":"\n"}
+,{"stream_name":"stdout","time":41.120478217,"data":"=== downloading authors' dataset.zip from Google Drive (~4 GB) ===\n"}
+,{"stream_name":"stderr","time":43.346512373,"data":"Downloading...\n"}
+,{"stream_name":"stderr","time":43.346543014,"data":"From (original): https://drive.google.com/uc?id=1ejmUgVOOiHST3RjHPqsn2P3i_woGPYX_\n"}
+,{"stream_name":"stderr","time":43.34654729,"data":"From (redirected): https://drive.google.com/uc?id=1ejmUgVOOiHST3RjHPqsn2P3i_woGPYX_\u0026confirm=t\u0026uuid=7e6968d9-9515-4083-871a-5fc00a1dcd65\n"}
+,{"stream_name":"stderr","time":43.346551483,"data":"To: /kaggle/working/dataset.zip\n"}
+,{"stream_name":"stderr","time":88.287113175,"data":"\r  0%|          | 0.00/3.98G [00:00\u003c?, ?B/s]\r  0%|          | 4.72M/3.98G [00:00\u003c01:38, 40.2MB/s]\r  0%|          | 8.91M/3.98G [00:00\u003c03:14, 20.4MB/s]\r  1%|          | 28.8M/3.98G [00:00\u003c00:56, 70.3MB/s]\r  1%|          | 40.4M/3.98G [00:00\u003c00:52, 75.1MB/s]\r  1%|▏         | 51.9M/3.98G [00:00\u003c00:45, 85.6MB/s]\r  2%|▏         | 62.4M/3.98G [00:01\u003c01:20, 48.6MB/s]\r  2%|▏         | 77.1M/3.98G [00:01\u003c00:59, 65.5MB/s]\r  2%|▏         | 87.6M/3.98G [00:01\u003c01:02, 62.3MB/s]\r  3%|▎         | 107M/3.98G [00:01\u003c00:44, 87.9MB/s] \r  3%|▎         | 119M/3.98G [00:01\u003c01:00, 63.7MB/s]\r  3%|▎         | 137M/3.98G [00:01\u003c00:45, 84.3MB/s]\r  4%|▍         | 150M/3.98G [00:02\u003c01:04, 59.3MB/s]\r  4%|▍         | 168M/3.98G [00:02\u003c00:54, 69.8MB/s]\r  4%|▍         | 178M/3.98G [00:02\u003c00:52, 72.8MB/s]\r  5%|▍         | 187M/3.98G [00:02\u003c00:52, 72.2MB/s]\r  5%|▌         | 206M/3.98G [00:02\u003c00:39, 95.4MB/s]\r  5%|▌         | 218M/3.98G [00:03\u003c00:43, 86.1MB/s]\r  6%|▌         | 229M/3.98G [00:03\u003c00:51, 72.7MB/s]\r  6%|▋         | 250M/3.98G [00:03\u003c00:38, 97.3MB/s]\r  7%|▋         | 262M/3.98G [00:03\u003c01:05, 56.8MB/s]\r  7%|▋         | 281M/3.98G [00:03\u003c00:48, 76.7MB/s]\r  7%|▋         | 293M/3.98G [00:04\u003c00:55, 66.5MB/s]\r  8%|▊         | 312M/3.98G [00:04\u003c00:42, 86.1MB/s]\r  8%|▊         | 325M/3.98G [00:04\u003c00:47, 76.4MB/s]\r  9%|▊         | 347M/3.98G [00:04\u003c00:35, 103MB/s] \r  9%|▉         | 361M/3.98G [00:04\u003c00:37, 95.8MB/s]\r  9%|▉         | 374M/3.98G [00:04\u003c00:35, 102MB/s] \r 10%|▉         | 387M/3.98G [00:05\u003c00:50, 71.8MB/s]\r 10%|█         | 408M/3.98G [00:05\u003c00:37, 95.5MB/s]\r 11%|█         | 421M/3.98G [00:05\u003c00:50, 70.3MB/s]\r 11%|█         | 437M/3.98G [00:05\u003c00:41, 84.9MB/s]\r 11%|█▏        | 451M/3.98G [00:05\u003c00:37, 95.1MB/s]\r 12%|█▏        | 464M/3.98G [00:06\u003c00:36, 96.6MB/s]\r 12%|█▏        | 479M/3.98G [00:06\u003c00:34, 101MB/s] \r 12%|█▏        | 491M/3.98G [00:06\u003c01:07, 51.7MB/s]\r 13%|█▎        | 513M/3.98G [00:06\u003c00:46, 74.6MB/s]\r 13%|█▎        | 526M/3.98G [00:07\u003c00:57, 60.1MB/s]\r 14%|█▎        | 539M/3.98G [00:07\u003c00:48, 70.3MB/s]\r 14%|█▍        | 556M/3.98G [00:07\u003c00:46, 73.8MB/s]\r 14%|█▍        | 571M/3.98G [00:07\u003c00:41, 81.2MB/s]\r 15%|█▍        | 586M/3.98G [00:07\u003c00:36, 93.1MB/s]\r 15%|█▌        | 598M/3.98G [00:07\u003c00:40, 83.5MB/s]\r 15%|█▌        | 608M/3.98G [00:08\u003c00:49, 68.1MB/s]\r 16%|█▌        | 630M/3.98G [00:08\u003c00:34, 95.9MB/s]\r 16%|█▌        | 642M/3.98G [00:08\u003c00:46, 71.9MB/s]\r 17%|█▋        | 658M/3.98G [00:08\u003c00:38, 86.6MB/s]\r 17%|█▋        | 671M/3.98G [00:08\u003c00:41, 79.9MB/s]\r 17%|█▋        | 687M/3.98G [00:08\u003c00:34, 95.5MB/s]\r 18%|█▊        | 700M/3.98G [00:09\u003c00:32, 100MB/s] \r 18%|█▊        | 713M/3.98G [00:09\u003c00:30, 106MB/s]\r 18%|█▊        | 726M/3.98G [00:09\u003c00:29, 112MB/s]\r 19%|█▊        | 738M/3.98G [00:09\u003c00:33, 98.1MB/s]\r 19%|█▉        | 749M/3.98G [00:09\u003c00:38, 84.8MB/s]\r 19%|█▉        | 770M/3.98G [00:09\u003c00:31, 101MB/s] \r 20%|█▉        | 781M/3.98G [00:09\u003c00:31, 102MB/s]\r 20%|█▉        | 792M/3.98G [00:09\u003c00:36, 87.6MB/s]\r 20%|██        | 804M/3.98G [00:10\u003c00:33, 95.7MB/s]\r 20%|██        | 815M/3.98G [00:10\u003c00:33, 95.2MB/s]\r 21%|██        | 825M/3.98G [00:10\u003c00:32, 96.5MB/s]\r 21%|██        | 836M/3.98G [00:10\u003c00:31, 99.2MB/s]\r 21%|██▏       | 853M/3.98G [00:10\u003c00:26, 117MB/s] \r 22%|██▏       | 866M/3.98G [00:10\u003c00:37, 83.3MB/s]\r 22%|██▏       | 876M/3.98G [00:11\u003c00:49, 63.0MB/s]\r 22%|██▏       | 887M/3.98G [00:11\u003c00:43, 71.2MB/s]\r 23%|██▎       | 898M/3.98G [00:11\u003c00:50, 61.1MB/s]\r 23%|██▎       | 911M/3.98G [00:11\u003c00:47, 64.9MB/s]\r 23%|██▎       | 930M/3.98G [00:11\u003c00:34, 88.1MB/s]\r 24%|██▎       | 941M/3.98G [00:11\u003c00:35, 85.1MB/s]\r 24%|██▍       | 951M/3.98G [00:11\u003c00:39, 76.0MB/s]\r 24%|██▍       | 969M/3.98G [00:12\u003c00:37, 80.7MB/s]\r 25%|██▍       | 978M/3.98G [00:12\u003c01:12, 41.6MB/s]\r 25%|██▌       | 996M/3.98G [00:12\u003c00:51, 57.9MB/s]\r 25%|██▌       | 1.01G/3.98G [00:13\u003c00:54, 54.4MB/s]\r 25%|██▌       | 1.01G/3.98G [00:13\u003c01:05, 45.2MB/s]\r 26%|██▌       | 1.03G/3.98G [00:13\u003c00:49, 59.6MB/s]\r 26%|██▌       | 1.04G/3.98G [00:13\u003c00:54, 54.1MB/s]\r 26%|██▋       | 1.05G/3.98G [00:13\u003c00:42, 68.8MB/s]\r 27%|██▋       | 1.07G/3.98G [00:13\u003c00:37, 78.6MB/s]\r 27%|██▋       | 1.08G/3.98G [00:14\u003c00:42, 67.9MB/s]\r 27%|██▋       | 1.08G/3.98G [00:14\u003c00:40, 71.3MB/s]\r 28%|██▊       | 1.10G/3.98G [00:14\u003c00:33, 85.1MB/s]\r 28%|██▊       | 1.11G/3.98G [00:14\u003c00:32, 87.8MB/s]\r 28%|██▊       | 1.12G/3.98G [00:14\u003c00:32, 87.5MB/s]\r 28%|██▊       | 1.13G/3.98G [00:14\u003c00:27, 105MB/s] \r 29%|██▉       | 1.15G/3.98G [00:14\u003c00:30, 92.3MB/s]\r 29%|██▉       | 1.16G/3.98G [00:15\u003c00:29, 95.4MB/s]\r 30%|██▉       | 1.18G/3.98G [00:15\u003c00:24, 116MB/s] \r 30%|██▉       | 1.19G/3.98G [00:15\u003c00:27, 102MB/s]\r 30%|███       | 1.21G/3.98G [00:15\u003c00:24, 112MB/s]\r 31%|███       | 1.22G/3.98G [00:15\u003c00:27, 99.3MB/s]\r 31%|███       | 1.23G/3.98G [00:15\u003c00:34, 79.1MB/s]\r 31%|███       | 1.24G/3.98G [00:15\u003c00:34, 79.0MB/s]\r 31%|███▏      | 1.25G/3.98G [00:16\u003c00:55, 49.1MB/s]\r 32%|███▏      | 1.27G/3.98G [00:16\u003c00:40, 67.1MB/s]\r 32%|███▏      | 1.28G/3.98G [00:16\u003c00:42, 63.4MB/s]\r 32%|███▏      | 1.29G/3.98G [00:17\u003c01:07, 40.1MB/s]\r 33%|███▎      | 1.30G/3.98G [00:17\u003c00:43, 61.7MB/s]\r 33%|███▎      | 1.32G/3.98G [00:17\u003c00:39, 68.2MB/s]\r 34%|███▎      | 1.33G/3.98G [00:17\u003c00:32, 81.1MB/s]\r 34%|███▍      | 1.35G/3.98G [00:17\u003c00:30, 87.4MB/s]\r 34%|███▍      | 1.37G/3.98G [00:17\u003c00:24, 108MB/s] \r 35%|███▍      | 1.38G/3.98G [00:18\u003c00:45, 57.7MB/s]\r 35%|███▌      | 1.40G/3.98G [00:18\u003c00:34, 74.6MB/s]\r 35%|███▌      | 1.41G/3.98G [00:18\u003c00:37, 68.4MB/s]\r 36%|███▌      | 1.42G/3.98G [00:18\u003c00:31, 81.1MB/s]\r 36%|███▌      | 1.44G/3.98G [00:18\u003c00:36, 70.6MB/s]\r 37%|███▋      | 1.46G/3.98G [00:18\u003c00:29, 87.0MB/s]\r 37%|███▋      | 1.48G/3.98G [00:19\u003c00:23, 107MB/s] \r 37%|███▋      | 1.49G/3.98G [00:19\u003c00:25, 96.2MB/s]\r 38%|███▊      | 1.50G/3.98G [00:19\u003c00:26, 93.0MB/s]\r 38%|███▊      | 1.51G/3.98G [00:19\u003c00:46, 53.2MB/s]\r 38%|███▊      | 1.53G/3.98G [00:19\u003c00:33, 74.3MB/s]\r 39%|███▊      | 1.54G/3.98G [00:20\u003c00:32, 74.2MB/s]\r 39%|███▉      | 1.55G/3.98G [00:20\u003c00:30, 78.7MB/s]\r 40%|███▉      | 1.58G/3.98G [00:20\u003c00:29, 80.5MB/s]\r 40%|████      | 1.60G/3.98G [00:20\u003c00:22, 108MB/s] \r 41%|████      | 1.61G/3.98G [00:21\u003c00:51, 46.1MB/s]\r 41%|████      | 1.63G/3.98G [00:21\u003c00:41, 57.1MB/s]\r 41%|████      | 1.64G/3.98G [00:21\u003c00:36, 64.7MB/s]\r 41%|████▏     | 1.65G/3.98G [00:21\u003c00:35, 64.9MB/s]\r 42%|████▏     | 1.67G/3.98G [00:21\u003c00:26, 86.0MB/s]\r 42%|████▏     | 1.69G/3.98G [00:22\u003c00:25, 89.4MB/s]\r 43%|████▎     | 1.70G/3.98G [00:22\u003c00:22, 103MB/s] \r 43%|████▎     | 1.72G/3.98G [00:22\u003c00:18, 119MB/s]\r 44%|████▎     | 1.74G/3.98G [00:22\u003c00:19, 115MB/s]\r 44%|████▍     | 1.75G/3.98G [00:22\u003c00:25, 87.9MB/s]\r 45%|████▍     | 1.77G/3.98G [00:22\u003c00:19, 111MB/s] \r 45%|████▌     | 1.79G/3.98G [00:22\u003c00:16, 133MB/s]\r 45%|████▌     | 1.81G/3.98G [00:23\u003c00:17, 126MB/s]\r 46%|████▌     | 1.83G/3.98G [00:23\u003c00:32, 66.7MB/s]\r 46%|████▋     | 1.84G/3.98G [00:23\u003c00:26, 80.5MB/s]\r 47%|████▋     | 1.86G/3.98G [00:23\u003c00:24, 86.2MB/s]\r 47%|████▋     | 1.88G/3.98G [00:23\u003c00:20, 105MB/s] \r 47%|████▋     | 1.89G/3.98G [00:24\u003c00:21, 95.3MB/s]\r 48%|████▊     | 1.91G/3.98G [00:24\u003c00:17, 118MB/s] \r 48%|████▊     | 1.93G/3.98G [00:24\u003c00:21, 95.8MB/s]\r 49%|████▉     | 1.95G/3.98G [00:24\u003c00:17, 118MB/s] \r 49%|████▉     | 1.96G/3.98G [00:24\u003c00:19, 105MB/s]\r 50%|████▉     | 1.97G/3.98G [00:25\u003c00:35, 57.2MB/s]\r 50%|████▉     | 1.99G/3.98G [00:25\u003c00:28, 69.6MB/s]\r 50%|█████     | 2.01G/3.98G [00:25\u003c00:23, 83.4MB/s]\r 51%|█████     | 2.02G/3.98G [00:25\u003c00:18, 104MB/s] \r 51%|█████     | 2.04G/3.98G [00:25\u003c00:19, 97.4MB/s]\r 52%|█████▏    | 2.06G/3.98G [00:25\u003c00:16, 119MB/s] \r 52%|█████▏    | 2.08G/3.98G [00:25\u003c00:13, 139MB/s]\r 53%|█████▎    | 2.10G/3.98G [00:26\u003c00:12, 151MB/s]\r 53%|█████▎    | 2.12G/3.98G [00:26\u003c00:12, 146MB/s]\r 54%|█████▎    | 2.13G/3.98G [00:26\u003c00:13, 134MB/s]\r 54%|█████▍    | 2.15G/3.98G [00:26\u003c00:14, 129MB/s]\r 54%|█████▍    | 2.16G/3.98G [00:26\u003c00:22, 81.8MB/s]\r 55%|█████▍    | 2.18G/3.98G [00:26\u003c00:17, 101MB/s] \r 55%|█████▌    | 2.19G/3.98G [00:27\u003c00:18, 96.1MB/s]\r 56%|█████▌    | 2.21G/3.98G [00:27\u003c00:15, 116MB/s] \r 56%|█████▌    | 2.23G/3.98G [00:27\u003c00:16, 104MB/s]\r 56%|█████▋    | 2.24G/3.98G [00:27\u003c00:16, 105MB/s]\r 57%|█████▋    | 2.26G/3.98G [00:27\u003c00:24, 69.6MB/s]\r 57%|█████▋    | 2.28G/3.98G [00:27\u003c00:19, 88.8MB/s]\r 58%|█████▊    | 2.29G/3.98G [00:28\u003c00:19, 87.4MB/s]\r 58%|█████▊    | 2.30G/3.98G [00:28\u003c00:27, 61.3MB/s]\r 58%|█████▊    | 2.32G/3.98G [00:28\u003c00:20, 81.8MB/s]\r 59%|█████▊    | 2.34G/3.98G [00:28\u003c00:18, 87.6MB/s]\r 59%|█████▉    | 2.36G/3.98G [00:28\u003c00:15, 106MB/s] \r 60%|█████▉    | 2.37G/3.98G [00:28\u003c00:15, 104MB/s]\r 60%|██████    | 2.39G/3.98G [00:29\u003c00:12, 125MB/s]\r 60%|██████    | 2.41G/3.98G [00:29\u003c00:15, 100MB/s]\r 61%|██████    | 2.42G/3.98G [00:29\u003c00:15, 100MB/s]\r 61%|██████    | 2.44G/3.98G [00:29\u003c00:13, 116MB/s]\r 62%|██████▏   | 2.45G/3.98G [00:29\u003c00:14, 106MB/s]\r 62%|██████▏   | 2.46G/3.98G [00:29\u003c00:14, 102MB/s]\r 62%|██████▏   | 2.47G/3.98G [00:29\u003c00:13, 110MB/s]\r 62%|██████▏   | 2.49G/3.98G [00:30\u003c00:13, 108MB/s]\r 63%|██████▎   | 2.50G/3.98G [00:30\u003c00:13, 113MB/s]\r 63%|██████▎   | 2.52G/3.98G [00:30\u003c00:12, 121MB/s]\r 63%|██████▎   | 2.53G/3.98G [00:30\u003c00:14, 102MB/s]\r 64%|██████▍   | 2.54G/3.98G [00:30\u003c00:12, 116MB/s]\r 64%|██████▍   | 2.56G/3.98G [00:30\u003c00:11, 121MB/s]\r 65%|██████▍   | 2.57G/3.98G [00:30\u003c00:12, 115MB/s]\r 65%|██████▍   | 2.58G/3.98G [00:30\u003c00:12, 116MB/s]\r 65%|██████▌   | 2.60G/3.98G [00:31\u003c00:11, 118MB/s]\r 66%|██████▌   | 2.62G/3.98G [00:31\u003c00:10, 130MB/s]\r 66%|██████▋   | 2.64G/3.98G [00:31\u003c00:09, 147MB/s]\r 67%|██████▋   | 2.65G/3.98G [00:31\u003c00:11, 115MB/s]\r 67%|██████▋   | 2.67G/3.98G [00:31\u003c00:09, 137MB/s]\r 68%|██████▊   | 2.69G/3.98G [00:31\u003c00:12, 99.5MB/s]\r 68%|██████▊   | 2.71G/3.98G [00:31\u003c00:10, 122MB/s] \r 68%|██████▊   | 2.73G/3.98G [00:32\u003c00:11, 107MB/s]\r 69%|██████▉   | 2.74G/3.98G [00:32\u003c00:12, 99.2MB/s]\r 69%|██████▉   | 2.76G/3.98G [00:32\u003c00:10, 121MB/s] \r 70%|██████▉   | 2.78G/3.98G [00:32\u003c00:11, 107MB/s]\r 70%|███████   | 2.80G/3.98G [00:32\u003c00:09, 131MB/s]\r 71%|███████   | 2.82G/3.98G [00:32\u003c00:11, 97.2MB/s]\r 71%|███████   | 2.83G/3.98G [00:33\u003c00:10, 111MB/s] \r 72%|███████▏  | 2.85G/3.98G [00:33\u003c00:09, 122MB/s]\r 72%|███████▏  | 2.86G/3.98G [00:33\u003c00:11, 95.4MB/s]\r 72%|███████▏  | 2.88G/3.98G [00:33\u003c00:09, 114MB/s] \r 73%|███████▎  | 2.90G/3.98G [00:34\u003c00:18, 58.4MB/s]\r 73%|███████▎  | 2.92G/3.98G [00:34\u003c00:13, 76.0MB/s]\r 74%|███████▎  | 2.93G/3.98G [00:34\u003c00:11, 90.5MB/s]\r 74%|███████▍  | 2.95G/3.98G [00:34\u003c00:12, 84.1MB/s]\r 75%|███████▍  | 2.97G/3.98G [00:35\u003c00:19, 52.5MB/s]\r 75%|███████▌  | 2.99G/3.98G [00:35\u003c00:14, 68.2MB/s]\r 75%|███████▌  | 3.00G/3.98G [00:35\u003c00:12, 79.8MB/s]\r 76%|███████▌  | 3.02G/3.98G [00:35\u003c00:09, 98.7MB/s]\r 76%|███████▋  | 3.04G/3.98G [00:36\u003c00:18, 52.2MB/s]\r 77%|███████▋  | 3.06G/3.98G [00:36\u003c00:12, 72.4MB/s]\r 77%|███████▋  | 3.07G/3.98G [00:36\u003c00:11, 78.8MB/s]\r 78%|███████▊  | 3.10G/3.98G [00:36\u003c00:08, 103MB/s] \r 78%|███████▊  | 3.12G/3.98G [00:36\u003c00:06, 124MB/s]\r 79%|███████▉  | 3.14G/3.98G [00:36\u003c00:06, 139MB/s]\r 79%|███████▉  | 3.16G/3.98G [00:36\u003c00:06, 131MB/s]\r 80%|███████▉  | 3.18G/3.98G [00:36\u003c00:05, 151MB/s]\r 80%|████████  | 3.20G/3.98G [00:37\u003c00:10, 73.7MB/s]\r 81%|████████  | 3.22G/3.98G [00:37\u003c00:08, 90.1MB/s]\r 81%|████████  | 3.23G/3.98G [00:37\u003c00:08, 93.4MB/s]\r 82%|████████▏ | 3.25G/3.98G [00:37\u003c00:07, 95.7MB/s]\r 82%|████████▏ | 3.26G/3.98G [00:37\u003c00:06, 113MB/s] \r 82%|████████▏ | 3.28G/3.98G [00:38\u003c00:06, 109MB/s]\r 83%|████████▎ | 3.30G/3.98G [00:38\u003c00:05, 121MB/s]\r 83%|████████▎ | 3.31G/3.98G [00:38\u003c00:07, 92.2MB/s]\r 84%|████████▎ | 3.33G/3.98G [00:38\u003c00:06, 109MB/s] \r 84%|████████▍ | 3.34G/3.98G [00:38\u003c00:06, 99.9MB/s]\r 84%|████████▍ | 3.36G/3.98G [00:38\u003c00:05, 111MB/s] \r 85%|████████▍ | 3.37G/3.98G [00:38\u003c00:05, 108MB/s]\r 85%|████████▍ | 3.38G/3.98G [00:39\u003c00:05, 118MB/s]\r 85%|████████▌ | 3.40G/3.98G [00:39\u003c00:04, 134MB/s]\r 86%|████████▌ | 3.42G/3.98G [00:39\u003c00:06, 88.8MB/s]\r 86%|████████▋ | 3.44G/3.98G [00:39\u003c00:04, 113MB/s] \r 87%|████████▋ | 3.45G/3.98G [00:39\u003c00:06, 87.1MB/s]\r 87%|████████▋ | 3.47G/3.98G [00:39\u003c00:05, 99.5MB/s]\r 88%|████████▊ | 3.49G/3.98G [00:40\u003c00:04, 121MB/s] \r 88%|████████▊ | 3.51G/3.98G [00:40\u003c00:04, 114MB/s]\r 88%|████████▊ | 3.52G/3.98G [00:40\u003c00:04, 115MB/s]\r 89%|████████▉ | 3.54G/3.98G [00:40\u003c00:03, 130MB/s]\r 89%|████████▉ | 3.55G/3.98G [00:40\u003c00:05, 83.0MB/s]\r 90%|████████▉ | 3.58G/3.98G [00:40\u003c00:03, 107MB/s] \r 90%|█████████ | 3.59G/3.98G [00:41\u003c00:03, 117MB/s]\r 91%|█████████ | 3.61G/3.98G [00:41\u003c00:04, 76.7MB/s]\r 91%|█████████ | 3.63G/3.98G [00:41\u003c00:03, 98.1MB/s]\r 92%|█████████▏| 3.64G/3.98G [00:41\u003c00:03, 108MB/s] \r 92%|█████████▏| 3.66G/3.98G [00:41\u003c00:03, 101MB/s]\r 92%|█████████▏| 3.67G/3.98G [00:41\u003c00:02, 105MB/s]\r 93%|█████████▎| 3.69G/3.98G [00:42\u003c00:03, 95.2MB/s]\r 93%|█████████▎| 3.70G/3.98G [00:42\u003c00:03, 89.3MB/s]\r 93%|█████████▎| 3.71G/3.98G [00:42\u003c00:03, 83.5MB/s]\r 94%|█████████▎| 3.73G/3.98G [00:42\u003c00:02, 107MB/s] \r 94%|█████████▍| 3.74G/3.98G [00:42\u003c00:02, 93.6MB/s]\r 94%|█████████▍| 3.75G/3.98G [00:42\u003c00:02, 94.3MB/s]\r 95%|█████████▍| 3.76G/3.98G [00:42\u003c00:01, 113MB/s] \r 95%|█████████▍| 3.78G/3.98G [00:42\u003c00:01, 109MB/s]\r 95%|█████████▌| 3.79G/3.98G [00:43\u003c00:01, 116MB/s]\r 96%|█████████▌| 3.81G/3.98G [00:43\u003c00:01, 131MB/s]\r 96%|█████████▌| 3.83G/3.98G [00:43\u003c00:01, 106MB/s]\r 97%|█████████▋| 3.85G/3.98G [00:43\u003c00:01, 127MB/s]\r 97%|█████████▋| 3.86G/3.98G [00:43\u003c00:01, 115MB/s]\r 97%|█████████▋| 3.87G/3.98G [00:43\u003c00:01, 98.9MB/s]\r 98%|█████████▊| 3.89G/3.98G [00:43\u003c00:00, 112MB/s] \r 98%|█████████▊| 3.90G/3.98G [00:44\u003c00:00, 101MB/s]\r 98%|█████████▊| 3.92G/3.98G [00:44\u003c00:00, 119MB/s]\r 99%|█████████▉| 3.93G/3.98G [00:44\u003c00:00, 126MB/s]\r 99%|█████████▉| 3.95G/3.98G [00:44\u003c00:00, 121MB/s]\r 99%|█████████▉| 3.96G/3.98G [00:44\u003c00:00, 69.7MB/s]\r100%|█████████▉| 3.98G/3.98G [00:44\u003c00:00, 89.7MB/s]\r100%|██████████| 3.98G/3.98G [00:44\u003c00:00, 88.6MB/s]\n"}
+,{"stream_name":"stdout","time":88.28799437,"data":"dataset.zip = 3981.7 MB\n"}
+,{"stream_name":"stdout","time":88.616712325,"data":"zip entries: 43500\n"}
+,{"stream_name":"stdout","time":113.434258562,"data":"EVENTS  = /kaggle/working/dataset_x/dataset/events/processed_events_and_counterfactuals\n"}
+,{"stream_name":"stdout","time":113.434298095,"data":"SERIES  = /kaggle/working/dataset_x/dataset/time-sersseries\n"}
+,{"stream_name":"stdout","time":113.435141636,"data":"symlink /kaggle/working/CAMEF_repo/CAMEF/data/event -\u003e /kaggle/working/dataset_x/dataset/events/processed_events_and_counterfactuals\n"}
+,{"stream_name":"stdout","time":113.435156016,"data":"symlink /kaggle/working/CAMEF_repo/CAMEF/data/series -\u003e /kaggle/working/dataset_x/dataset/time-sersseries\n"}
+,{"stream_name":"stdout","time":113.441651768,"data":"dataloader split('/')[2] on 'data/event/1/20230727.txt' = '1' (must equal class '1')\n"}
+,{"stream_name":"stdout","time":113.441669667,"data":"\n"}
+,{"stream_name":"stdout","time":113.44167418,"data":"=== pre-fetching pretrained weights (all OPEN; NO LLaMA at runtime) ===\n"}
+,{"stream_name":"stderr","time":118.111573431,"data":"Some weights of RobertaModel were not initialized from the model checkpoint at FacebookAI/roberta-base and are newly initialized: ['roberta.pooler.dense.bias', 'roberta.pooler.dense.weight']\n"}
+,{"stream_name":"stderr","time":118.111612568,"data":"You should probably TRAIN this model on a down-stream task to be able to use it for predictions and inference.\n"}
+,{"stream_name":"stdout","time":118.962157668,"data":"  OK: roberta-base\n"}
+,{"stream_name":"stdout","time":125.44692644,"data":"  OK: gpt2\n"}
+,{"stream_name":"stderr","time":144.737874867,"data":"/usr/local/lib/python3.12/dist-packages/momentfm/models/moment.py:174: UserWarning: Only reconstruction head is pre-trained. Classification and forecasting heads must be fine-tuned.\n"}
+,{"stream_name":"stderr","time":144.737923932,"data":"  warnings.warn(\"Only reconstruction head is pre-trained. Classification and forecasting heads must be fine-tuned.\")\n"}
+,{"stream_name":"stdout","time":144.805135187,"data":"  OK: AutonLab/MOMENT-1-large\n"}
+,{"stream_name":"stdout","time":144.805592561,"data":"\n"}
+,{"stream_name":"stdout","time":144.805679962,"data":"############### TRAIN [time] (epochs=10) ###############\n"}
+,{"stream_name":"stdout","time":144.805689446,"data":"$ /usr/bin/python3 train.py --moment-model AutonLab/MOMENT-1-large --event-dir data/event --series-dir data/series --series-id SP500 --seq-len 35 --pred-len 35 --batch-size 10 --epochs 10 --output-path /kaggle/working/out_time --split-by-time\n"}
+,{"stream_name":"stderr","time":179.0613479,"data":"Some weights of RobertaModel were not initialized from the model checkpoint at FacebookAI/roberta-base and are newly initialized: ['roberta.pooler.dense.bias', 'roberta.pooler.dense.weight']\n"}
+,{"stream_name":"stderr","time":179.061396858,"data":"You should probably TRAIN this model on a down-stream task to be able to use it for predictions and inference.\n"}
+,{"stream_name":"stdout","time":203.831364559,"data":"Data Loaded: TRAIN: 916, VALI: 306, TEST: 305 [split: by time (6:2:2)]\n"}
+,{"stream_name":"stderr","time":204.688687669,"data":"Token indices sequence length is longer than the specified maximum sequence length for this model (970 \u003e 512). Running this sequence through the model will result in indexing errors\n"}
+,{"stream_name":"stdout","time":1045.535063064,"data":"Step in Epoch: 1/10, loss: 1.3881425857543945\n"}
+,{"stream_name":"stdout","time":1045.535135738,"data":"Step in Epoch: 1/10, loss: 1.5286829471588135\n"}
+,{"stream_name":"stdout","time":1045.535143924,"data":"Step in Epoch: 1/10, loss: 1.579398274421692\n"}
+,{"stream_name":"stdout","time":1045.535149986,"data":"Step in Epoch: 1/10, loss: 1.3801116943359375\n"}
+,{"stream_name":"stdout","time":1045.535155781,"data":"Step in Epoch: 1/10, loss: 1.3728446960449219\n"}
+,{"stream_name":"stdout","time":1045.535161155,"data":"Step in Epoch: 1/10, loss: 1.9080376625061035\n"}
+,{"stream_name":"stdout","time":1045.535166632,"data":"Step in Epoch: 1/10, loss: 1.8216537237167358\n"}
+,{"stream_name":"stdout","time":1045.53518413,"data":"Step in Epoch: 1/10, loss: 2.0769705772399902\n"}
+,{"stream_name":"stdout","time":1045.535188275,"data":"Step in Epoch: 1/10, loss: 3.735104560852051\n"}
+,{"stream_name":"stdout","time":1045.535192208,"data":"Step in Epoch: 1/10, loss: 4.78457498550415\n"}
+,{"stream_name":"stdout","time":1045.535196066,"data":"Step in Epoch: 1/10, loss: 4.516890525817871\n"}
+,{"stream_name":"stdout","time":1045.535199867,"data":"Step in Epoch: 1/10, loss: 4.948235511779785\n"}
+,{"stream_name":"stdout","time":1045.53520353,"data":"Step in Epoch: 1/10, loss: 5.829977035522461\n"}
+,{"stream_name":"stdout","time":1045.53520742,"data":"Step in Epoch: 1/10, loss: 5.082551002502441\n"}
+,{"stream_name":"stdout","time":1045.535212887,"data":"Step in Epoch: 1/10, loss: 4.498612880706787\n"}
+,{"stream_name":"stdout","time":1045.535220605,"data":"Step in Epoch: 1/10, loss: 4.174368858337402\n"}
+,{"stream_name":"stdout","time":1045.535223304,"data":"Step in Epoch: 1/10, loss: 4.0555949211120605\n"}
+,{"stream_name":"stdout","time":1045.535225921,"data":"Step in Epoch: 1/10, loss: 3.4457554817199707\n"}
+,{"stream_name":"stdout","time":1045.535246127,"data":"Step in Epoch: 1/10, loss: 3.0857410430908203\n"}
+,{"stream_name":"stdout","time":1045.535250832,"data":"Step in Epoch: 1/10, loss: 2.7730541229248047\n"}
+,{"stream_name":"stdout","time":1045.535255195,"data":"Step in Epoch: 1/10, loss: 2.5243635177612305\n"}
+,{"stream_name":"stdout","time":1045.535259183,"data":"Step in Epoch: 1/10, loss: 2.7660293579101562\n"}
+,{"stream_name":"stdout","time":1045.535263737,"data":"Step in Epoch: 1/10, loss: 2.405580520629883\n"}
+,{"stream_name":"stdout","time":1045.53526844,"data":"Step in Epoch: 1/10, loss: 2.065864324569702\n"}
+,{"stream_name":"stdout","time":1045.535272297,"data":"Step in Epoch: 1/10, loss: 2.527737617492676\n"}
+,{"stream_name":"stdout","time":1045.53527603,"data":"Step in Epoch: 1/10, loss: 2.7277607917785645\n"}
+,{"stream_name":"stdout","time":1045.535279815,"data":"Step in Epoch: 1/10, loss: 2.537780284881592\n"}
+,{"stream_name":"stdout","time":1045.535283577,"data":"Step in Epoch: 1/10, loss: 2.609929084777832\n"}
+,{"stream_name":"stdout","time":1045.53528732,"data":"Step in Epoch: 1/10, loss: 2.2527244091033936\n"}
+,{"stream_name":"stdout","time":1045.535291032,"data":"Step in Epoch: 1/10, loss: 1.9383251667022705\n"}
+,{"stream_name":"stdout","time":1045.535294833,"data":"Step in Epoch: 1/10, loss: 1.901024341583252\n"}
+,{"stream_name":"stdout","time":1045.53529856,"data":"Step in Epoch: 1/10, loss: 1.544087529182434\n"}
+,{"stream_name":"stdout","time":1045.535302355,"data":"Step in Epoch: 1/10, loss: 1.3910138607025146\n"}
+,{"stream_name":"stdout","time":1045.535306208,"data":"Step in Epoch: 1/10, loss: 1.4005132913589478\n"}
+,{"stream_name":"stdout","time":1045.535310204,"data":"Step in Epoch: 1/10, loss: 1.303689956665039\n"}
+,{"stream_name":"stdout","time":1045.535315907,"data":"Step in Epoch: 1/10, loss: 1.3332009315490723\n"}
+,{"stream_name":"stdout","time":1045.535322987,"data":"Step in Epoch: 1/10, loss: 1.3513396978378296\n"}
+,{"stream_name":"stdout","time":1045.535325706,"data":"Step in Epoch: 1/10, loss: 1.4732557535171509\n"}
+,{"stream_name":"stdout","time":1045.535328397,"data":"Step in Epoch: 1/10, loss: 1.8389320373535156\n"}
+,{"stream_name":"stdout","time":1045.53534538,"data":"Step in Epoch: 1/10, loss: 1.7422536611557007\n"}
+,{"stream_name":"stdout","time":1045.535350093,"data":"Step in Epoch: 1/10, loss: 1.504035234451294\n"}
+,{"stream_name":"stdout","time":1045.535354581,"data":"Step in Epoch: 1/10, loss: 1.6036596298217773\n"}
+,{"stream_name":"stdout","time":1045.535358873,"data":"Step in Epoch: 1/10, loss: 1.3279694318771362\n"}
+,{"stream_name":"stdout","time":1045.535368652,"data":"Step in Epoch: 1/10, loss: 1.303236722946167\n"}
+,{"stream_name":"stdout","time":1045.53537447,"data":"Step in Epoch: 1/10, loss: 1.2330801486968994\n"}
+,{"stream_name":"stdout","time":1045.535378322,"data":"Step in Epoch: 1/10, loss: 1.2987945079803467\n"}
+,{"stream_name":"stdout","time":1045.535382165,"data":"Step in Epoch: 1/10, loss: 1.2807528972625732\n"}
+,{"stream_name":"stdout","time":1045.53538591,"data":"Step in Epoch: 1/10, loss: 1.243857979774475\n"}
+,{"stream_name":"stdout","time":1045.535400751,"data":"Step in Epoch: 1/10, loss: 1.2723363637924194\n"}
+,{"stream_name":"stdout","time":1045.535404241,"data":"Step in Epoch: 1/10, loss: 1.3119269609451294\n"}
+,{"stream_name":"stdout","time":1045.535407857,"data":"Step in Epoch: 1/10, loss: 1.3240200281143188\n"}
+,{"stream_name":"stdout","time":1045.535411438,"data":"Step in Epoch: 1/10, loss: 1.3097413778305054\n"}
+,{"stream_name":"stdout","time":1045.535415015,"data":"Step in Epoch: 1/10, loss: 1.2762560844421387\n"}
+,{"stream_name":"stdout","time":1045.535418586,"data":"Step in Epoch: 1/10, loss: 1.4330217838287354\n"}
+,{"stream_name":"stdout","time":1045.535427949,"data":"Step in Epoch: 1/10, loss: 1.5407061576843262\n"}
+,{"stream_name":"stdout","time":1045.53543138,"data":"Step in Epoch: 1/10, loss: 1.5843451023101807\n"}
+,{"stream_name":"stdout","time":1045.535453168,"data":"Step in Epoch: 1/10, loss: 1.7743513584136963\n"}
+,{"stream_name":"stdout","time":1045.53545712,"data":"Step in Epoch: 1/10, loss: 2.0661182403564453\n"}
+,{"stream_name":"stdout","time":1045.535461613,"data":"Step in Epoch: 1/10, loss: 1.9439454078674316\n"}
+,{"stream_name":"stdout","time":1045.535465495,"data":"Step in Epoch: 1/10, loss: 2.241187334060669\n"}
+,{"stream_name":"stdout","time":1045.535469091,"data":"Step in Epoch: 1/10, loss: 2.0052173137664795\n"}
+,{"stream_name":"stdout","time":1045.535472535,"data":"Step in Epoch: 1/10, loss: 2.275390625\n"}
+,{"stream_name":"stdout","time":1045.535476022,"data":"Step in Epoch: 1/10, loss: 2.563908100128174\n"}
+,{"stream_name":"stdout","time":1045.535479541,"data":"Step in Epoch: 1/10, loss: 2.6809418201446533\n"}
+,{"stream_name":"stdout","time":1045.535483087,"data":"Step in Epoch: 1/10, loss: 2.7581355571746826\n"}
+,{"stream_name":"stdout","time":1045.535486582,"data":"Step in Epoch: 1/10, loss: 2.9236361980438232\n"}
+,{"stream_name":"stdout","time":1045.535490076,"data":"Step in Epoch: 1/10, loss: 3.0676393508911133\n"}
+,{"stream_name":"stdout","time":1045.535493551,"data":"Step in Epoch: 1/10, loss: 3.049445390701294\n"}
+,{"stream_name":"stdout","time":1045.535497122,"data":"Step in Epoch: 1/10, loss: 3.5825817584991455\n"}
+,{"stream_name":"stdout","time":1045.535500638,"data":"Step in Epoch: 1/10, loss: 3.6437811851501465\n"}
+,{"stream_name":"stdout","time":1045.535504217,"data":"Step in Epoch: 1/10, loss: 4.148227691650391\n"}
+,{"stream_name":"stdout","time":1045.535507697,"data":"Step in Epoch: 1/10, loss: 4.095586776733398\n"}
+,{"stream_name":"stdout","time":1045.535511233,"data":"Step in Epoch: 1/10, loss: 4.593508243560791\n"}
+,{"stream_name":"stdout","time":1045.535514743,"data":"Step in Epoch: 1/10, loss: 4.515748977661133\n"}
+,{"stream_name":"stdout","time":1045.535522916,"data":"Step in Epoch: 1/10, loss: 4.637905597686768\n"}
+,{"stream_name":"stdout","time":1045.535526093,"data":"Step in Epoch: 1/10, loss: 4.136303901672363\n"}
+,{"stream_name":"stdout","time":1045.535529399,"data":"Step in Epoch: 1/10, loss: 3.8174149990081787\n"}
+,{"stream_name":"stdout","time":1045.535544823,"data":"Step in Epoch: 1/10, loss: 3.6572823524475098\n"}
+,{"stream_name":"stdout","time":1045.535552834,"data":"Step in Epoch: 1/10, loss: 2.8848929405212402\n"}
+,{"stream_name":"stdout","time":1045.535557254,"data":"Step in Epoch: 1/10, loss: 3.596315383911133\n"}
+,{"stream_name":"stdout","time":1045.535561172,"data":"Step in Epoch: 1/10, loss: 4.25178337097168\n"}
+,{"stream_name":"stdout","time":1045.535564772,"data":"Step in Epoch: 1/10, loss: 4.128193378448486\n"}
+,{"stream_name":"stdout","time":1045.535568261,"data":"Step in Epoch: 1/10, loss: 4.258871078491211\n"}
+,{"stream_name":"stdout","time":1045.535571776,"data":"Step in Epoch: 1/10, loss: 5.007801532745361\n"}
+,{"stream_name":"stdout","time":1045.535575251,"data":"Step in Epoch: 1/10, loss: 5.195703983306885\n"}
+,{"stream_name":"stdout","time":1045.535578733,"data":"Step in Epoch: 1/10, loss: 4.957986831665039\n"}
+,{"stream_name":"stdout","time":1045.535582202,"data":"Step in Epoch: 1/10, loss: 4.85619592666626\n"}
+,{"stream_name":"stdout","time":1045.535585675,"data":"Step in Epoch: 1/10, loss: 5.679990291595459\n"}
+,{"stream_name":"stdout","time":1045.53558918,"data":"Step in Epoch: 1/10, loss: 6.0527801513671875\n"}
+,{"stream_name":"stdout","time":1045.535592706,"data":"Step in Epoch: 1/10, loss: 6.719974517822266\n"}
+,{"stream_name":"stdout","time":1045.535596674,"data":"Step in Epoch: 1/10, loss: 7.159700393676758\n"}
+,{"stream_name":"stdout","time":1045.535600245,"data":"Step in Epoch: 1/10, loss: 7.622894763946533\n"}
+,{"stream_name":"stdout","time":1045.535603814,"data":"Epoch: 1/10, loss: 2.913269482229067\n"}
+,{"stream_name":"stderr","time":1343.204469366,"data":"\rTesting:   0%|          | 0/31 [00:00\u003c?, ?it/s]\rTesting:   3%|▎         | 1/31 [00:09\u003c04:52,  9.74s/it]\rTesting:   6%|▋         | 2/31 [00:19\u003c04:44,  9.83s/it]\rTesting:  10%|▉         | 3/31 [00:29\u003c04:40, 10.03s/it]\rTesting:  13%|█▎        | 4/31 [00:40\u003c04:32, 10.10s/it]\rTesting:  16%|█▌        | 5/31 [00:50\u003c04:23, 10.14s/it]\rTesting:  19%|█▉        | 6/31 [00:59\u003c04:06,  9.88s/it]\rTesting:  23%|██▎       | 7/31 [01:09\u003c03:59,  9.99s/it]\rTesting:  26%|██▌       | 8/31 [01:19\u003c03:46,  9.87s/it]\rTesting:  29%|██▉       | 9/31 [01:29\u003c03:35,  9.78s/it]\rTesting:  32%|███▏      | 10/31 [01:39\u003c03:28,  9.94s/it]\rTesting:  35%|███▌      | 11/31 [01:49\u003c03:19,  9.98s/it]\rTesting:  39%|███▊      | 12/31 [01:58\u003c03:06,  9.83s/it]\rTesting:  42%|████▏     | 13/31 [02:09\u003c02:58,  9.92s/it]\rTesting:  45%|████▌     | 14/31 [02:18\u003c02:47,  9.85s/it]\rTesting:  48%|████▊     | 15/31 [02:28\u003c02:37,  9.85s/it]\rTesting:  52%|█████▏    | 16/31 [02:38\u003c02:28,  9.89s/it]\rTesting:  55%|█████▍    | 17/31 [02:48\u003c02:17,  9.82s/it]\rTesting:  58%|█████▊    | 18/31 [02:58\u003c02:08,  9.89s/it]\rTesting:  61%|██████▏   | 19/31 [03:08\u003c01:58,  9.87s/it]\rTesting:  65%|██████▍   | 20/31 [03:17\u003c01:46,  9.67s/it]\rTesting:  68%|██████▊   | 21/31 [03:26\u003c01:35,  9.53s/it]\rTesting:  71%|███████   | 22/31 [03:35\u003c01:25,  9.47s/it]\rTesting:  74%|███████▍  | 23/31 [03:45\u003c01:17,  9.63s/it]\rTesting:  77%|███████▋  | 24/31 [03:55\u003c01:06,  9.49s/it]\rTesting:  81%|████████  | 25/31 [04:04\u003c00:56,  9.49s/it]\rTesting:  84%|████████▍ | 26/31 [04:14\u003c00:47,  9.50s/it]\rTesting:  87%|████████▋ | 27/31 [04:23\u003c00:37,  9.47s/it]\rTesting:  90%|█████████ | 28/31 [04:32\u003c00:28,  9.40s/it]\rTesting:  94%|█████████▎| 29/31 [04:42\u003c00:19,  9.52s/it]\rTesting:  97%|█████████▋| 30/31 [04:51\u003c00:09,  9.46s/it]\rTesting: 100%|██████████| 31/31 [04:57\u003c00:00,  8.38s/it]\rTesting: 100%|██████████| 31/31 [04:57\u003c00:00,  9.60s/it]\n"}
+,{"stream_name":"stderr","time":1632.996051976,"data":"\rTesting:   0%|          | 0/31 [00:00\u003c?, ?it/s]\rTesting:   3%|▎         | 1/31 [00:11\u003c05:31, 11.04s/it]\rTesting:   6%|▋         | 2/31 [00:20\u003c04:53, 10.12s/it]\rTesting:  10%|▉         | 3/31 [00:30\u003c04:40, 10.03s/it]\rTesting:  13%|█▎        | 4/31 [00:40\u003c04:34, 10.17s/it]\rTesting:  16%|█▌        | 5/31 [00:49\u003c04:10,  9.64s/it]\rTesting:  19%|█▉        | 6/31 [00:58\u003c03:55,  9.40s/it]\rTesting:  23%|██▎       | 7/31 [01:07\u003c03:44,  9.34s/it]\rTesting:  26%|██▌       | 8/31 [01:17\u003c03:35,  9.38s/it]\rTesting:  29%|██▉       | 9/31 [01:26\u003c03:24,  9.29s/it]\rTesting:  32%|███▏      | 10/31 [01:35\u003c03:16,  9.36s/it]\rTesting:  35%|███▌      | 11/31 [01:45\u003c03:06,  9.35s/it]\rTesting:  39%|███▊      | 12/31 [01:54\u003c02:57,  9.36s/it]\rTesting:  42%|████▏     | 13/31 [02:03\u003c02:48,  9.38s/it]\rTesting:  45%|████▌     | 14/31 [02:13\u003c02:40,  9.44s/it]\rTesting:  48%|████▊     | 15/31 [02:22\u003c02:28,  9.29s/it]\rTesting:  52%|█████▏    | 16/31 [02:31\u003c02:18,  9.24s/it]\rTesting:  55%|█████▍    | 17/31 [02:41\u003c02:10,  9.34s/it]\rTesting:  58%|█████▊    | 18/31 [02:50\u003c02:01,  9.35s/it]\rTesting:  61%|██████▏   | 19/31 [02:59\u003c01:50,  9.20s/it]\rTesting:  65%|██████▍   | 20/31 [03:08\u003c01:42,  9.29s/it]\rTesting:  68%|██████▊   | 21/31 [03:18\u003c01:33,  9.35s/it]\rTesting:  71%|███████   | 22/31 [03:28\u003c01:25,  9.50s/it]\rTesting:  74%|███████▍  | 23/31 [03:36\u003c01:14,  9.28s/it]\rTesting:  77%|███████▋  | 24/31 [03:46\u003c01:05,  9.30s/it]\rTesting:  81%|████████  | 25/31 [03:55\u003c00:56,  9.37s/it]\rTesting:  84%|████████▍ | 26/31 [04:05\u003c00:47,  9.51s/it]\rTesting:  87%|████████▋ | 27/31 [04:15\u003c00:38,  9.66s/it]\rTesting:  90%|█████████ | 28/31 [04:24\u003c00:28,  9.52s/it]\rTesting:  94%|█████████▎| 29/31 [04:34\u003c00:19,  9.70s/it]\rTesting:  97%|█████████▋| 30/31 [04:45\u003c00:09,  9.85s/it]\rTesting: 100%|██████████| 31/31 [04:49\u003c00:00,  8.27s/it]\rTesting: 100%|██████████| 31/31 [04:49\u003c00:00,  9.35s/it]\n"}
+,{"stream_name":"stdout","time":1639.424845084,"data":"Vali Combined Loss: 52.59102891013857, Vali MSE Loss: 44.94138046423836, Vali MAE Loss: 6.646526058506374, Vali Contrastive Loss: 1.0031223873938284\n"}
+,{"stream_name":"stdout","time":1639.424898368,"data":"Test Combined loss: 20.279419972814175, Test MSE Loss: 15.503679717998567, Test MAE Loss: 3.7723883280120214, Test Contrastive Loss: 1.0033519268035889\n"}
+,{"stream_name":"stdout","time":1639.424906237,"data":"Model saved successfully to /kaggle/working/out_time/best_model.pth\n"}
+,{"stream_name":"stdout","time":1639.424912274,"data":"Tokenizer saved successfully to /kaggle/working/out_time/tokenizer\n"}
+,{"stream_name":"stdout","time":1639.424917938,"data":"Saving Best Model @ iter1: Vali Combined Loss: 52.59102891013857, Vali MSE Loss: 44.94138046423836, Vali MAE Loss: 6.646526058506374\n"}
+,{"stream_name":"stdout","time":1639.424924536,"data":"Test Combined loss: 20.279419972814175, Test MSE Loss: 15.503679717998567, Test MAE Loss: 3.7723883280120214\n"}
+,{"stream_name":"stdout","time":1639.424930191,"data":"Model saved successfully to /kaggle/working/out_time/lastest_model.pth\n"}
+,{"stream_name":"stdout","time":1639.424935684,"data":"Tokenizer saved successfully to /kaggle/working/out_time/tokenizer\n"}
+,{"stream_name":"stdout","time":2442.374265921,"data":"Step in Epoch: 2/10, loss: 1.3545175790786743\n"}
+,{"stream_name":"stdout","time":2442.374324917,"data":"Step in Epoch: 2/10, loss: 1.4996113777160645\n"}
+,{"stream_name":"stdout","time":2442.374331293,"data":"Step in Epoch: 2/10, loss: 1.5557024478912354\n"}
+,{"stream_name":"stdout","time":2442.374335388,"data":"Step in Epoch: 2/10, loss: 1.3597288131713867\n"}
+,{"stream_name":"stdout","time":2442.374339325,"data":"Step in Epoch: 2/10, loss: 1.3575952053070068\n"}
+,{"stream_name":"stdout","time":2442.374349196,"data":"Step in Epoch: 2/10, loss: 1.8852155208587646\n"}
+,{"stream_name":"stdout","time":2442.37435292,"data":"Step in Epoch: 2/10, loss: 1.8106991052627563\n"}
+,{"stream_name":"stdout","time":2442.374356387,"data":"Step in Epoch: 2/10, loss: 2.0529661178588867\n"}
+,{"stream_name":"stdout","time":2442.374360118,"data":"Step in Epoch: 2/10, loss: 3.839183807373047\n"}
+,{"stream_name":"stdout","time":2442.374363962,"data":"Step in Epoch: 2/10, loss: 4.96085786819458\n"}
+,{"stream_name":"stdout","time":2442.374368233,"data":"Step in Epoch: 2/10, loss: 4.731204032897949\n"}
+,{"stream_name":"stdout","time":2442.374372,"data":"Step in Epoch: 2/10, loss: 5.124719619750977\n"}
+,{"stream_name":"stdout","time":2442.374376069,"data":"Step in Epoch: 2/10, loss: 6.062161445617676\n"}
+,{"stream_name":"stdout","time":2442.374379817,"data":"Step in Epoch: 2/10, loss: 5.236042022705078\n"}
+,{"stream_name":"stdout","time":2442.374383642,"data":"Step in Epoch: 2/10, loss: 4.533512115478516\n"}
+,{"stream_name":"stdout","time":2442.374387535,"data":"Step in Epoch: 2/10, loss: 4.229830265045166\n"}
+,{"stream_name":"stdout","time":2442.374390964,"data":"Step in Epoch: 2/10, loss: 4.191662788391113\n"}
+,{"stream_name":"stdout","time":2442.3743943,"data":"Step in Epoch: 2/10, loss: 3.5506081581115723\n"}
+,{"stream_name":"stdout","time":2442.374397513,"data":"Step in Epoch: 2/10, loss: 3.2798876762390137\n"}
+,{"stream_name":"stdout","time":2442.37440083,"data":"Step in Epoch: 2/10, loss: 2.9351978302001953\n"}
+,{"stream_name":"stdout","time":2442.374404188,"data":"Step in Epoch: 2/10, loss: 2.6741557121276855\n"}
+,{"stream_name":"stdout","time":2442.374407498,"data":"Step in Epoch: 2/10, loss: 2.879133701324463\n"}
+,{"stream_name":"stdout","time":2442.374410828,"data":"Step in Epoch: 2/10, loss: 2.5985121726989746\n"}
+,{"stream_name":"stdout","time":2442.374417474,"data":"Step in Epoch: 2/10, loss: 2.260817050933838\n"}
+,{"stream_name":"stdout","time":2442.374420409,"data":"Step in Epoch: 2/10, loss: 2.6500306129455566\n"}
+,{"stream_name":"stdout","time":2442.37442315,"data":"Step in Epoch: 2/10, loss: 2.9693050384521484\n"}
+,{"stream_name":"stdout","time":2442.374425682,"data":"Step in Epoch: 2/10, loss: 2.861164093017578\n"}
+,{"stream_name":"stdout","time":2442.374428042,"data":"Step in Epoch: 2/10, loss: 2.962909698486328\n"}
+,{"stream_name":"stdout","time":2442.374430463,"data":"Step in Epoch: 2/10, loss: 2.5212717056274414\n"}
+,{"stream_name":"stdout","time":2442.374433023,"data":"Step in Epoch: 2/10, loss: 2.2413673400878906\n"}
+,{"stream_name":"stdout","time":2442.374435284,"data":"Step in Epoch: 2/10, loss: 2.109471321105957\n"}
+,{"stream_name":"stdout","time":2442.374437629,"data":"Step in Epoch: 2/10, loss: 1.8096070289611816\n"}
+,{"stream_name":"stdout","time":2442.374440011,"data":"Step in Epoch: 2/10, loss: 1.6068840026855469\n"}
+,{"stream_name":"stdout","time":2442.374442351,"data":"Step in Epoch: 2/10, loss: 1.6579169034957886\n"}
+,{"stream_name":"stdout","time":2442.374444695,"data":"Step in Epoch: 2/10, loss: 1.5275564193725586\n"}
+,{"stream_name":"stdout","time":2442.374446953,"data":"Step in Epoch: 2/10, loss: 1.5382682085037231\n"}
+,{"stream_name":"stdout","time":2442.374449373,"data":"Step in Epoch: 2/10, loss: 1.6689589023590088\n"}
+,{"stream_name":"stdout","time":2442.374455519,"data":"Step in Epoch: 2/10, loss: 1.8319381475448608\n"}
+,{"stream_name":"stdout","time":2442.37445792,"data":"Step in Epoch: 2/10, loss: 2.2669992446899414\n"}
+,{"stream_name":"stdout","time":2442.374460167,"data":"Step in Epoch: 2/10, loss: 2.2569737434387207\n"}
+,{"stream_name":"stdout","time":2442.374462471,"data":"Step in Epoch: 2/10, loss: 1.9321361780166626\n"}
+,{"stream_name":"stdout","time":2442.374464749,"data":"Step in Epoch: 2/10, loss: 1.9925193786621094\n"}
+,{"stream_name":"stdout","time":2442.374467005,"data":"Step in Epoch: 2/10, loss: 1.6763163805007935\n"}
+,{"stream_name":"stdout","time":2442.37446926,"data":"Step in Epoch: 2/10, loss: 1.4339876174926758\n"}
+,{"stream_name":"stdout","time":2442.374472433,"data":"Step in Epoch: 2/10, loss: 1.2750593423843384\n"}
+,{"stream_name":"stdout","time":2442.374474735,"data":"Step in Epoch: 2/10, loss: 1.2791802883148193\n"}
+,{"stream_name":"stdout","time":2442.374477029,"data":"Step in Epoch: 2/10, loss: 1.5054141283035278\n"}
+,{"stream_name":"stdout","time":2442.37447928,"data":"Step in Epoch: 2/10, loss: 1.4604530334472656\n"}
+,{"stream_name":"stdout","time":2442.374481545,"data":"Step in Epoch: 2/10, loss: 1.305282473564148\n"}
+,{"stream_name":"stdout","time":2442.374483801,"data":"Step in Epoch: 2/10, loss: 1.163472056388855\n"}
+,{"stream_name":"stdout","time":2442.374486217,"data":"Step in Epoch: 2/10, loss: 1.0709636211395264\n"}
+,{"stream_name":"stdout","time":2442.374488495,"data":"Step in Epoch: 2/10, loss: 1.2206461429595947\n"}
+,{"stream_name":"stdout","time":2442.374490842,"data":"Step in Epoch: 2/10, loss: 1.1453139781951904\n"}
+,{"stream_name":"stdout","time":2442.374493125,"data":"Step in Epoch: 2/10, loss: 1.0634530782699585\n"}
+,{"stream_name":"stdout","time":2442.374495377,"data":"Step in Epoch: 2/10, loss: 1.1230846643447876\n"}
+,{"stream_name":"stdout","time":2442.374497627,"data":"Step in Epoch: 2/10, loss: 1.2570910453796387\n"}
+,{"stream_name":"stdout","time":2442.374499885,"data":"Step in Epoch: 2/10, loss: 1.3742517232894897\n"}
+,{"stream_name":"stdout","time":2442.374502135,"data":"Step in Epoch: 2/10, loss: 1.6093854904174805\n"}
+,{"stream_name":"stdout","time":2442.374504376,"data":"Step in Epoch: 2/10, loss: 1.5525583028793335\n"}
+,{"stream_name":"stdout","time":2442.37450662,"data":"Step in Epoch: 2/10, loss: 1.7873820066452026\n"}
+,{"stream_name":"stdout","time":2442.37450889,"data":"Step in Epoch: 2/10, loss: 1.7125173807144165\n"}
+,{"stream_name":"stdout","time":2442.374511137,"data":"Step in Epoch: 2/10, loss: 1.937693476676941\n"}
+,{"stream_name":"stdout","time":2442.374513395,"data":"Step in Epoch: 2/10, loss: 2.2647745609283447\n"}
+,{"stream_name":"stdout","time":2442.374515638,"data":"Step in Epoch: 2/10, loss: 2.3790035247802734\n"}
+,{"stream_name":"stdout","time":2442.374517889,"data":"Step in Epoch: 2/10, loss: 2.4965014457702637\n"}
+,{"stream_name":"stdout","time":2442.374520141,"data":"Step in Epoch: 2/10, loss: 2.613882064819336\n"}
+,{"stream_name":"stdout","time":2442.374522399,"data":"Step in Epoch: 2/10, loss: 2.738588809967041\n"}
+,{"stream_name":"stdout","time":2442.374524648,"data":"Step in Epoch: 2/10, loss: 2.7833163738250732\n"}
+,{"stream_name":"stdout","time":2442.374526917,"data":"Step in Epoch: 2/10, loss: 3.379129409790039\n"}
+,{"stream_name":"stdout","time":2442.37452918,"data":"Step in Epoch: 2/10, loss: 3.5041165351867676\n"}
+,{"stream_name":"stdout","time":2442.374531458,"data":"Step in Epoch: 2/10, loss: 3.8909151554107666\n"}
+,{"stream_name":"stdout","time":2442.374536188,"data":"Step in Epoch: 2/10, loss: 3.8819782733917236\n"}
+,{"stream_name":"stdout","time":2442.374540435,"data":"Step in Epoch: 2/10, loss: 4.438422203063965\n"}
+,{"stream_name":"stdout","time":2442.374542893,"data":"Step in Epoch: 2/10, loss: 4.359979152679443\n"}
+,{"stream_name":"stdout","time":2442.374545925,"data":"Step in Epoch: 2/10, loss: 4.518651485443115\n"}
+,{"stream_name":"stdout","time":2442.374548816,"data":"Step in Epoch: 2/10, loss: 4.0475544929504395\n"}
+,{"stream_name":"stdout","time":2442.374551195,"data":"Step in Epoch: 2/10, loss: 3.7588865756988525\n"}
+,{"stream_name":"stdout","time":2442.374553442,"data":"Step in Epoch: 2/10, loss: 3.5719847679138184\n"}
+,{"stream_name":"stdout","time":2442.374555695,"data":"Step in Epoch: 2/10, loss: 2.796168327331543\n"}
+,{"stream_name":"stdout","time":2442.374558022,"data":"Step in Epoch: 2/10, loss: 3.4721732139587402\n"}
+,{"stream_name":"stdout","time":2442.374560292,"data":"Step in Epoch: 2/10, loss: 4.1486968994140625\n"}
+,{"stream_name":"stdout","time":2442.374562658,"data":"Step in Epoch: 2/10, loss: 4.099148750305176\n"}
+,{"stream_name":"stdout","time":2442.374564916,"data":"Step in Epoch: 2/10, loss: 4.2078680992126465\n"}
+,{"stream_name":"stdout","time":2442.374567238,"data":"Step in Epoch: 2/10, loss: 4.919609546661377\n"}
+,{"stream_name":"stdout","time":2442.374569509,"data":"Step in Epoch: 2/10, loss: 5.124828338623047\n"}
+,{"stream_name":"stdout","time":2442.37457179,"data":"Step in Epoch: 2/10, loss: 4.833913803100586\n"}
+,{"stream_name":"stdout","time":2442.374574038,"data":"Step in Epoch: 2/10, loss: 4.795520305633545\n"}
+,{"stream_name":"stdout","time":2442.374576348,"data":"Step in Epoch: 2/10, loss: 5.622669696807861\n"}
+,{"stream_name":"stdout","time":2442.374578679,"data":"Step in Epoch: 2/10, loss: 6.024975776672363\n"}
+,{"stream_name":"stdout","time":2442.3745812,"data":"Step in Epoch: 2/10, loss: 6.6709160804748535\n"}
+,{"stream_name":"stdout","time":2442.374583474,"data":"Step in Epoch: 2/10, loss: 7.119565010070801\n"}
+,{"stream_name":"stdout","time":2442.374585715,"data":"Step in Epoch: 2/10, loss: 7.6408281326293945\n"}
+,{"stream_name":"stdout","time":2442.374588121,"data":"Epoch: 2/10, loss: 2.9176834070164226\n"}
+,{"stream_name":"stderr","time":2738.37373112,"data":"\rTesting:   0%|          | 0/31 [00:00\u003c?, ?it/s]\rTesting:   3%|▎         | 1/31 [00:09\u003c04:50,  9.67s/it]\rTesting:   6%|▋         | 2/31 [00:19\u003c04:42,  9.75s/it]\rTesting:  10%|▉         | 3/31 [00:29\u003c04:38,  9.95s/it]\rTesting:  13%|█▎        | 4/31 [00:39\u003c04:30, 10.03s/it]\rTesting:  16%|█▌        | 5/31 [00:49\u003c04:21, 10.06s/it]\rTesting:  19%|█▉        | 6/31 [00:59\u003c04:04,  9.79s/it]\rTesting:  23%|██▎       | 7/31 [01:09\u003c03:57,  9.90s/it]\rTesting:  26%|██▌       | 8/31 [01:18\u003c03:44,  9.78s/it]\rTesting:  29%|██▉       | 9/31 [01:28\u003c03:33,  9.70s/it]\rTesting:  32%|███▏      | 10/31 [01:38\u003c03:26,  9.85s/it]\rTesting:  35%|███▌      | 11/31 [01:48\u003c03:18,  9.90s/it]\rTesting:  39%|███▊      | 12/31 [01:57\u003c03:05,  9.75s/it]\rTesting:  42%|████▏     | 13/31 [02:08\u003c02:57,  9.83s/it]\rTesting:  45%|████▌     | 14/31 [02:17\u003c02:46,  9.77s/it]\rTesting:  48%|████▊     | 15/31 [02:27\u003c02:36,  9.76s/it]\rTesting:  52%|█████▏    | 16/31 [02:37\u003c02:27,  9.81s/it]\rTesting:  55%|█████▍    | 17/31 [02:46\u003c02:16,  9.75s/it]\rTesting:  58%|█████▊    | 18/31 [02:56\u003c02:07,  9.82s/it]\rTesting:  61%|██████▏   | 19/31 [03:06\u003c01:57,  9.80s/it]\rTesting:  65%|██████▍   | 20/31 [03:15\u003c01:45,  9.62s/it]\rTesting:  68%|██████▊   | 21/31 [03:24\u003c01:34,  9.47s/it]\rTesting:  71%|███████   | 22/31 [03:34\u003c01:24,  9.43s/it]\rTesting:  74%|███████▍  | 23/31 [03:44\u003c01:16,  9.60s/it]\rTesting:  77%|███████▋  | 24/31 [03:53\u003c01:06,  9.46s/it]\rTesting:  81%|████████  | 25/31 [04:02\u003c00:56,  9.47s/it]\rTesting:  84%|████████▍ | 26/31 [04:12\u003c00:47,  9.49s/it]\rTesting:  87%|████████▋ | 27/31 [04:21\u003c00:37,  9.46s/it]\rTesting:  90%|█████████ | 28/31 [04:31\u003c00:28,  9.39s/it]\rTesting:  94%|█████████▎| 29/31 [04:40\u003c00:19,  9.51s/it]\rTesting:  97%|█████████▋| 30/31 [04:50\u003c00:09,  9.44s/it]\rTesting: 100%|██████████| 31/31 [04:55\u003c00:00,  8.36s/it]\rTesting: 100%|██████████| 31/31 [04:55\u003c00:00,  9.55s/it]\n"}
+,{"stream_name":"stderr","time":3027.776505066,"data":"\rTesting:   0%|          | 0/31 [00:00\u003c?, ?it/s]\rTesting:   3%|▎         | 1/31 [00:11\u003c05:30, 11.01s/it]\rTesting:   6%|▋         | 2/31 [00:20\u003c04:52, 10.08s/it]\rTesting:  10%|▉         | 3/31 [00:30\u003c04:39, 10.00s/it]\rTesting:  13%|█▎        | 4/31 [00:40\u003c04:33, 10.14s/it]\rTesting:  16%|█▌        | 5/31 [00:49\u003c04:09,  9.62s/it]\rTesting:  19%|█▉        | 6/31 [00:58\u003c03:54,  9.38s/it]\rTesting:  23%|██▎       | 7/31 [01:07\u003c03:43,  9.32s/it]\rTesting:  26%|██▌       | 8/31 [01:16\u003c03:35,  9.36s/it]\rTesting:  29%|██▉       | 9/31 [01:26\u003c03:23,  9.27s/it]\rTesting:  32%|███▏      | 10/31 [01:35\u003c03:16,  9.34s/it]\rTesting:  35%|███▌      | 11/31 [01:44\u003c03:06,  9.33s/it]\rTesting:  39%|███▊      | 12/31 [01:54\u003c02:57,  9.35s/it]\rTesting:  42%|████▏     | 13/31 [02:03\u003c02:48,  9.37s/it]\rTesting:  45%|████▌     | 14/31 [02:13\u003c02:40,  9.43s/it]\rTesting:  48%|████▊     | 15/31 [02:22\u003c02:28,  9.28s/it]\rTesting:  52%|█████▏    | 16/31 [02:31\u003c02:18,  9.24s/it]\rTesting:  55%|█████▍    | 17/31 [02:40\u003c02:10,  9.33s/it]\rTesting:  58%|█████▊    | 18/31 [02:50\u003c02:01,  9.35s/it]\rTesting:  61%|██████▏   | 19/31 [02:59\u003c01:50,  9.19s/it]\rTesting:  65%|██████▍   | 20/31 [03:08\u003c01:42,  9.28s/it]\rTesting:  68%|██████▊   | 21/31 [03:18\u003c01:33,  9.34s/it]\rTesting:  71%|███████   | 22/31 [03:27\u003c01:25,  9.49s/it]\rTesting:  74%|███████▍  | 23/31 [03:36\u003c01:14,  9.27s/it]\rTesting:  77%|███████▋  | 24/31 [03:45\u003c01:05,  9.30s/it]\rTesting:  81%|████████  | 25/31 [03:55\u003c00:56,  9.36s/it]\rTesting:  84%|████████▍ | 26/31 [04:05\u003c00:47,  9.50s/it]\rTesting:  87%|████████▋ | 27/31 [04:15\u003c00:38,  9.64s/it]\rTesting:  90%|█████████ | 28/31 [04:24\u003c00:28,  9.50s/it]\rTesting:  94%|█████████▎| 29/31 [04:34\u003c00:19,  9.70s/it]\rTesting:  97%|█████████▋| 30/31 [04:44\u003c00:09,  9.84s/it]\rTesting: 100%|██████████| 31/31 [04:49\u003c00:00,  8.26s/it]\rTesting: 100%|██████████| 31/31 [04:49\u003c00:00,  9.34s/it]\n"}
+,{"stream_name":"stdout","time":3032.526494958,"data":"Vali Combined Loss: 52.87103742473827, Vali MSE Loss: 45.20134618871885, Vali MAE Loss: 6.666600269887034, Vali Contrastive Loss: 1.0030909661323792\n"}
+,{"stream_name":"stdout","time":3032.526527066,"data":"Test Combined loss: 20.243026746084215, Test MSE Loss: 15.475447667099756, Test MAE Loss: 3.764261592129162, Test Contrastive Loss: 1.0033174868552917\n"}
+,{"stream_name":"stdout","time":3032.526531268,"data":"Model saved successfully to /kaggle/working/out_time/lastest_model.pth\n"}
+,{"stream_name":"stdout","time":3032.526548622,"data":"Tokenizer saved successfully to /kaggle/working/out_time/tokenizer\n"}
+,{"stream_name":"stdout","time":3836.943227972,"data":"Step in Epoch: 3/10, loss: 1.3703603744506836\n"}
+,{"stream_name":"stdout","time":3836.943279843,"data":"Step in Epoch: 3/10, loss: 1.5170717239379883\n"}
+,{"stream_name":"stdout","time":3836.94328634,"data":"Step in Epoch: 3/10, loss: 1.5717682838439941\n"}
+,{"stream_name":"stdout","time":3836.943290435,"data":"Step in Epoch: 3/10, loss: 1.3725121021270752\n"}
+,{"stream_name":"stdout","time":3836.94329456,"data":"Step in Epoch: 3/10, loss: 1.370481014251709\n"}
+,{"stream_name":"stdout","time":3836.943298553,"data":"Step in Epoch: 3/10, loss: 1.911295771598816\n"}
+,{"stream_name":"stdout","time":3836.94330231,"data":"Step in Epoch: 3/10, loss: 1.8364827632904053\n"}
+,{"stream_name":"stdout","time":3836.943306206,"data":"Step in Epoch: 3/10, loss: 2.0848641395568848\n"}
+,{"stream_name":"stdout","time":3836.943310085,"data":"Step in Epoch: 3/10, loss: 3.7578072547912598\n"}
+,{"stream_name":"stdout","time":3836.943313707,"data":"Step in Epoch: 3/10, loss: 4.797467231750488\n"}
+,{"stream_name":"stdout","time":3836.943317128,"data":"Step in Epoch: 3/10, loss: 4.583207130432129\n"}
+,{"stream_name":"stdout","time":3836.943320965,"data":"Step in Epoch: 3/10, loss: 4.982996940612793\n"}
+,{"stream_name":"stdout","time":3836.943324845,"data":"Step in Epoch: 3/10, loss: 5.907384395599365\n"}
+,{"stream_name":"stdout","time":3836.943328773,"data":"Step in Epoch: 3/10, loss: 5.169501304626465\n"}
+,{"stream_name":"stdout","time":3836.94333273,"data":"Step in Epoch: 3/10, loss: 4.562025547027588\n"}
+,{"stream_name":"stdout","time":3836.943336845,"data":"Step in Epoch: 3/10, loss: 4.282911777496338\n"}
+,{"stream_name":"stdout","time":3836.943340218,"data":"Step in Epoch: 3/10, loss: 4.233212471008301\n"}
+,{"stream_name":"stdout","time":3836.943343713,"data":"Step in Epoch: 3/10, loss: 3.5689759254455566\n"}
+,{"stream_name":"stdout","time":3836.943347015,"data":"Step in Epoch: 3/10, loss: 3.2891030311584473\n"}
+,{"stream_name":"stdout","time":3836.943350362,"data":"Step in Epoch: 3/10, loss: 2.9446840286254883\n"}
+,{"stream_name":"stdout","time":3836.943353825,"data":"Step in Epoch: 3/10, loss: 2.68668794631958\n"}
+,{"stream_name":"stdout","time":3836.943357057,"data":"Step in Epoch: 3/10, loss: 2.8940844535827637\n"}
+,{"stream_name":"stdout","time":3836.943360573,"data":"Step in Epoch: 3/10, loss: 2.6149682998657227\n"}
+,{"stream_name":"stdout","time":3836.943369385,"data":"Step in Epoch: 3/10, loss: 2.278766393661499\n"}
+,{"stream_name":"stdout","time":3836.943372375,"data":"Step in Epoch: 3/10, loss: 2.6704931259155273\n"}
+,{"stream_name":"stdout","time":3836.94337469,"data":"Step in Epoch: 3/10, loss: 2.9928784370422363\n"}
+,{"stream_name":"stdout","time":3836.943377063,"data":"Step in Epoch: 3/10, loss: 2.8864285945892334\n"}
+,{"stream_name":"stdout","time":3836.943379336,"data":"Step in Epoch: 3/10, loss: 2.9906105995178223\n"}
+,{"stream_name":"stdout","time":3836.943381616,"data":"Step in Epoch: 3/10, loss: 2.549386978149414\n"}
+,{"stream_name":"stdout","time":3836.943383883,"data":"Step in Epoch: 3/10, loss: 2.269603729248047\n"}
+,{"stream_name":"stdout","time":3836.943386135,"data":"Step in Epoch: 3/10, loss: 2.138657331466675\n"}
+,{"stream_name":"stdout","time":3836.943388385,"data":"Step in Epoch: 3/10, loss: 1.8378121852874756\n"}
+,{"stream_name":"stdout","time":3836.943390713,"data":"Step in Epoch: 3/10, loss: 1.6342815160751343\n"}
+,{"stream_name":"stdout","time":3836.943392999,"data":"Step in Epoch: 3/10, loss: 1.6880476474761963\n"}
+,{"stream_name":"stdout","time":3836.943395259,"data":"Step in Epoch: 3/10, loss: 1.557788372039795\n"}
+,{"stream_name":"stdout","time":3836.94339752,"data":"Step in Epoch: 3/10, loss: 1.5710551738739014\n"}
+,{"stream_name":"stdout","time":3836.943426835,"data":"Step in Epoch: 3/10, loss: 1.7060017585754395\n"}
+,{"stream_name":"stdout","time":3836.943431321,"data":"Step in Epoch: 3/10, loss: 1.8750240802764893\n"}
+,{"stream_name":"stdout","time":3836.943435209,"data":"Step in Epoch: 3/10, loss: 2.3222713470458984\n"}
+,{"stream_name":"stdout","time":3836.943439171,"data":"Step in Epoch: 3/10, loss: 2.315746784210205\n"}
+,{"stream_name":"stdout","time":3836.943443121,"data":"Step in Epoch: 3/10, loss: 1.9883389472961426\n"}
+,{"stream_name":"stdout","time":3836.943446443,"data":"Step in Epoch: 3/10, loss: 2.054633617401123\n"}
+,{"stream_name":"stdout","time":3836.943449779,"data":"Step in Epoch: 3/10, loss: 1.734006404876709\n"}
+,{"stream_name":"stdout","time":3836.943453106,"data":"Step in Epoch: 3/10, loss: 1.4880598783493042\n"}
+,{"stream_name":"stdout","time":3836.943457905,"data":"Step in Epoch: 3/10, loss: 1.3260422945022583\n"}
+,{"stream_name":"stdout","time":3836.943461288,"data":"Step in Epoch: 3/10, loss: 1.3341989517211914\n"}
+,{"stream_name":"stdout","time":3836.943464596,"data":"Step in Epoch: 3/10, loss: 1.5754376649856567\n"}
+,{"stream_name":"stdout","time":3836.943467893,"data":"Step in Epoch: 3/10, loss: 1.5337181091308594\n"}
+,{"stream_name":"stdout","time":3836.943471216,"data":"Step in Epoch: 3/10, loss: 1.3742618560791016\n"}
+,{"stream_name":"stdout","time":3836.943474576,"data":"Step in Epoch: 3/10, loss: 1.2270914316177368\n"}
+,{"stream_name":"stdout","time":3836.943477864,"data":"Step in Epoch: 3/10, loss: 1.1233866214752197\n"}
+,{"stream_name":"stdout","time":3836.943481133,"data":"Step in Epoch: 3/10, loss: 1.2965894937515259\n"}
+,{"stream_name":"stdout","time":3836.94348444,"data":"Step in Epoch: 3/10, loss: 1.2205064296722412\n"}
+,{"stream_name":"stdout","time":3836.943489613,"data":"Step in Epoch: 3/10, loss: 1.083863615989685\n"}
+,{"stream_name":"stdout","time":3836.943496089,"data":"Step in Epoch: 3/10, loss: 1.0487303733825684\n"}
+,{"stream_name":"stdout","time":3836.943498383,"data":"Step in Epoch: 3/10, loss: 1.1640205383300781\n"}
+,{"stream_name":"stdout","time":3836.943500709,"data":"Step in Epoch: 3/10, loss: 1.2685619592666626\n"}
+,{"stream_name":"stdout","time":3836.943502995,"data":"Step in Epoch: 3/10, loss: 1.4843697547912598\n"}
+,{"stream_name":"stdout","time":3836.943505228,"data":"Step in Epoch: 3/10, loss: 1.4315884113311768\n"}
+,{"stream_name":"stdout","time":3836.943507901,"data":"Step in Epoch: 3/10, loss: 1.6515321731567383\n"}
+,{"stream_name":"stdout","time":3836.943522901,"data":"Step in Epoch: 3/10, loss: 1.5835750102996826\n"}
+,{"stream_name":"stdout","time":3836.943527118,"data":"Step in Epoch: 3/10, loss: 1.8002943992614746\n"}
+,{"stream_name":"stdout","time":3836.94353087,"data":"Step in Epoch: 3/10, loss: 2.115330934524536\n"}
+,{"stream_name":"stdout","time":3836.943534909,"data":"Step in Epoch: 3/10, loss: 2.230739116668701\n"}
+,{"stream_name":"stdout","time":3836.943538882,"data":"Step in Epoch: 3/10, loss: 2.3516860008239746\n"}
+,{"stream_name":"stdout","time":3836.943542623,"data":"Step in Epoch: 3/10, loss: 2.474292755126953\n"}
+,{"stream_name":"stdout","time":3836.943545867,"data":"Step in Epoch: 3/10, loss: 2.604252815246582\n"}
+,{"stream_name":"stdout","time":3836.943549216,"data":"Step in Epoch: 3/10, loss: 2.6583149433135986\n"}
+,{"stream_name":"stdout","time":3836.943552895,"data":"Step in Epoch: 3/10, loss: 3.249403476715088\n"}
+,{"stream_name":"stdout","time":3836.943556189,"data":"Step in Epoch: 3/10, loss: 3.383509635925293\n"}
+,{"stream_name":"stdout","time":3836.943559601,"data":"Step in Epoch: 3/10, loss: 3.773576259613037\n"}
+,{"stream_name":"stdout","time":3836.943562855,"data":"Step in Epoch: 3/10, loss: 3.776628017425537\n"}
+,{"stream_name":"stdout","time":3836.943569553,"data":"Step in Epoch: 3/10, loss: 4.33509635925293\n"}
+,{"stream_name":"stdout","time":3836.943572966,"data":"Step in Epoch: 3/10, loss: 4.2671003341674805\n"}
+,{"stream_name":"stdout","time":3836.94357627,"data":"Step in Epoch: 3/10, loss: 4.433942794799805\n"}
+,{"stream_name":"stdout","time":3836.943579584,"data":"Step in Epoch: 3/10, loss: 3.976901054382324\n"}
+,{"stream_name":"stdout","time":3836.943582918,"data":"Step in Epoch: 3/10, loss: 3.698395252227783\n"}
+,{"stream_name":"stdout","time":3836.94358623,"data":"Step in Epoch: 3/10, loss: 3.5197999477386475\n"}
+,{"stream_name":"stdout","time":3836.943589535,"data":"Step in Epoch: 3/10, loss: 2.7563395500183105\n"}
+,{"stream_name":"stdout","time":3836.943592931,"data":"Step in Epoch: 3/10, loss: 3.431580066680908\n"}
+,{"stream_name":"stdout","time":3836.94359792,"data":"Step in Epoch: 3/10, loss: 4.108404159545898\n"}
+,{"stream_name":"stdout","time":3836.943604231,"data":"Step in Epoch: 3/10, loss: 4.063837051391602\n"}
+,{"stream_name":"stdout","time":3836.943618934,"data":"Step in Epoch: 3/10, loss: 4.176327705383301\n"}
+,{"stream_name":"stdout","time":3836.943623191,"data":"Step in Epoch: 3/10, loss: 4.888788223266602\n"}
+,{"stream_name":"stdout","time":3836.943626996,"data":"Step in Epoch: 3/10, loss: 5.097154140472412\n"}
+,{"stream_name":"stdout","time":3836.943630945,"data":"Step in Epoch: 3/10, loss: 4.81077241897583\n"}
+,{"stream_name":"stdout","time":3836.943634818,"data":"Step in Epoch: 3/10, loss: 4.775508880615234\n"}
+,{"stream_name":"stdout","time":3836.94363816,"data":"Step in Epoch: 3/10, loss: 5.6032280921936035\n"}
+,{"stream_name":"stdout","time":3836.943641451,"data":"Step in Epoch: 3/10, loss: 6.00732946395874\n"}
+,{"stream_name":"stdout","time":3836.943644789,"data":"Step in Epoch: 3/10, loss: 6.654252052307129\n"}
+,{"stream_name":"stdout","time":3836.943648551,"data":"Step in Epoch: 3/10, loss: 7.1042022705078125\n"}
+,{"stream_name":"stdout","time":3836.943651901,"data":"Step in Epoch: 3/10, loss: 7.627101898193359\n"}
+,{"stream_name":"stdout","time":3836.943655193,"data":"Epoch: 3/10, loss: 2.8950142562389374\n"}
+,{"stream_name":"stderr","time":4134.151812899,"data":"\rTesting:   0%|          | 0/31 [00:00\u003c?, ?it/s]\rTesting:   3%|▎         | 1/31 [00:09\u003c04:52,  9.75s/it]\rTesting:   6%|▋         | 2/31 [00:19\u003c04:45,  9.83s/it]\rTesting:  10%|▉         | 3/31 [00:29\u003c04:40, 10.02s/it]\rTesting:  13%|█▎        | 4/31 [00:40\u003c04:32, 10.08s/it]\rTesting:  16%|█▌        | 5/31 [00:50\u003c04:22, 10.10s/it]\rTesting:  19%|█▉        | 6/31 [00:59\u003c04:06,  9.84s/it]\rTesting:  23%|██▎       | 7/31 [01:09\u003c03:58,  9.95s/it]\rTesting:  26%|██▌       | 8/31 [01:19\u003c03:45,  9.82s/it]\rTesting:  29%|██▉       | 9/31 [01:28\u003c03:34,  9.74s/it]\rTesting:  32%|███▏      | 10/31 [01:39\u003c03:27,  9.89s/it]\rTesting:  35%|███▌      | 11/31 [01:49\u003c03:18,  9.93s/it]\rTesting:  39%|███▊      | 12/31 [01:58\u003c03:05,  9.77s/it]\rTesting:  42%|████▏     | 13/31 [02:08\u003c02:57,  9.85s/it]\rTesting:  45%|████▌     | 14/31 [02:18\u003c02:46,  9.77s/it]\rTesting:  48%|████▊     | 15/31 [02:27\u003c02:36,  9.77s/it]\rTesting:  52%|█████▏    | 16/31 [02:37\u003c02:27,  9.84s/it]\rTesting:  55%|█████▍    | 17/31 [02:47\u003c02:16,  9.79s/it]\rTesting:  58%|█████▊    | 18/31 [02:57\u003c02:08,  9.86s/it]\rTesting:  61%|██████▏   | 19/31 [03:07\u003c01:58,  9.83s/it]\rTesting:  65%|██████▍   | 20/31 [03:16\u003c01:46,  9.66s/it]\rTesting:  68%|██████▊   | 21/31 [03:25\u003c01:35,  9.52s/it]\rTesting:  71%|███████   | 22/31 [03:35\u003c01:25,  9.48s/it]\rTesting:  74%|███████▍  | 23/31 [03:45\u003c01:17,  9.65s/it]\rTesting:  77%|███████▋  | 24/31 [03:54\u003c01:06,  9.51s/it]\rTesting:  81%|████████  | 25/31 [04:03\u003c00:57,  9.52s/it]\rTesting:  84%|████████▍ | 26/31 [04:13\u003c00:47,  9.53s/it]\rTesting:  87%|████████▋ | 27/31 [04:22\u003c00:38,  9.50s/it]\rTesting:  90%|█████████ | 28/31 [04:32\u003c00:28,  9.43s/it]\rTesting:  94%|█████████▎| 29/31 [04:41\u003c00:19,  9.54s/it]\rTesting:  97%|█████████▋| 30/31 [04:51\u003c00:09,  9.48s/it]\rTesting: 100%|██████████| 31/31 [04:57\u003c00:00,  8.39s/it]\rTesting: 100%|██████████| 31/31 [04:57\u003c00:00,  9.59s/it]\n"}
+,{"stream_name":"stderr","time":4423.560934209,"data":"\rTesting:   0%|          | 0/31 [00:00\u003c?, ?it/s]\rTesting:   3%|▎         | 1/31 [00:11\u003c05:31, 11.03s/it]\rTesting:   6%|▋         | 2/31 [00:20\u003c04:53, 10.13s/it]\rTesting:  10%|▉         | 3/31 [00:30\u003c04:41, 10.04s/it]\rTesting:  13%|█▎        | 4/31 [00:40\u003c04:35, 10.19s/it]\rTesting:  16%|█▌        | 5/31 [00:49\u003c04:10,  9.65s/it]\rTesting:  19%|█▉        | 6/31 [00:58\u003c03:55,  9.42s/it]\rTesting:  23%|██▎       | 7/31 [01:07\u003c03:44,  9.36s/it]\rTesting:  26%|██▌       | 8/31 [01:17\u003c03:35,  9.39s/it]\rTesting:  29%|██▉       | 9/31 [01:26\u003c03:24,  9.30s/it]\rTesting:  32%|███▏      | 10/31 [01:35\u003c03:16,  9.37s/it]\rTesting:  35%|███▌      | 11/31 [01:45\u003c03:07,  9.35s/it]\rTesting:  39%|███▊      | 12/31 [01:54\u003c02:57,  9.36s/it]\rTesting:  42%|████▏     | 13/31 [02:04\u003c02:49,  9.39s/it]\rTesting:  45%|████▌     | 14/31 [02:13\u003c02:40,  9.44s/it]\rTesting:  48%|████▊     | 15/31 [02:22\u003c02:28,  9.29s/it]\rTesting:  52%|█████▏    | 16/31 [02:31\u003c02:18,  9.23s/it]\rTesting:  55%|█████▍    | 17/31 [02:41\u003c02:10,  9.32s/it]\rTesting:  58%|█████▊    | 18/31 [02:50\u003c02:01,  9.33s/it]\rTesting:  61%|██████▏   | 19/31 [02:59\u003c01:50,  9.18s/it]\rTesting:  65%|██████▍   | 20/31 [03:08\u003c01:41,  9.27s/it]\rTesting:  68%|██████▊   | 21/31 [03:18\u003c01:33,  9.32s/it]\rTesting:  71%|███████   | 22/31 [03:28\u003c01:25,  9.47s/it]\rTesting:  74%|███████▍  | 23/31 [03:36\u003c01:14,  9.25s/it]\rTesting:  77%|███████▋  | 24/31 [03:46\u003c01:04,  9.28s/it]\rTesting:  81%|████████  | 25/31 [03:55\u003c00:56,  9.34s/it]\rTesting:  84%|████████▍ | 26/31 [04:05\u003c00:47,  9.47s/it]\rTesting:  87%|████████▋ | 27/31 [04:15\u003c00:38,  9.62s/it]\rTesting:  90%|█████████ | 28/31 [04:24\u003c00:28,  9.48s/it]\rTesting:  94%|█████████▎| 29/31 [04:34\u003c00:19,  9.67s/it]\rTesting:  97%|█████████▋| 30/31 [04:44\u003c00:09,  9.81s/it]\rTesting: 100%|██████████| 31/31 [04:49\u003c00:00,  8.24s/it]\rTesting: 100%|██████████| 31/31 [04:49\u003c00:00,  9.34s/it]\n"}
+,{"stream_name":"stdout","time":4427.704171359,"data":"Vali Combined Loss: 52.90533790715767, Vali MSE Loss: 45.23316947540902, Vali MAE Loss: 6.6691104442894025, Vali Contrastive Loss: 1.0030579874592442\n"}
+,{"stream_name":"stdout","time":4427.704201832,"data":"Test Combined loss: 20.273385848347576, Test MSE Loss: 15.502937967370913, Test MAE Loss: 3.7671762320159368, Test Contrastive Loss: 1.0032716489607287\n"}
+,{"stream_name":"stdout","time":4427.704209854,"data":"Model saved successfully to /kaggle/working/out_time/lastest_model.pth\n"}
+,{"stream_name":"stdout","time":4427.704217953,"data":"Tokenizer saved successfully to /kaggle/working/out_time/tokenizer\n"}
+,{"stream_name":"stdout","time":5235.490374603,"data":"Step in Epoch: 4/10, loss: 1.3696058988571167\n"}
+,{"stream_name":"stdout","time":5235.490467212,"data":"Step in Epoch: 4/10, loss: 1.5157358646392822\n"}
+,{"stream_name":"stdout","time":5235.490475956,"data":"Step in Epoch: 4/10, loss: 1.570023775100708\n"}
+,{"stream_name":"stdout","time":5235.490481841,"data":"Step in Epoch: 4/10, loss: 1.3709824085235596\n"}
+,{"stream_name":"stdout","time":5235.490487265,"data":"Step in Epoch: 4/10, loss: 1.3688156604766846\n"}
+,{"stream_name":"stdout","time":5235.490492407,"data":"Step in Epoch: 4/10, loss: 1.907790184020996\n"}
+,{"stream_name":"stdout","time":5235.490497699,"data":"Step in Epoch: 4/10, loss: 1.8329228162765503\n"}
+,{"stream_name":"stdout","time":5235.490503571,"data":"Step in Epoch: 4/10, loss: 2.0800933837890625\n"}
+,{"stream_name":"stdout","time":5235.490508885,"data":"Step in Epoch: 4/10, loss: 3.746079921722412\n"}
+,{"stream_name":"stdout","time":5235.490514122,"data":"Step in Epoch: 4/10, loss: 4.782498836517334\n"}
+,{"stream_name":"stdout","time":5235.490520128,"data":"Step in Epoch: 4/10, loss: 4.567344665527344\n"}
+,{"stream_name":"stdout","time":5235.490525165,"data":"Step in Epoch: 4/10, loss: 4.964966773986816\n"}
+,{"stream_name":"stdout","time":5235.490530285,"data":"Step in Epoch: 4/10, loss: 5.887739658355713\n"}
+,{"stream_name":"stdout","time":5235.490535576,"data":"Step in Epoch: 4/10, loss: 5.147942543029785\n"}
+,{"stream_name":"stdout","time":5235.49054033,"data":"Step in Epoch: 4/10, loss: 4.538667678833008\n"}
+,{"stream_name":"stdout","time":5235.490544919,"data":"Step in Epoch: 4/10, loss: 4.258465766906738\n"}
+,{"stream_name":"stdout","time":5235.490549533,"data":"Step in Epoch: 4/10, loss: 4.206745147705078\n"}
+,{"stream_name":"stdout","time":5235.49055525,"data":"Step in Epoch: 4/10, loss: 3.5446720123291016\n"}
+,{"stream_name":"stdout","time":5235.490561058,"data":"Step in Epoch: 4/10, loss: 3.265127658843994\n"}
+,{"stream_name":"stdout","time":5235.490566531,"data":"Step in Epoch: 4/10, loss: 2.9209799766540527\n"}
+,{"stream_name":"stdout","time":5235.490572148,"data":"Step in Epoch: 4/10, loss: 2.663440704345703\n"}
+,{"stream_name":"stdout","time":5235.49057699,"data":"Step in Epoch: 4/10, loss: 2.8660693168640137\n"}
+,{"stream_name":"stdout","time":5235.490582316,"data":"Step in Epoch: 4/10, loss: 2.5872738361358643\n"}
+,{"stream_name":"stdout","time":5235.49058697,"data":"Step in Epoch: 4/10, loss: 2.2536323070526123\n"}
+,{"stream_name":"stdout","time":5235.490591934,"data":"Step in Epoch: 4/10, loss: 2.636418581008911\n"}
+,{"stream_name":"stdout","time":5235.490596561,"data":"Step in Epoch: 4/10, loss: 2.9505419731140137\n"}
+,{"stream_name":"stdout","time":5235.490601141,"data":"Step in Epoch: 4/10, loss: 2.8427298069000244\n"}
+,{"stream_name":"stdout","time":5235.490605683,"data":"Step in Epoch: 4/10, loss: 2.939546585083008\n"}
+,{"stream_name":"stdout","time":5235.49061029,"data":"Step in Epoch: 4/10, loss: 2.503174304962158\n"}
+,{"stream_name":"stdout","time":5235.490615036,"data":"Step in Epoch: 4/10, loss: 2.2251434326171875\n"}
+,{"stream_name":"stdout","time":5235.490619791,"data":"Step in Epoch: 4/10, loss: 2.093313694000244\n"}
+,{"stream_name":"stdout","time":5235.490624469,"data":"Step in Epoch: 4/10, loss: 1.7965288162231445\n"}
+,{"stream_name":"stdout","time":5235.490634567,"data":"Step in Epoch: 4/10, loss: 1.5955302715301514\n"}
+,{"stream_name":"stdout","time":5235.490639416,"data":"Step in Epoch: 4/10, loss: 1.643865704536438\n"}
+,{"stream_name":"stdout","time":5235.49065842,"data":"Step in Epoch: 4/10, loss: 1.5144736766815186\n"}
+,{"stream_name":"stdout","time":5235.490663841,"data":"Step in Epoch: 4/10, loss: 1.523508071899414\n"}
+,{"stream_name":"stdout","time":5235.490682952,"data":"Step in Epoch: 4/10, loss: 1.6507620811462402\n"}
+,{"stream_name":"stdout","time":5235.490687082,"data":"Step in Epoch: 4/10, loss: 1.8102045059204102\n"}
+,{"stream_name":"stdout","time":5235.490690739,"data":"Step in Epoch: 4/10, loss: 2.2384347915649414\n"}
+,{"stream_name":"stdout","time":5235.49069433,"data":"Step in Epoch: 4/10, loss: 2.22756028175354\n"}
+,{"stream_name":"stdout","time":5235.490697938,"data":"Step in Epoch: 4/10, loss: 1.9059391021728516\n"}
+,{"stream_name":"stdout","time":5235.490701526,"data":"Step in Epoch: 4/10, loss: 1.9653393030166626\n"}
+,{"stream_name":"stdout","time":5235.490705054,"data":"Step in Epoch: 4/10, loss: 1.6523245573043823\n"}
+,{"stream_name":"stdout","time":5235.490708597,"data":"Step in Epoch: 4/10, loss: 1.414017677307129\n"}
+,{"stream_name":"stdout","time":5235.490712135,"data":"Step in Epoch: 4/10, loss: 1.2577917575836182\n"}
+,{"stream_name":"stdout","time":5235.490717082,"data":"Step in Epoch: 4/10, loss: 1.261258602142334\n"}
+,{"stream_name":"stdout","time":5235.490720798,"data":"Step in Epoch: 4/10, loss: 1.4838762283325195\n"}
+,{"stream_name":"stdout","time":5235.490724429,"data":"Step in Epoch: 4/10, loss: 1.4394484758377075\n"}
+,{"stream_name":"stdout","time":5235.490727936,"data":"Step in Epoch: 4/10, loss: 1.2863798141479492\n"}
+,{"stream_name":"stdout","time":5235.490733415,"data":"Step in Epoch: 4/10, loss: 1.1470937728881836\n"}
+,{"stream_name":"stdout","time":5235.490740882,"data":"Step in Epoch: 4/10, loss: 1.0566329956054688\n"}
+,{"stream_name":"stdout","time":5235.490756414,"data":"Step in Epoch: 4/10, loss: 1.2039213180541992\n"}
+,{"stream_name":"stdout","time":5235.49076082,"data":"Step in Epoch: 4/10, loss: 1.1293405294418335\n"}
+,{"stream_name":"stdout","time":5235.49076481,"data":"Step in Epoch: 4/10, loss: 1.0583730936050415\n"}
+,{"stream_name":"stdout","time":5235.4907693,"data":"Step in Epoch: 4/10, loss: 1.1341876983642578\n"}
+,{"stream_name":"stdout","time":5235.490773543,"data":"Step in Epoch: 4/10, loss: 1.2689169645309448\n"}
+,{"stream_name":"stdout","time":5235.490777071,"data":"Step in Epoch: 4/10, loss: 1.3843772411346436\n"}
+,{"stream_name":"stdout","time":5235.490780598,"data":"Step in Epoch: 4/10, loss: 1.6099034547805786\n"}
+,{"stream_name":"stdout","time":5235.490784089,"data":"Step in Epoch: 4/10, loss: 1.5456119775772095\n"}
+,{"stream_name":"stdout","time":5235.490787597,"data":"Step in Epoch: 4/10, loss: 1.755210041999817\n"}
+,{"stream_name":"stdout","time":5235.490791087,"data":"Step in Epoch: 4/10, loss: 1.682091236114502\n"}
+,{"stream_name":"stdout","time":5235.490794554,"data":"Step in Epoch: 4/10, loss: 1.8744860887527466\n"}
+,{"stream_name":"stdout","time":5235.490798074,"data":"Step in Epoch: 4/10, loss: 2.166780710220337\n"}
+,{"stream_name":"stdout","time":5235.49080157,"data":"Step in Epoch: 4/10, loss: 2.2671523094177246\n"}
+,{"stream_name":"stdout","time":5235.4908051,"data":"Step in Epoch: 4/10, loss: 2.3735368251800537\n"}
+,{"stream_name":"stdout","time":5235.49080859,"data":"Step in Epoch: 4/10, loss: 2.4881699085235596\n"}
+,{"stream_name":"stdout","time":5235.490812102,"data":"Step in Epoch: 4/10, loss: 2.608513832092285\n"}
+,{"stream_name":"stdout","time":5235.490815629,"data":"Step in Epoch: 4/10, loss: 2.6577916145324707\n"}
+,{"stream_name":"stdout","time":5235.490819122,"data":"Step in Epoch: 4/10, loss: 3.239696979522705\n"}
+,{"stream_name":"stdout","time":5235.490822657,"data":"Step in Epoch: 4/10, loss: 3.3706600666046143\n"}
+,{"stream_name":"stdout","time":5235.490826258,"data":"Step in Epoch: 4/10, loss: 3.758934497833252\n"}
+,{"stream_name":"stdout","time":5235.49083958,"data":"Step in Epoch: 4/10, loss: 3.758790969848633\n"}
+,{"stream_name":"stdout","time":5235.490854825,"data":"Step in Epoch: 4/10, loss: 4.3156023025512695\n"}
+,{"stream_name":"stdout","time":5235.490859142,"data":"Step in Epoch: 4/10, loss: 4.247348785400391\n"}
+,{"stream_name":"stdout","time":5235.490863574,"data":"Step in Epoch: 4/10, loss: 4.413329124450684\n"}
+,{"stream_name":"stdout","time":5235.490867774,"data":"Step in Epoch: 4/10, loss: 3.956876277923584\n"}
+,{"stream_name":"stdout","time":5235.490871947,"data":"Step in Epoch: 4/10, loss: 3.6779377460479736\n"}
+,{"stream_name":"stdout","time":5235.490875517,"data":"Step in Epoch: 4/10, loss: 3.4995195865631104\n"}
+,{"stream_name":"stdout","time":5235.490879101,"data":"Step in Epoch: 4/10, loss: 2.738306760787964\n"}
+,{"stream_name":"stdout","time":5235.490882622,"data":"Step in Epoch: 4/10, loss: 3.4115347862243652\n"}
+,{"stream_name":"stdout","time":5235.490886184,"data":"Step in Epoch: 4/10, loss: 4.087299823760986\n"}
+,{"stream_name":"stdout","time":5235.4908897,"data":"Step in Epoch: 4/10, loss: 4.043279647827148\n"}
+,{"stream_name":"stdout","time":5235.490893258,"data":"Step in Epoch: 4/10, loss: 4.155999660491943\n"}
+,{"stream_name":"stdout","time":5235.49089683,"data":"Step in Epoch: 4/10, loss: 4.868195533752441\n"}
+,{"stream_name":"stdout","time":5235.49090032,"data":"Step in Epoch: 4/10, loss: 5.0771613121032715\n"}
+,{"stream_name":"stdout","time":5235.49090389,"data":"Step in Epoch: 4/10, loss: 4.791403293609619\n"}
+,{"stream_name":"stdout","time":5235.490907493,"data":"Step in Epoch: 4/10, loss: 4.75684118270874\n"}
+,{"stream_name":"stdout","time":5235.490911074,"data":"Step in Epoch: 4/10, loss: 5.584845542907715\n"}
+,{"stream_name":"stdout","time":5235.490914558,"data":"Step in Epoch: 4/10, loss: 5.98951530456543\n"}
+,{"stream_name":"stdout","time":5235.490918082,"data":"Step in Epoch: 4/10, loss: 6.6377434730529785\n"}
+,{"stream_name":"stdout","time":5235.490922242,"data":"Step in Epoch: 4/10, loss: 7.088862419128418\n"}
+,{"stream_name":"stdout","time":5235.49092603,"data":"Step in Epoch: 4/10, loss: 7.612980365753174\n"}
+,{"stream_name":"stdout","time":5235.490934567,"data":"Epoch: 4/10, loss: 2.8757661516251773\n"}
+,{"stream_name":"stderr","time":5532.780269938,"data":"\rTesting:   0%|          | 0/31 [00:00\u003c?, ?it/s]\rTesting:   3%|▎         | 1/31 [00:09\u003c04:51,  9.73s/it]\rTesting:   6%|▋         | 2/31 [00:19\u003c04:44,  9.81s/it]\rTesting:  10%|▉         | 3/31 [00:29\u003c04:40, 10.01s/it]\rTesting:  13%|█▎        | 4/31 [00:40\u003c04:32, 10.09s/it]\rTesting:  16%|█▌        | 5/31 [00:50\u003c04:23, 10.14s/it]\rTesting:  19%|█▉        | 6/31 [00:59\u003c04:07,  9.90s/it]\rTesting:  23%|██▎       | 7/31 [01:09\u003c04:00, 10.00s/it]\rTesting:  26%|██▌       | 8/31 [01:19\u003c03:46,  9.87s/it]\rTesting:  29%|██▉       | 9/31 [01:29\u003c03:35,  9.77s/it]\rTesting:  32%|███▏      | 10/31 [01:39\u003c03:28,  9.91s/it]\rTesting:  35%|███▌      | 11/31 [01:49\u003c03:19,  9.95s/it]\rTesting:  39%|███▊      | 12/31 [01:58\u003c03:06,  9.79s/it]\rTesting:  42%|████▏     | 13/31 [02:08\u003c02:57,  9.87s/it]\rTesting:  45%|████▌     | 14/31 [02:18\u003c02:46,  9.80s/it]\rTesting:  48%|████▊     | 15/31 [02:28\u003c02:36,  9.80s/it]\rTesting:  52%|█████▏    | 16/31 [02:38\u003c02:27,  9.84s/it]\rTesting:  55%|█████▍    | 17/31 [02:47\u003c02:16,  9.78s/it]\rTesting:  58%|█████▊    | 18/31 [02:57\u003c02:08,  9.85s/it]\rTesting:  61%|██████▏   | 19/31 [03:07\u003c01:58,  9.84s/it]\rTesting:  65%|██████▍   | 20/31 [03:16\u003c01:46,  9.65s/it]\rTesting:  68%|██████▊   | 21/31 [03:26\u003c01:35,  9.51s/it]\rTesting:  71%|███████   | 22/31 [03:35\u003c01:25,  9.46s/it]\rTesting:  74%|███████▍  | 23/31 [03:45\u003c01:17,  9.63s/it]\rTesting:  77%|███████▋  | 24/31 [03:54\u003c01:06,  9.49s/it]\rTesting:  81%|████████  | 25/31 [04:04\u003c00:57,  9.50s/it]\rTesting:  84%|████████▍ | 26/31 [04:13\u003c00:47,  9.52s/it]\rTesting:  87%|████████▋ | 27/31 [04:23\u003c00:37,  9.48s/it]\rTesting:  90%|█████████ | 28/31 [04:32\u003c00:28,  9.41s/it]\rTesting:  94%|█████████▎| 29/31 [04:42\u003c00:19,  9.52s/it]\rTesting:  97%|█████████▋| 30/31 [04:51\u003c00:09,  9.46s/it]\rTesting: 100%|██████████| 31/31 [04:57\u003c00:00,  8.38s/it]\rTesting: 100%|██████████| 31/31 [04:57\u003c00:00,  9.59s/it]\n"}
+,{"stream_name":"stderr","time":5822.479828331,"data":"\rTesting:   0%|          | 0/31 [00:00\u003c?, ?it/s]\rTesting:   3%|▎         | 1/31 [00:11\u003c05:32, 11.08s/it]\rTesting:   6%|▋         | 2/31 [00:20\u003c04:53, 10.13s/it]\rTesting:  10%|▉         | 3/31 [00:30\u003c04:40, 10.03s/it]\rTesting:  13%|█▎        | 4/31 [00:40\u003c04:34, 10.18s/it]\rTesting:  16%|█▌        | 5/31 [00:49\u003c04:10,  9.65s/it]\rTesting:  19%|█▉        | 6/31 [00:58\u003c03:55,  9.42s/it]\rTesting:  23%|██▎       | 7/31 [01:07\u003c03:44,  9.35s/it]\rTesting:  26%|██▌       | 8/31 [01:17\u003c03:35,  9.38s/it]\rTesting:  29%|██▉       | 9/31 [01:26\u003c03:24,  9.29s/it]\rTesting:  32%|███▏      | 10/31 [01:35\u003c03:16,  9.36s/it]\rTesting:  35%|███▌      | 11/31 [01:45\u003c03:06,  9.34s/it]\rTesting:  39%|███▊      | 12/31 [01:54\u003c02:57,  9.36s/it]\rTesting:  42%|████▏     | 13/31 [02:03\u003c02:48,  9.38s/it]\rTesting:  45%|████▌     | 14/31 [02:13\u003c02:40,  9.44s/it]\rTesting:  48%|████▊     | 15/31 [02:22\u003c02:28,  9.29s/it]\rTesting:  52%|█████▏    | 16/31 [02:31\u003c02:18,  9.24s/it]\rTesting:  55%|█████▍    | 17/31 [02:41\u003c02:10,  9.32s/it]\rTesting:  58%|█████▊    | 18/31 [02:50\u003c02:01,  9.34s/it]\rTesting:  61%|██████▏   | 19/31 [02:59\u003c01:50,  9.19s/it]\rTesting:  65%|██████▍   | 20/31 [03:08\u003c01:42,  9.28s/it]\rTesting:  68%|██████▊   | 21/31 [03:18\u003c01:33,  9.34s/it]\rTesting:  71%|███████   | 22/31 [03:28\u003c01:25,  9.50s/it]\rTesting:  74%|███████▍  | 23/31 [03:36\u003c01:14,  9.27s/it]\rTesting:  77%|███████▋  | 24/31 [03:46\u003c01:05,  9.30s/it]\rTesting:  81%|████████  | 25/31 [03:55\u003c00:56,  9.37s/it]\rTesting:  84%|████████▍ | 26/31 [04:05\u003c00:47,  9.51s/it]\rTesting:  87%|████████▋ | 27/31 [04:15\u003c00:38,  9.65s/it]\rTesting:  90%|█████████ | 28/31 [04:24\u003c00:28,  9.50s/it]\rTesting:  94%|█████████▎| 29/31 [04:34\u003c00:19,  9.69s/it]\rTesting:  97%|█████████▋| 30/31 [04:45\u003c00:09,  9.84s/it]\rTesting: 100%|██████████| 31/31 [04:49\u003c00:00,  8.27s/it]\rTesting: 100%|██████████| 31/31 [04:49\u003c00:00,  9.35s/it]\n"}
+,{"stream_name":"stdout","time":5827.425722892,"data":"Vali Combined Loss: 53.0111574526352, Vali MSE Loss: 45.33170266490574, Vali MAE Loss: 6.6764396002506485, Vali Contrastive Loss: 1.0030151874788347\n"}
+,{"stream_name":"stdout","time":5827.425786353,"data":"Test Combined loss: 20.339508832347345, Test MSE Loss: 15.563281278975207, Test MAE Loss: 3.773013832435206, Test Contrastive Loss: 1.003213720936929\n"}
+,{"stream_name":"stdout","time":5827.425793421,"data":"Model saved successfully to /kaggle/working/out_time/lastest_model.pth\n"}
+,{"stream_name":"stdout","time":5827.425803663,"data":"Tokenizer saved successfully to /kaggle/working/out_time/tokenizer\n"}
+,{"stream_name":"stdout","time":6632.074053094,"data":"Step in Epoch: 5/10, loss: 1.3767081499099731\n"}
+,{"stream_name":"stdout","time":6632.074089698,"data":"Step in Epoch: 5/10, loss: 1.5230716466903687\n"}
+,{"stream_name":"stdout","time":6632.074096724,"data":"Step in Epoch: 5/10, loss: 1.5776705741882324\n"}
+,{"stream_name":"stdout","time":6632.074101489,"data":"Step in Epoch: 5/10, loss: 1.3774793148040771\n"}
+,{"stream_name":"stdout","time":6632.074106178,"data":"Step in Epoch: 5/10, loss: 1.3752069473266602\n"}
+,{"stream_name":"stdout","time":6632.074111052,"data":"Step in Epoch: 5/10, loss: 1.9146496057510376\n"}
+,{"stream_name":"stdout","time":6632.074115826,"data":"Step in Epoch: 5/10, loss: 1.8397908210754395\n"}
+,{"stream_name":"stdout","time":6632.074120735,"data":"Step in Epoch: 5/10, loss: 2.0848889350891113\n"}
+,{"stream_name":"stdout","time":6632.074125247,"data":"Step in Epoch: 5/10, loss: 3.686096668243408\n"}
+,{"stream_name":"stdout","time":6632.074130304,"data":"Step in Epoch: 5/10, loss: 4.583242893218994\n"}
+,{"stream_name":"stdout","time":6632.074135177,"data":"Step in Epoch: 5/10, loss: 4.346978187561035\n"}
+,{"stream_name":"stdout","time":6632.074139509,"data":"Step in Epoch: 5/10, loss: 4.7422895431518555\n"}
+,{"stream_name":"stdout","time":6632.074143811,"data":"Step in Epoch: 5/10, loss: 5.751254081726074\n"}
+,{"stream_name":"stdout","time":6632.074148049,"data":"Step in Epoch: 5/10, loss: 4.9405131340026855\n"}
+,{"stream_name":"stdout","time":6632.074152844,"data":"Step in Epoch: 5/10, loss: 4.280579566955566\n"}
+,{"stream_name":"stdout","time":6632.074157528,"data":"Step in Epoch: 5/10, loss: 4.041240215301514\n"}
+,{"stream_name":"stdout","time":6632.07416265,"data":"Step in Epoch: 5/10, loss: 3.994877338409424\n"}
+,{"stream_name":"stdout","time":6632.074167676,"data":"Step in Epoch: 5/10, loss: 3.372714042663574\n"}
+,{"stream_name":"stdout","time":6632.074171814,"data":"Step in Epoch: 5/10, loss: 3.084998607635498\n"}
+,{"stream_name":"stdout","time":6632.074176527,"data":"Step in Epoch: 5/10, loss: 2.7100534439086914\n"}
+,{"stream_name":"stdout","time":6632.074181149,"data":"Step in Epoch: 5/10, loss: 2.4290032386779785\n"}
+,{"stream_name":"stdout","time":6632.074185619,"data":"Step in Epoch: 5/10, loss: 2.590709686279297\n"}
+,{"stream_name":"stdout","time":6632.074190799,"data":"Step in Epoch: 5/10, loss: 2.344883441925049\n"}
+,{"stream_name":"stdout","time":6632.074195384,"data":"Step in Epoch: 5/10, loss: 2.0113704204559326\n"}
+,{"stream_name":"stdout","time":6632.074200404,"data":"Step in Epoch: 5/10, loss: 2.413788318634033\n"}
+,{"stream_name":"stdout","time":6632.074205576,"data":"Step in Epoch: 5/10, loss: 2.7126927375793457\n"}
+,{"stream_name":"stdout","time":6632.074210241,"data":"Step in Epoch: 5/10, loss: 2.5195508003234863\n"}
+,{"stream_name":"stdout","time":6632.074214747,"data":"Step in Epoch: 5/10, loss: 2.5766849517822266\n"}
+,{"stream_name":"stdout","time":6632.074219185,"data":"Step in Epoch: 5/10, loss: 2.193296194076538\n"}
+,{"stream_name":"stdout","time":6632.074223767,"data":"Step in Epoch: 5/10, loss: 1.991274356842041\n"}
+,{"stream_name":"stdout","time":6632.074228172,"data":"Step in Epoch: 5/10, loss: 1.886035442352295\n"}
+,{"stream_name":"stdout","time":6632.074232637,"data":"Step in Epoch: 5/10, loss: 1.638512372970581\n"}
+,{"stream_name":"stdout","time":6632.074242569,"data":"Step in Epoch: 5/10, loss: 1.4521437883377075\n"}
+,{"stream_name":"stdout","time":6632.074246386,"data":"Step in Epoch: 5/10, loss: 1.4333597421646118\n"}
+,{"stream_name":"stdout","time":6632.074249421,"data":"Step in Epoch: 5/10, loss: 1.2770978212356567\n"}
+,{"stream_name":"stdout","time":6632.074263199,"data":"Step in Epoch: 5/10, loss: 1.238507628440857\n"}
+,{"stream_name":"stdout","time":6632.074265763,"data":"Step in Epoch: 5/10, loss: 1.3252204656600952\n"}
+,{"stream_name":"stdout","time":6632.074268194,"data":"Step in Epoch: 5/10, loss: 1.514436960220337\n"}
+,{"stream_name":"stdout","time":6632.074270528,"data":"Step in Epoch: 5/10, loss: 1.9655547142028809\n"}
+,{"stream_name":"stdout","time":6632.074272771,"data":"Step in Epoch: 5/10, loss: 1.9306288957595825\n"}
+,{"stream_name":"stdout","time":6632.074275021,"data":"Step in Epoch: 5/10, loss: 1.541831612586975\n"}
+,{"stream_name":"stdout","time":6632.074277336,"data":"Step in Epoch: 5/10, loss: 1.524503469467163\n"}
+,{"stream_name":"stdout","time":6632.074279572,"data":"Step in Epoch: 5/10, loss: 1.2644098997116089\n"}
+,{"stream_name":"stdout","time":6632.074281985,"data":"Step in Epoch: 5/10, loss: 1.1333760023117065\n"}
+,{"stream_name":"stdout","time":6632.074286051,"data":"Step in Epoch: 5/10, loss: 1.086768388748169\n"}
+,{"stream_name":"stdout","time":6632.074288431,"data":"Step in Epoch: 5/10, loss: 1.0841455459594727\n"}
+,{"stream_name":"stdout","time":6632.07429068,"data":"Step in Epoch: 5/10, loss: 1.2185890674591064\n"}
+,{"stream_name":"stdout","time":6632.074292917,"data":"Step in Epoch: 5/10, loss: 1.190266728401184\n"}
+,{"stream_name":"stdout","time":6632.074295189,"data":"Step in Epoch: 5/10, loss: 1.1009684801101685\n"}
+,{"stream_name":"stdout","time":6632.074297516,"data":"Step in Epoch: 5/10, loss: 1.0745570659637451\n"}
+,{"stream_name":"stdout","time":6632.074299766,"data":"Step in Epoch: 5/10, loss: 1.1187959909439087\n"}
+,{"stream_name":"stdout","time":6632.074302026,"data":"Step in Epoch: 5/10, loss: 1.0985978841781616\n"}
+,{"stream_name":"stdout","time":6632.074304679,"data":"Step in Epoch: 5/10, loss: 1.0595078468322754\n"}
+,{"stream_name":"stdout","time":6632.074307077,"data":"Step in Epoch: 5/10, loss: 1.1181358098983765\n"}
+,{"stream_name":"stdout","time":6632.074309319,"data":"Step in Epoch: 5/10, loss: 1.1766868829727173\n"}
+,{"stream_name":"stdout","time":6632.074311632,"data":"Step in Epoch: 5/10, loss: 1.2658779621124268\n"}
+,{"stream_name":"stdout","time":6632.074313902,"data":"Step in Epoch: 5/10, loss: 1.344190001487732\n"}
+,{"stream_name":"stdout","time":6632.074316159,"data":"Step in Epoch: 5/10, loss: 1.5380094051361084\n"}
+,{"stream_name":"stdout","time":6632.074335921,"data":"Step in Epoch: 5/10, loss: 1.4752006530761719\n"}
+,{"stream_name":"stdout","time":6632.074338431,"data":"Step in Epoch: 5/10, loss: 1.6867361068725586\n"}
+,{"stream_name":"stdout","time":6632.074340876,"data":"Step in Epoch: 5/10, loss: 1.620483160018921\n"}
+,{"stream_name":"stdout","time":6632.074343268,"data":"Step in Epoch: 5/10, loss: 1.8392449617385864\n"}
+,{"stream_name":"stdout","time":6632.074345655,"data":"Step in Epoch: 5/10, loss: 2.152860641479492\n"}
+,{"stream_name":"stdout","time":6632.074348118,"data":"Step in Epoch: 5/10, loss: 2.261754035949707\n"}
+,{"stream_name":"stdout","time":6632.074350507,"data":"Step in Epoch: 5/10, loss: 2.3777341842651367\n"}
+,{"stream_name":"stdout","time":6632.0743529,"data":"Step in Epoch: 5/10, loss: 2.495626926422119\n"}
+,{"stream_name":"stdout","time":6632.074355312,"data":"Step in Epoch: 5/10, loss: 2.6169168949127197\n"}
+,{"stream_name":"stdout","time":6632.074357932,"data":"Step in Epoch: 5/10, loss: 2.6656479835510254\n"}
+,{"stream_name":"stdout","time":6632.074360361,"data":"Step in Epoch: 5/10, loss: 3.245701313018799\n"}
+,{"stream_name":"stdout","time":6632.074362765,"data":"Step in Epoch: 5/10, loss: 3.374993324279785\n"}
+,{"stream_name":"stdout","time":6632.074365167,"data":"Step in Epoch: 5/10, loss: 3.761477470397949\n"}
+,{"stream_name":"stdout","time":6632.074370496,"data":"Step in Epoch: 5/10, loss: 3.7616748809814453\n"}
+,{"stream_name":"stdout","time":6632.074373032,"data":"Step in Epoch: 5/10, loss: 4.3167524337768555\n"}
+,{"stream_name":"stdout","time":6632.074375446,"data":"Step in Epoch: 5/10, loss: 4.2472825050354\n"}
+,{"stream_name":"stdout","time":6632.074377849,"data":"Step in Epoch: 5/10, loss: 4.412242412567139\n"}
+,{"stream_name":"stdout","time":6632.074380326,"data":"Step in Epoch: 5/10, loss: 3.9551262855529785\n"}
+,{"stream_name":"stdout","time":6632.074382726,"data":"Step in Epoch: 5/10, loss: 3.6761324405670166\n"}
+,{"stream_name":"stdout","time":6632.074385122,"data":"Step in Epoch: 5/10, loss: 3.497189521789551\n"}
+,{"stream_name":"stdout","time":6632.074387535,"data":"Step in Epoch: 5/10, loss: 2.736052989959717\n"}
+,{"stream_name":"stdout","time":6632.074389952,"data":"Step in Epoch: 5/10, loss: 3.407838821411133\n"}
+,{"stream_name":"stdout","time":6632.074392354,"data":"Step in Epoch: 5/10, loss: 4.082136154174805\n"}
+,{"stream_name":"stdout","time":6632.074394761,"data":"Step in Epoch: 5/10, loss: 4.03768253326416\n"}
+,{"stream_name":"stdout","time":6632.074397152,"data":"Step in Epoch: 5/10, loss: 4.149773597717285\n"}
+,{"stream_name":"stdout","time":6632.074399599,"data":"Step in Epoch: 5/10, loss: 4.860706806182861\n"}
+,{"stream_name":"stdout","time":6632.074401984,"data":"Step in Epoch: 5/10, loss: 5.069106578826904\n"}
+,{"stream_name":"stdout","time":6632.074404376,"data":"Step in Epoch: 5/10, loss: 4.783292293548584\n"}
+,{"stream_name":"stdout","time":6632.074406769,"data":"Step in Epoch: 5/10, loss: 4.74851131439209\n"}
+,{"stream_name":"stdout","time":6632.074409164,"data":"Step in Epoch: 5/10, loss: 5.57547664642334\n"}
+,{"stream_name":"stdout","time":6632.074411558,"data":"Step in Epoch: 5/10, loss: 5.979659557342529\n"}
+,{"stream_name":"stdout","time":6632.074413972,"data":"Step in Epoch: 5/10, loss: 6.6273674964904785\n"}
+,{"stream_name":"stdout","time":6632.074416904,"data":"Step in Epoch: 5/10, loss: 7.078122138977051\n"}
+,{"stream_name":"stdout","time":6632.074419376,"data":"Step in Epoch: 5/10, loss: 7.601873397827148\n"}
+,{"stream_name":"stdout","time":6632.074421776,"data":"Epoch: 5/10, loss: 2.762681002202241\n"}
+,{"stream_name":"stderr","time":6929.808997016,"data":"\rTesting:   0%|          | 0/31 [00:00\u003c?, ?it/s]\rTesting:   3%|▎         | 1/31 [00:09\u003c04:53,  9.77s/it]\rTesting:   6%|▋         | 2/31 [00:19\u003c04:45,  9.84s/it]\rTesting:  10%|▉         | 3/31 [00:29\u003c04:41, 10.05s/it]\rTesting:  13%|█▎        | 4/31 [00:40\u003c04:32, 10.11s/it]\rTesting:  16%|█▌        | 5/31 [00:50\u003c04:23, 10.15s/it]\rTesting:  19%|█▉        | 6/31 [00:59\u003c04:07,  9.89s/it]\rTesting:  23%|██▎       | 7/31 [01:09\u003c03:59, 10.00s/it]\rTesting:  26%|██▌       | 8/31 [01:19\u003c03:46,  9.86s/it]\rTesting:  29%|██▉       | 9/31 [01:29\u003c03:34,  9.77s/it]\rTesting:  32%|███▏      | 10/31 [01:39\u003c03:28,  9.91s/it]\rTesting:  35%|███▌      | 11/31 [01:49\u003c03:19,  9.95s/it]\rTesting:  39%|███▊      | 12/31 [01:58\u003c03:05,  9.78s/it]\rTesting:  42%|████▏     | 13/31 [02:08\u003c02:57,  9.87s/it]\rTesting:  45%|████▌     | 14/31 [02:18\u003c02:46,  9.79s/it]\rTesting:  48%|████▊     | 15/31 [02:28\u003c02:36,  9.80s/it]\rTesting:  52%|█████▏    | 16/31 [02:38\u003c02:27,  9.84s/it]\rTesting:  55%|█████▍    | 17/31 [02:47\u003c02:17,  9.79s/it]\rTesting:  58%|█████▊    | 18/31 [02:57\u003c02:08,  9.86s/it]\rTesting:  61%|██████▏   | 19/31 [03:07\u003c01:58,  9.85s/it]\rTesting:  65%|██████▍   | 20/31 [03:16\u003c01:46,  9.66s/it]\rTesting:  68%|██████▊   | 21/31 [03:26\u003c01:35,  9.52s/it]\rTesting:  71%|███████   | 22/31 [03:35\u003c01:25,  9.47s/it]\rTesting:  74%|███████▍  | 23/31 [03:45\u003c01:17,  9.65s/it]\rTesting:  77%|███████▋  | 24/31 [03:54\u003c01:06,  9.51s/it]\rTesting:  81%|████████  | 25/31 [04:04\u003c00:57,  9.53s/it]\rTesting:  84%|████████▍ | 26/31 [04:13\u003c00:47,  9.54s/it]\rTesting:  87%|████████▋ | 27/31 [04:23\u003c00:38,  9.52s/it]\rTesting:  90%|█████████ | 28/31 [04:32\u003c00:28,  9.45s/it]\rTesting:  94%|█████████▎| 29/31 [04:42\u003c00:19,  9.57s/it]\rTesting:  97%|█████████▋| 30/31 [04:51\u003c00:09,  9.50s/it]\rTesting: 100%|██████████| 31/31 [04:57\u003c00:00,  8.41s/it]\rTesting: 100%|██████████| 31/31 [04:57\u003c00:00,  9.60s/it]\n"}
+,{"stream_name":"stderr","time":7220.208485913,"data":"\rTesting:   0%|          | 0/31 [00:00\u003c?, ?it/s]\rTesting:   3%|▎         | 1/31 [00:11\u003c05:32, 11.08s/it]\rTesting:   6%|▋         | 2/31 [00:20\u003c04:54, 10.14s/it]\rTesting:  10%|▉         | 3/31 [00:30\u003c04:41, 10.04s/it]\rTesting:  13%|█▎        | 4/31 [00:40\u003c04:35, 10.20s/it]\rTesting:  16%|█▌        | 5/31 [00:49\u003c04:11,  9.68s/it]\rTesting:  19%|█▉        | 6/31 [00:58\u003c03:56,  9.45s/it]\rTesting:  23%|██▎       | 7/31 [01:07\u003c03:45,  9.38s/it]\rTesting:  26%|██▌       | 8/31 [01:17\u003c03:36,  9.40s/it]\rTesting:  29%|██▉       | 9/31 [01:26\u003c03:24,  9.32s/it]\rTesting:  32%|███▏      | 10/31 [01:36\u003c03:17,  9.40s/it]\rTesting:  35%|███▌      | 11/31 [01:45\u003c03:07,  9.38s/it]\rTesting:  39%|███▊      | 12/31 [01:54\u003c02:58,  9.38s/it]\rTesting:  42%|████▏     | 13/31 [02:04\u003c02:49,  9.40s/it]\rTesting:  45%|████▌     | 14/31 [02:13\u003c02:40,  9.46s/it]\rTesting:  48%|████▊     | 15/31 [02:22\u003c02:28,  9.30s/it]\rTesting:  52%|█████▏    | 16/31 [02:31\u003c02:18,  9.25s/it]\rTesting:  55%|█████▍    | 17/31 [02:41\u003c02:10,  9.34s/it]\rTesting:  58%|█████▊    | 18/31 [02:50\u003c02:01,  9.35s/it]\rTesting:  61%|██████▏   | 19/31 [02:59\u003c01:50,  9.20s/it]\rTesting:  65%|██████▍   | 20/31 [03:09\u003c01:42,  9.29s/it]\rTesting:  68%|██████▊   | 21/31 [03:18\u003c01:33,  9.35s/it]\rTesting:  71%|███████   | 22/31 [03:28\u003c01:25,  9.51s/it]\rTesting:  74%|███████▍  | 23/31 [03:37\u003c01:14,  9.29s/it]\rTesting:  77%|███████▋  | 24/31 [03:46\u003c01:05,  9.32s/it]\rTesting:  81%|████████  | 25/31 [03:56\u003c00:56,  9.38s/it]\rTesting:  84%|████████▍ | 26/31 [04:06\u003c00:47,  9.53s/it]\rTesting:  87%|████████▋ | 27/31 [04:16\u003c00:38,  9.68s/it]\rTesting:  90%|█████████ | 28/31 [04:25\u003c00:28,  9.53s/it]\rTesting:  94%|█████████▎| 29/31 [04:35\u003c00:19,  9.73s/it]\rTesting:  97%|█████████▋| 30/31 [04:45\u003c00:09,  9.88s/it]\rTesting: 100%|██████████| 31/31 [04:50\u003c00:00,  8.29s/it]\rTesting: 100%|██████████| 31/31 [04:50\u003c00:00,  9.37s/it]\n"}
+,{"stream_name":"stdout","time":7224.393004108,"data":"Vali Combined Loss: 55.580951931840836, Vali MSE Loss: 47.72018790771136, Vali MAE Loss: 6.8577746896846365, Vali Contrastive Loss: 1.002989334444846\n"}
+,{"stream_name":"stdout","time":7224.39305086,"data":"Test Combined loss: 21.152839414137215, Test MSE Loss: 16.307922617157878, Test MAE Loss: 3.841750455966807, Test Contrastive Loss: 1.003166341012524\n"}
+,{"stream_name":"stdout","time":7224.39306194,"data":"Model saved successfully to /kaggle/working/out_time/lastest_model.pth\n"}
+,{"stream_name":"stdout","time":7224.393065664,"data":"Tokenizer saved successfully to /kaggle/working/out_time/tokenizer\n"}
+,{"stream_name":"stdout","time":8028.525845455,"data":"Step in Epoch: 6/10, loss: 1.3762319087982178\n"}
+,{"stream_name":"stdout","time":8028.525911805,"data":"Step in Epoch: 6/10, loss: 1.522262454032898\n"}
+,{"stream_name":"stdout","time":8028.525918595,"data":"Step in Epoch: 6/10, loss: 1.5766618251800537\n"}
+,{"stream_name":"stdout","time":8028.525923127,"data":"Step in Epoch: 6/10, loss: 1.3777074813842773\n"}
+,{"stream_name":"stdout","time":8028.525927577,"data":"Step in Epoch: 6/10, loss: 1.3755578994750977\n"}
+,{"stream_name":"stdout","time":8028.525933592,"data":"Step in Epoch: 6/10, loss: 1.9119540452957153\n"}
+,{"stream_name":"stdout","time":8028.525940558,"data":"Step in Epoch: 6/10, loss: 1.8377584218978882\n"}
+,{"stream_name":"stdout","time":8028.525943608,"data":"Step in Epoch: 6/10, loss: 2.080868721008301\n"}
+,{"stream_name":"stdout","time":8028.525946785,"data":"Step in Epoch: 6/10, loss: 3.6646485328674316\n"}
+,{"stream_name":"stdout","time":8028.525949788,"data":"Step in Epoch: 6/10, loss: 4.5523481369018555\n"}
+,{"stream_name":"stdout","time":8028.525953025,"data":"Step in Epoch: 6/10, loss: 4.297826766967773\n"}
+,{"stream_name":"stdout","time":8028.525955988,"data":"Step in Epoch: 6/10, loss: 4.396490097045898\n"}
+,{"stream_name":"stdout","time":8028.525958986,"data":"Step in Epoch: 6/10, loss: 4.498884201049805\n"}
+,{"stream_name":"stdout","time":8028.525961938,"data":"Step in Epoch: 6/10, loss: 3.6688389778137207\n"}
+,{"stream_name":"stdout","time":8028.525964982,"data":"Step in Epoch: 6/10, loss: 3.1864967346191406\n"}
+,{"stream_name":"stdout","time":8028.52596804,"data":"Step in Epoch: 6/10, loss: 3.057981491088867\n"}
+,{"stream_name":"stdout","time":8028.525971432,"data":"Step in Epoch: 6/10, loss: 3.0264782905578613\n"}
+,{"stream_name":"stdout","time":8028.525988293,"data":"Step in Epoch: 6/10, loss: 2.2402193546295166\n"}
+,{"stream_name":"stdout","time":8028.525993659,"data":"Step in Epoch: 6/10, loss: 1.9878369569778442\n"}
+,{"stream_name":"stdout","time":8028.525998712,"data":"Step in Epoch: 6/10, loss: 1.7479113340377808\n"}
+,{"stream_name":"stdout","time":8028.526003323,"data":"Step in Epoch: 6/10, loss: 1.58568274974823\n"}
+,{"stream_name":"stdout","time":8028.526007535,"data":"Step in Epoch: 6/10, loss: 1.6258548498153687\n"}
+,{"stream_name":"stdout","time":8028.526012071,"data":"Step in Epoch: 6/10, loss: 1.427994728088379\n"}
+,{"stream_name":"stdout","time":8028.526016982,"data":"Step in Epoch: 6/10, loss: 1.2474263906478882\n"}
+,{"stream_name":"stdout","time":8028.526021455,"data":"Step in Epoch: 6/10, loss: 1.355397343635559\n"}
+,{"stream_name":"stdout","time":8028.526043592,"data":"Step in Epoch: 6/10, loss: 1.4755377769470215\n"}
+,{"stream_name":"stdout","time":8028.52604843,"data":"Step in Epoch: 6/10, loss: 1.3829874992370605\n"}
+,{"stream_name":"stdout","time":8028.526053118,"data":"Step in Epoch: 6/10, loss: 1.4303066730499268\n"}
+,{"stream_name":"stdout","time":8028.526057378,"data":"Step in Epoch: 6/10, loss: 1.2494521141052246\n"}
+,{"stream_name":"stdout","time":8028.526062109,"data":"Step in Epoch: 6/10, loss: 1.2631973028182983\n"}
+,{"stream_name":"stdout","time":8028.526067427,"data":"Step in Epoch: 6/10, loss: 1.3075323104858398\n"}
+,{"stream_name":"stdout","time":8028.526071789,"data":"Step in Epoch: 6/10, loss: 1.4280821084976196\n"}
+,{"stream_name":"stdout","time":8028.52607702,"data":"Step in Epoch: 6/10, loss: 1.4729000329971313\n"}
+,{"stream_name":"stdout","time":8028.526082092,"data":"Step in Epoch: 6/10, loss: 1.3212430477142334\n"}
+,{"stream_name":"stdout","time":8028.52608696,"data":"Step in Epoch: 6/10, loss: 1.109844446182251\n"}
+,{"stream_name":"stdout","time":8028.526102342,"data":"Step in Epoch: 6/10, loss: 1.1197295188903809\n"}
+,{"stream_name":"stdout","time":8028.526105909,"data":"Step in Epoch: 6/10, loss: 1.2828987836837769\n"}
+,{"stream_name":"stdout","time":8028.526109283,"data":"Step in Epoch: 6/10, loss: 1.3302061557769775\n"}
+,{"stream_name":"stdout","time":8028.526112654,"data":"Step in Epoch: 6/10, loss: 1.4016919136047363\n"}
+,{"stream_name":"stdout","time":8028.526115935,"data":"Step in Epoch: 6/10, loss: 1.2854886054992676\n"}
+,{"stream_name":"stdout","time":8028.526119278,"data":"Step in Epoch: 6/10, loss: 1.137570858001709\n"}
+,{"stream_name":"stdout","time":8028.526122633,"data":"Step in Epoch: 6/10, loss: 1.099209189414978\n"}
+,{"stream_name":"stdout","time":8028.526126007,"data":"Step in Epoch: 6/10, loss: 1.1776351928710938\n"}
+,{"stream_name":"stdout","time":8028.526130878,"data":"Step in Epoch: 6/10, loss: 1.2395960092544556\n"}
+,{"stream_name":"stdout","time":8028.526142322,"data":"Step in Epoch: 6/10, loss: 1.2100389003753662\n"}
+,{"stream_name":"stdout","time":8028.526144766,"data":"Step in Epoch: 6/10, loss: 1.1248407363891602\n"}
+,{"stream_name":"stdout","time":8028.526147028,"data":"Step in Epoch: 6/10, loss: 1.0522016286849976\n"}
+,{"stream_name":"stdout","time":8028.526149283,"data":"Step in Epoch: 6/10, loss: 1.0760862827301025\n"}
+,{"stream_name":"stdout","time":8028.526151729,"data":"Step in Epoch: 6/10, loss: 1.0710723400115967\n"}
+,{"stream_name":"stdout","time":8028.526153977,"data":"Step in Epoch: 6/10, loss: 1.046754240989685\n"}
+,{"stream_name":"stdout","time":8028.526156227,"data":"Step in Epoch: 6/10, loss: 1.0361074209213257\n"}
+,{"stream_name":"stdout","time":8028.526158473,"data":"Step in Epoch: 6/10, loss: 1.093935489654541\n"}
+,{"stream_name":"stdout","time":8028.5261608,"data":"Step in Epoch: 6/10, loss: 1.0537763833999634\n"}
+,{"stream_name":"stdout","time":8028.526180515,"data":"Step in Epoch: 6/10, loss: 1.064143419265747\n"}
+,{"stream_name":"stdout","time":8028.526182915,"data":"Step in Epoch: 6/10, loss: 1.135898232460022\n"}
+,{"stream_name":"stdout","time":8028.526185343,"data":"Step in Epoch: 6/10, loss: 1.2460910081863403\n"}
+,{"stream_name":"stdout","time":8028.526187867,"data":"Step in Epoch: 6/10, loss: 1.3424201011657715\n"}
+,{"stream_name":"stdout","time":8028.52619027,"data":"Step in Epoch: 6/10, loss: 1.5432209968566895\n"}
+,{"stream_name":"stdout","time":8028.526192679,"data":"Step in Epoch: 6/10, loss: 1.487491488456726\n"}
+,{"stream_name":"stdout","time":8028.526195095,"data":"Step in Epoch: 6/10, loss: 1.69342041015625\n"}
+,{"stream_name":"stdout","time":8028.526197591,"data":"Step in Epoch: 6/10, loss: 1.6240553855895996\n"}
+,{"stream_name":"stdout","time":8028.526200227,"data":"Step in Epoch: 6/10, loss: 1.828547716140747\n"}
+,{"stream_name":"stdout","time":8028.526202663,"data":"Step in Epoch: 6/10, loss: 2.13193416595459\n"}
+,{"stream_name":"stdout","time":8028.526205061,"data":"Step in Epoch: 6/10, loss: 2.241021156311035\n"}
+,{"stream_name":"stdout","time":8028.526207553,"data":"Step in Epoch: 6/10, loss: 2.355555534362793\n"}
+,{"stream_name":"stdout","time":8028.526209957,"data":"Step in Epoch: 6/10, loss: 2.4720468521118164\n"}
+,{"stream_name":"stdout","time":8028.526212371,"data":"Step in Epoch: 6/10, loss: 2.5957701206207275\n"}
+,{"stream_name":"stdout","time":8028.526214794,"data":"Step in Epoch: 6/10, loss: 2.64575457572937\n"}
+,{"stream_name":"stdout","time":8028.526217206,"data":"Step in Epoch: 6/10, loss: 3.2278714179992676\n"}
+,{"stream_name":"stdout","time":8028.52621962,"data":"Step in Epoch: 6/10, loss: 3.3575198650360107\n"}
+,{"stream_name":"stdout","time":8028.526222056,"data":"Step in Epoch: 6/10, loss: 3.741767406463623\n"}
+,{"stream_name":"stdout","time":8028.526227786,"data":"Step in Epoch: 6/10, loss: 3.741672992706299\n"}
+,{"stream_name":"stdout","time":8028.526230313,"data":"Step in Epoch: 6/10, loss: 4.294370651245117\n"}
+,{"stream_name":"stdout","time":8028.526232749,"data":"Step in Epoch: 6/10, loss: 4.225523471832275\n"}
+,{"stream_name":"stdout","time":8028.526235194,"data":"Step in Epoch: 6/10, loss: 4.3899312019348145\n"}
+,{"stream_name":"stdout","time":8028.526237613,"data":"Step in Epoch: 6/10, loss: 3.935055732727051\n"}
+,{"stream_name":"stdout","time":8028.526240025,"data":"Step in Epoch: 6/10, loss: 3.657519817352295\n"}
+,{"stream_name":"stdout","time":8028.526242543,"data":"Step in Epoch: 6/10, loss: 3.479518413543701\n"}
+,{"stream_name":"stdout","time":8028.526244945,"data":"Step in Epoch: 6/10, loss: 2.722259044647217\n"}
+,{"stream_name":"stdout","time":8028.526247365,"data":"Step in Epoch: 6/10, loss: 3.390822410583496\n"}
+,{"stream_name":"stdout","time":8028.526249905,"data":"Step in Epoch: 6/10, loss: 4.062610149383545\n"}
+,{"stream_name":"stdout","time":8028.526252311,"data":"Step in Epoch: 6/10, loss: 4.018606185913086\n"}
+,{"stream_name":"stdout","time":8028.526254722,"data":"Step in Epoch: 6/10, loss: 4.13059139251709\n"}
+,{"stream_name":"stdout","time":8028.526257166,"data":"Step in Epoch: 6/10, loss: 4.839505672454834\n"}
+,{"stream_name":"stdout","time":8028.526259609,"data":"Step in Epoch: 6/10, loss: 5.0476179122924805\n"}
+,{"stream_name":"stdout","time":8028.526262038,"data":"Step in Epoch: 6/10, loss: 4.7630934715271\n"}
+,{"stream_name":"stdout","time":8028.526264441,"data":"Step in Epoch: 6/10, loss: 4.728715896606445\n"}
+,{"stream_name":"stdout","time":8028.526266868,"data":"Step in Epoch: 6/10, loss: 5.553738117218018\n"}
+,{"stream_name":"stdout","time":8028.526269316,"data":"Step in Epoch: 6/10, loss: 5.957365989685059\n"}
+,{"stream_name":"stdout","time":8028.526271757,"data":"Step in Epoch: 6/10, loss: 6.603883743286133\n"}
+,{"stream_name":"stdout","time":8028.526274535,"data":"Step in Epoch: 6/10, loss: 7.054013252258301\n"}
+,{"stream_name":"stdout","time":8028.526277033,"data":"Step in Epoch: 6/10, loss: 7.5770087242126465\n"}
+,{"stream_name":"stdout","time":8028.526279467,"data":"Epoch: 6/10, loss: 2.5088608342668284\n"}
+,{"stream_name":"stderr","time":8325.45715327,"data":"\rTesting:   0%|          | 0/31 [00:00\u003c?, ?it/s]\rTesting:   3%|▎         | 1/31 [00:09\u003c04:51,  9.72s/it]\rTesting:   6%|▋         | 2/31 [00:19\u003c04:44,  9.81s/it]\rTesting:  10%|▉         | 3/31 [00:29\u003c04:40, 10.03s/it]\rTesting:  13%|█▎        | 4/31 [00:40\u003c04:32, 10.10s/it]\rTesting:  16%|█▌        | 5/31 [00:50\u003c04:23, 10.13s/it]\rTesting:  19%|█▉        | 6/31 [00:59\u003c04:06,  9.87s/it]\rTesting:  23%|██▎       | 7/31 [01:09\u003c03:59,  9.98s/it]\rTesting:  26%|██▌       | 8/31 [01:19\u003c03:46,  9.85s/it]\rTesting:  29%|██▉       | 9/31 [01:28\u003c03:34,  9.76s/it]\rTesting:  32%|███▏      | 10/31 [01:39\u003c03:28,  9.91s/it]\rTesting:  35%|███▌      | 11/31 [01:49\u003c03:19,  9.95s/it]\rTesting:  39%|███▊      | 12/31 [01:58\u003c03:06,  9.80s/it]\rTesting:  42%|████▏     | 13/31 [02:08\u003c02:57,  9.88s/it]\rTesting:  45%|████▌     | 14/31 [02:18\u003c02:46,  9.80s/it]\rTesting:  48%|████▊     | 15/31 [02:28\u003c02:36,  9.80s/it]\rTesting:  52%|█████▏    | 16/31 [02:38\u003c02:27,  9.84s/it]\rTesting:  55%|█████▍    | 17/31 [02:47\u003c02:16,  9.77s/it]\rTesting:  58%|█████▊    | 18/31 [02:57\u003c02:07,  9.83s/it]\rTesting:  61%|██████▏   | 19/31 [03:07\u003c01:57,  9.82s/it]\rTesting:  65%|██████▍   | 20/31 [03:16\u003c01:45,  9.63s/it]\rTesting:  68%|██████▊   | 21/31 [03:25\u003c01:34,  9.48s/it]\rTesting:  71%|███████   | 22/31 [03:35\u003c01:24,  9.44s/it]\rTesting:  74%|███████▍  | 23/31 [03:45\u003c01:16,  9.61s/it]\rTesting:  77%|███████▋  | 24/31 [03:54\u003c01:06,  9.49s/it]\rTesting:  81%|████████  | 25/31 [04:03\u003c00:56,  9.49s/it]\rTesting:  84%|████████▍ | 26/31 [04:13\u003c00:47,  9.51s/it]\rTesting:  87%|████████▋ | 27/31 [04:22\u003c00:37,  9.47s/it]\rTesting:  90%|█████████ | 28/31 [04:32\u003c00:28,  9.39s/it]\rTesting:  94%|█████████▎| 29/31 [04:41\u003c00:19,  9.51s/it]\rTesting:  97%|█████████▋| 30/31 [04:51\u003c00:09,  9.44s/it]\rTesting: 100%|██████████| 31/31 [04:56\u003c00:00,  8.36s/it]\rTesting: 100%|██████████| 31/31 [04:56\u003c00:00,  9.58s/it]\n"}
+,{"stream_name":"stderr","time":8614.392273994,"data":"\rTesting:   0%|          | 0/31 [00:00\u003c?, ?it/s]\rTesting:   3%|▎         | 1/31 [00:11\u003c05:30, 11.03s/it]\rTesting:   6%|▋         | 2/31 [00:20\u003c04:53, 10.11s/it]\rTesting:  10%|▉         | 3/31 [00:30\u003c04:40, 10.00s/it]\rTesting:  13%|█▎        | 4/31 [00:40\u003c04:33, 10.14s/it]\rTesting:  16%|█▌        | 5/31 [00:49\u003c04:09,  9.61s/it]\rTesting:  19%|█▉        | 6/31 [00:58\u003c03:54,  9.38s/it]\rTesting:  23%|██▎       | 7/31 [01:07\u003c03:43,  9.31s/it]\rTesting:  26%|██▌       | 8/31 [01:16\u003c03:34,  9.34s/it]\rTesting:  29%|██▉       | 9/31 [01:25\u003c03:23,  9.25s/it]\rTesting:  32%|███▏      | 10/31 [01:35\u003c03:15,  9.33s/it]\rTesting:  35%|███▌      | 11/31 [01:44\u003c03:06,  9.31s/it]\rTesting:  39%|███▊      | 12/31 [01:54\u003c02:56,  9.31s/it]\rTesting:  42%|████▏     | 13/31 [02:03\u003c02:48,  9.35s/it]\rTesting:  45%|████▌     | 14/31 [02:13\u003c02:39,  9.41s/it]\rTesting:  48%|████▊     | 15/31 [02:21\u003c02:28,  9.27s/it]\rTesting:  52%|█████▏    | 16/31 [02:31\u003c02:18,  9.22s/it]\rTesting:  55%|█████▍    | 17/31 [02:40\u003c02:10,  9.32s/it]\rTesting:  58%|█████▊    | 18/31 [02:49\u003c02:01,  9.33s/it]\rTesting:  61%|██████▏   | 19/31 [02:58\u003c01:50,  9.18s/it]\rTesting:  65%|██████▍   | 20/31 [03:08\u003c01:41,  9.27s/it]\rTesting:  68%|██████▊   | 21/31 [03:17\u003c01:33,  9.33s/it]\rTesting:  71%|███████   | 22/31 [03:27\u003c01:25,  9.47s/it]\rTesting:  74%|███████▍  | 23/31 [03:36\u003c01:13,  9.25s/it]\rTesting:  77%|███████▋  | 24/31 [03:45\u003c01:04,  9.27s/it]\rTesting:  81%|████████  | 25/31 [03:55\u003c00:56,  9.35s/it]\rTesting:  84%|████████▍ | 26/31 [04:04\u003c00:47,  9.48s/it]\rTesting:  87%|████████▋ | 27/31 [04:14\u003c00:38,  9.62s/it]\rTesting:  90%|█████████ | 28/31 [04:24\u003c00:28,  9.48s/it]\rTesting:  94%|█████████▎| 29/31 [04:34\u003c00:19,  9.68s/it]\rTesting:  97%|█████████▋| 30/31 [04:44\u003c00:09,  9.82s/it]\rTesting: 100%|██████████| 31/31 [04:48\u003c00:00,  8.25s/it]\rTesting: 100%|██████████| 31/31 [04:48\u003c00:00,  9.32s/it]\n"}
+,{"stream_name":"stdout","time":8618.486255918,"data":"Vali Combined Loss: 61.0707079751068, Vali MSE Loss: 52.842204050877704, Vali MAE Loss: 7.225535412955283, Vali Contrastive Loss: 1.002968511273784\n"}
+,{"stream_name":"stdout","time":8618.486280904,"data":"Test Combined loss: 22.213769593543347, Test MSE Loss: 17.290506385354607, Test MAE Loss: 3.9201344719388844, Test Contrastive Loss: 1.0031287362498622\n"}
+,{"stream_name":"stdout","time":8618.486285394,"data":"Model saved successfully to /kaggle/working/out_time/lastest_model.pth\n"}
+,{"stream_name":"stdout","time":8618.486296607,"data":"Tokenizer saved successfully to /kaggle/working/out_time/tokenizer\n"}
+,{"stream_name":"stdout","time":9421.110005164,"data":"Step in Epoch: 7/10, loss: 1.3677399158477783\n"}
+,{"stream_name":"stdout","time":9421.110064981,"data":"Step in Epoch: 7/10, loss: 1.5070816278457642\n"}
+,{"stream_name":"stdout","time":9421.110071923,"data":"Step in Epoch: 7/10, loss: 1.557626724243164\n"}
+,{"stream_name":"stdout","time":9421.110077024,"data":"Step in Epoch: 7/10, loss: 1.3682332038879395\n"}
+,{"stream_name":"stdout","time":9421.110081576,"data":"Step in Epoch: 7/10, loss: 1.3654401302337646\n"}
+,{"stream_name":"stdout","time":9421.110086717,"data":"Step in Epoch: 7/10, loss: 1.8432832956314087\n"}
+,{"stream_name":"stdout","time":9421.110091645,"data":"Step in Epoch: 7/10, loss: 1.7821232080459595\n"}
+,{"stream_name":"stdout","time":9421.110096117,"data":"Step in Epoch: 7/10, loss: 1.9431397914886475\n"}
+,{"stream_name":"stdout","time":9421.110100591,"data":"Step in Epoch: 7/10, loss: 2.1974685192108154\n"}
+,{"stream_name":"stdout","time":9421.110105677,"data":"Step in Epoch: 7/10, loss: 2.3249502182006836\n"}
+,{"stream_name":"stdout","time":9421.110111058,"data":"Step in Epoch: 7/10, loss: 2.1411070823669434\n"}
+,{"stream_name":"stdout","time":9421.110116179,"data":"Step in Epoch: 7/10, loss: 2.3173747062683105\n"}
+,{"stream_name":"stdout","time":9421.110120729,"data":"Step in Epoch: 7/10, loss: 3.1256887912750244\n"}
+,{"stream_name":"stdout","time":9421.110125693,"data":"Step in Epoch: 7/10, loss: 2.423440933227539\n"}
+,{"stream_name":"stdout","time":9421.110129997,"data":"Step in Epoch: 7/10, loss: 1.9152522087097168\n"}
+,{"stream_name":"stdout","time":9421.110134671,"data":"Step in Epoch: 7/10, loss: 1.719009518623352\n"}
+,{"stream_name":"stdout","time":9421.110139717,"data":"Step in Epoch: 7/10, loss: 1.6506006717681885\n"}
+,{"stream_name":"stdout","time":9421.110144004,"data":"Step in Epoch: 7/10, loss: 1.3682184219360352\n"}
+,{"stream_name":"stdout","time":9421.11014885,"data":"Step in Epoch: 7/10, loss: 1.2771410942077637\n"}
+,{"stream_name":"stdout","time":9421.110152972,"data":"Step in Epoch: 7/10, loss: 1.1543760299682617\n"}
+,{"stream_name":"stdout","time":9421.110157948,"data":"Step in Epoch: 7/10, loss: 1.0855411291122437\n"}
+,{"stream_name":"stdout","time":9421.110163147,"data":"Step in Epoch: 7/10, loss: 1.1134371757507324\n"}
+,{"stream_name":"stdout","time":9421.110167622,"data":"Step in Epoch: 7/10, loss: 1.1851990222930908\n"}
+,{"stream_name":"stdout","time":9421.110171934,"data":"Step in Epoch: 7/10, loss: 1.1906771659851074\n"}
+,{"stream_name":"stdout","time":9421.110176598,"data":"Step in Epoch: 7/10, loss: 1.184869647026062\n"}
+,{"stream_name":"stdout","time":9421.110180971,"data":"Step in Epoch: 7/10, loss: 1.1480937004089355\n"}
+,{"stream_name":"stdout","time":9421.110185119,"data":"Step in Epoch: 7/10, loss: 1.094545841217041\n"}
+,{"stream_name":"stdout","time":9421.110189575,"data":"Step in Epoch: 7/10, loss: 1.0843572616577148\n"}
+,{"stream_name":"stdout","time":9421.110194881,"data":"Step in Epoch: 7/10, loss: 1.2179467678070068\n"}
+,{"stream_name":"stdout","time":9421.110199593,"data":"Step in Epoch: 7/10, loss: 1.3221914768218994\n"}
+,{"stream_name":"stdout","time":9421.110204349,"data":"Step in Epoch: 7/10, loss: 1.286798119544983\n"}
+,{"stream_name":"stdout","time":9421.110209781,"data":"Step in Epoch: 7/10, loss: 1.2445062398910522\n"}
+,{"stream_name":"stdout","time":9421.110214935,"data":"Step in Epoch: 7/10, loss: 1.146112322807312\n"}
+,{"stream_name":"stdout","time":9421.11021994,"data":"Step in Epoch: 7/10, loss: 1.0882830619812012\n"}
+,{"stream_name":"stdout","time":9421.110224832,"data":"Step in Epoch: 7/10, loss: 1.1523324251174927\n"}
+,{"stream_name":"stdout","time":9421.110242099,"data":"Step in Epoch: 7/10, loss: 1.2464606761932373\n"}
+,{"stream_name":"stdout","time":9421.110246033,"data":"Step in Epoch: 7/10, loss: 1.249556064605713\n"}
+,{"stream_name":"stdout","time":9421.110251229,"data":"Step in Epoch: 7/10, loss: 1.2032315731048584\n"}
+,{"stream_name":"stdout","time":9421.110259763,"data":"Step in Epoch: 7/10, loss: 1.1874018907546997\n"}
+,{"stream_name":"stdout","time":9421.110262232,"data":"Step in Epoch: 7/10, loss: 1.0681395530700684\n"}
+,{"stream_name":"stdout","time":9421.110264807,"data":"Step in Epoch: 7/10, loss: 1.2421704530715942\n"}
+,{"stream_name":"stdout","time":9421.110267225,"data":"Step in Epoch: 7/10, loss: 1.3392916917800903\n"}
+,{"stream_name":"stdout","time":9421.110269823,"data":"Step in Epoch: 7/10, loss: 1.3667652606964111\n"}
+,{"stream_name":"stdout","time":9421.11027224,"data":"Step in Epoch: 7/10, loss: 1.2955260276794434\n"}
+,{"stream_name":"stdout","time":9421.110276847,"data":"Step in Epoch: 7/10, loss: 1.2103984355926514\n"}
+,{"stream_name":"stdout","time":9421.110279442,"data":"Step in Epoch: 7/10, loss: 1.2093956470489502\n"}
+,{"stream_name":"stdout","time":9421.110281917,"data":"Step in Epoch: 7/10, loss: 1.30190110206604\n"}
+,{"stream_name":"stdout","time":9421.110284343,"data":"Step in Epoch: 7/10, loss: 1.2580581903457642\n"}
+,{"stream_name":"stdout","time":9421.110286819,"data":"Step in Epoch: 7/10, loss: 1.1568578481674194\n"}
+,{"stream_name":"stdout","time":9421.110289233,"data":"Step in Epoch: 7/10, loss: 1.075976848602295\n"}
+,{"stream_name":"stdout","time":9421.11029165,"data":"Step in Epoch: 7/10, loss: 1.0308455228805542\n"}
+,{"stream_name":"stdout","time":9421.11029405,"data":"Step in Epoch: 7/10, loss: 1.0611631870269775\n"}
+,{"stream_name":"stdout","time":9421.110296529,"data":"Step in Epoch: 7/10, loss: 1.028975486755371\n"}
+,{"stream_name":"stdout","time":9421.110299007,"data":"Step in Epoch: 7/10, loss: 1.1064422130584717\n"}
+,{"stream_name":"stdout","time":9421.110301403,"data":"Step in Epoch: 7/10, loss: 1.1820005178451538\n"}
+,{"stream_name":"stdout","time":9421.110303837,"data":"Step in Epoch: 7/10, loss: 1.285739541053772\n"}
+,{"stream_name":"stdout","time":9421.110306335,"data":"Step in Epoch: 7/10, loss: 1.377112627029419\n"}
+,{"stream_name":"stdout","time":9421.110309199,"data":"Step in Epoch: 7/10, loss: 1.5601434707641602\n"}
+,{"stream_name":"stdout","time":9421.110311636,"data":"Step in Epoch: 7/10, loss: 1.511785626411438\n"}
+,{"stream_name":"stdout","time":9421.110314064,"data":"Step in Epoch: 7/10, loss: 1.7005274295806885\n"}
+,{"stream_name":"stdout","time":9421.110316567,"data":"Step in Epoch: 7/10, loss: 1.6382124423980713\n"}
+,{"stream_name":"stdout","time":9421.110319007,"data":"Step in Epoch: 7/10, loss: 1.828566074371338\n"}
+,{"stream_name":"stdout","time":9421.110321443,"data":"Step in Epoch: 7/10, loss: 2.121081829071045\n"}
+,{"stream_name":"stdout","time":9421.110323851,"data":"Step in Epoch: 7/10, loss: 2.2275030612945557\n"}
+,{"stream_name":"stdout","time":9421.110326553,"data":"Step in Epoch: 7/10, loss: 2.3395862579345703\n"}
+,{"stream_name":"stdout","time":9421.110328978,"data":"Step in Epoch: 7/10, loss: 2.4537887573242188\n"}
+,{"stream_name":"stdout","time":9421.110331429,"data":"Step in Epoch: 7/10, loss: 2.5751254558563232\n"}
+,{"stream_name":"stdout","time":9421.110333847,"data":"Step in Epoch: 7/10, loss: 2.625054359436035\n"}
+,{"stream_name":"stdout","time":9421.110336276,"data":"Step in Epoch: 7/10, loss: 3.2011139392852783\n"}
+,{"stream_name":"stdout","time":9421.110338731,"data":"Step in Epoch: 7/10, loss: 3.330310583114624\n"}
+,{"stream_name":"stdout","time":9421.110344385,"data":"Step in Epoch: 7/10, loss: 3.7126598358154297\n"}
+,{"stream_name":"stdout","time":9421.110346899,"data":"Step in Epoch: 7/10, loss: 3.7135255336761475\n"}
+,{"stream_name":"stdout","time":9421.110349315,"data":"Step in Epoch: 7/10, loss: 4.2642130851745605\n"}
+,{"stream_name":"stdout","time":9421.11035173,"data":"Step in Epoch: 7/10, loss: 4.197031021118164\n"}
+,{"stream_name":"stdout","time":9421.110354171,"data":"Step in Epoch: 7/10, loss: 4.361870288848877\n"}
+,{"stream_name":"stdout","time":9421.110356629,"data":"Step in Epoch: 7/10, loss: 3.9107041358947754\n"}
+,{"stream_name":"stdout","time":9421.110359043,"data":"Step in Epoch: 7/10, loss: 3.635608196258545\n"}
+,{"stream_name":"stdout","time":9421.110361506,"data":"Step in Epoch: 7/10, loss: 3.4593701362609863\n"}
+,{"stream_name":"stdout","time":9421.110363934,"data":"Step in Epoch: 7/10, loss: 2.707507848739624\n"}
+,{"stream_name":"stdout","time":9421.110366354,"data":"Step in Epoch: 7/10, loss: 3.3725218772888184\n"}
+,{"stream_name":"stdout","time":9421.110368811,"data":"Step in Epoch: 7/10, loss: 4.041948318481445\n"}
+,{"stream_name":"stdout","time":9421.110371233,"data":"Step in Epoch: 7/10, loss: 3.9987778663635254\n"}
+,{"stream_name":"stdout","time":9421.110373638,"data":"Step in Epoch: 7/10, loss: 4.110937118530273\n"}
+,{"stream_name":"stdout","time":9421.110376081,"data":"Step in Epoch: 7/10, loss: 4.818244457244873\n"}
+,{"stream_name":"stdout","time":9421.110378494,"data":"Step in Epoch: 7/10, loss: 5.026312828063965\n"}
+,{"stream_name":"stdout","time":9421.110385897,"data":"Step in Epoch: 7/10, loss: 4.743133068084717\n"}
+,{"stream_name":"stdout","time":9421.110388282,"data":"Step in Epoch: 7/10, loss: 4.709323406219482\n"}
+,{"stream_name":"stdout","time":9421.110390691,"data":"Step in Epoch: 7/10, loss: 5.532687664031982\n"}
+,{"stream_name":"stdout","time":9421.110393086,"data":"Step in Epoch: 7/10, loss: 5.935861110687256\n"}
+,{"stream_name":"stdout","time":9421.110396037,"data":"Step in Epoch: 7/10, loss: 6.581435680389404\n"}
+,{"stream_name":"stdout","time":9421.110398457,"data":"Step in Epoch: 7/10, loss: 7.0310516357421875\n"}
+,{"stream_name":"stdout","time":9421.11040086,"data":"Step in Epoch: 7/10, loss: 7.553396224975586\n"}
+,{"stream_name":"stdout","time":9421.110403267,"data":"Epoch: 7/10, loss: 2.2924838960170746\n"}
+,{"stream_name":"stderr","time":9717.845880197,"data":"\rTesting:   0%|          | 0/31 [00:00\u003c?, ?it/s]\rTesting:   3%|▎         | 1/31 [00:09\u003c04:53,  9.77s/it]\rTesting:   6%|▋         | 2/31 [00:19\u003c04:45,  9.83s/it]\rTesting:  10%|▉         | 3/31 [00:29\u003c04:40, 10.03s/it]\rTesting:  13%|█▎        | 4/31 [00:40\u003c04:32, 10.10s/it]\rTesting:  16%|█▌        | 5/31 [00:50\u003c04:22, 10.12s/it]\rTesting:  19%|█▉        | 6/31 [00:59\u003c04:05,  9.84s/it]\rTesting:  23%|██▎       | 7/31 [01:09\u003c03:58,  9.94s/it]\rTesting:  26%|██▌       | 8/31 [01:19\u003c03:45,  9.80s/it]\rTesting:  29%|██▉       | 9/31 [01:28\u003c03:33,  9.71s/it]\rTesting:  32%|███▏      | 10/31 [01:38\u003c03:27,  9.87s/it]\rTesting:  35%|███▌      | 11/31 [01:48\u003c03:18,  9.91s/it]\rTesting:  39%|███▊      | 12/31 [01:58\u003c03:05,  9.74s/it]\rTesting:  42%|████▏     | 13/31 [02:08\u003c02:56,  9.83s/it]\rTesting:  45%|████▌     | 14/31 [02:17\u003c02:45,  9.76s/it]\rTesting:  48%|████▊     | 15/31 [02:27\u003c02:36,  9.76s/it]\rTesting:  52%|█████▏    | 16/31 [02:37\u003c02:27,  9.81s/it]\rTesting:  55%|█████▍    | 17/31 [02:47\u003c02:16,  9.76s/it]\rTesting:  58%|█████▊    | 18/31 [02:57\u003c02:07,  9.82s/it]\rTesting:  61%|██████▏   | 19/31 [03:07\u003c01:57,  9.81s/it]\rTesting:  65%|██████▍   | 20/31 [03:16\u003c01:45,  9.63s/it]\rTesting:  68%|██████▊   | 21/31 [03:25\u003c01:34,  9.49s/it]\rTesting:  71%|███████   | 22/31 [03:34\u003c01:25,  9.46s/it]\rTesting:  74%|███████▍  | 23/31 [03:44\u003c01:17,  9.63s/it]\rTesting:  77%|███████▋  | 24/31 [03:53\u003c01:06,  9.49s/it]\rTesting:  81%|████████  | 25/31 [04:03\u003c00:57,  9.50s/it]\rTesting:  84%|████████▍ | 26/31 [04:13\u003c00:47,  9.52s/it]\rTesting:  87%|████████▋ | 27/31 [04:22\u003c00:37,  9.49s/it]\rTesting:  90%|█████████ | 28/31 [04:31\u003c00:28,  9.42s/it]\rTesting:  94%|█████████▎| 29/31 [04:41\u003c00:19,  9.54s/it]\rTesting:  97%|█████████▋| 30/31 [04:50\u003c00:09,  9.47s/it]\rTesting: 100%|██████████| 31/31 [04:56\u003c00:00,  8.38s/it]\rTesting: 100%|██████████| 31/31 [04:56\u003c00:00,  9.57s/it]\n"}
+,{"stream_name":"stderr","time":10007.177248899,"data":"\rTesting:   0%|          | 0/31 [00:00\u003c?, ?it/s]\rTesting:   3%|▎         | 1/31 [00:11\u003c05:31, 11.05s/it]\rTesting:   6%|▋         | 2/31 [00:20\u003c04:53, 10.13s/it]\rTesting:  10%|▉         | 3/31 [00:30\u003c04:40, 10.03s/it]\rTesting:  13%|█▎        | 4/31 [00:40\u003c04:34, 10.17s/it]\rTesting:  16%|█▌        | 5/31 [00:49\u003c04:10,  9.63s/it]\rTesting:  19%|█▉        | 6/31 [00:58\u003c03:55,  9.40s/it]\rTesting:  23%|██▎       | 7/31 [01:07\u003c03:44,  9.34s/it]\rTesting:  26%|██▌       | 8/31 [01:17\u003c03:35,  9.37s/it]\rTesting:  29%|██▉       | 9/31 [01:26\u003c03:24,  9.28s/it]\rTesting:  32%|███▏      | 10/31 [01:35\u003c03:16,  9.37s/it]\rTesting:  35%|███▌      | 11/31 [01:45\u003c03:07,  9.35s/it]\rTesting:  39%|███▊      | 12/31 [01:54\u003c02:57,  9.36s/it]\rTesting:  42%|████▏     | 13/31 [02:03\u003c02:48,  9.38s/it]\rTesting:  45%|████▌     | 14/31 [02:13\u003c02:40,  9.44s/it]\rTesting:  48%|████▊     | 15/31 [02:22\u003c02:28,  9.29s/it]\rTesting:  52%|█████▏    | 16/31 [02:31\u003c02:18,  9.24s/it]\rTesting:  55%|█████▍    | 17/31 [02:41\u003c02:10,  9.32s/it]\rTesting:  58%|█████▊    | 18/31 [02:50\u003c02:01,  9.34s/it]\rTesting:  61%|██████▏   | 19/31 [02:59\u003c01:50,  9.18s/it]\rTesting:  65%|██████▍   | 20/31 [03:08\u003c01:41,  9.27s/it]\rTesting:  68%|██████▊   | 21/31 [03:18\u003c01:33,  9.34s/it]\rTesting:  71%|███████   | 22/31 [03:28\u003c01:25,  9.48s/it]\rTesting:  74%|███████▍  | 23/31 [03:36\u003c01:14,  9.26s/it]\rTesting:  77%|███████▋  | 24/31 [03:46\u003c01:05,  9.29s/it]\rTesting:  81%|████████  | 25/31 [03:55\u003c00:56,  9.35s/it]\rTesting:  84%|████████▍ | 26/31 [04:05\u003c00:47,  9.48s/it]\rTesting:  87%|████████▋ | 27/31 [04:15\u003c00:38,  9.62s/it]\rTesting:  90%|█████████ | 28/31 [04:24\u003c00:28,  9.48s/it]\rTesting:  94%|█████████▎| 29/31 [04:34\u003c00:19,  9.67s/it]\rTesting:  97%|█████████▋| 30/31 [04:44\u003c00:09,  9.81s/it]\rTesting: 100%|██████████| 31/31 [04:49\u003c00:00,  8.24s/it]\rTesting: 100%|██████████| 31/31 [04:49\u003c00:00,  9.33s/it]\n"}
+,{"stream_name":"stdout","time":10011.287788896,"data":"Vali Combined Loss: 66.18273170378582, Vali MSE Loss: 57.629856962768415, Vali MAE Loss: 7.5499193581472985, Vali Contrastive Loss: 1.0029553828700897\n"}
+,{"stream_name":"stdout","time":10011.287830214,"data":"Test Combined loss: 23.293326165896488, Test MSE Loss: 18.290500436425805, Test MAE Loss: 3.999728241436523, Test Contrastive Loss: 1.003097488034156\n"}
+,{"stream_name":"stdout","time":10011.287837529,"data":"Model saved successfully to /kaggle/working/out_time/lastest_model.pth\n"}
+,{"stream_name":"stdout","time":10011.287853773,"data":"Tokenizer saved successfully to /kaggle/working/out_time/tokenizer\n"}
+,{"stream_name":"stdout","time":10816.121859261,"data":"Step in Epoch: 8/10, loss: 1.282461404800415\n"}
+,{"stream_name":"stdout","time":10816.121912961,"data":"Step in Epoch: 8/10, loss: 1.3709977865219116\n"}
+,{"stream_name":"stdout","time":10816.121920901,"data":"Step in Epoch: 8/10, loss: 1.3859834671020508\n"}
+,{"stream_name":"stdout","time":10816.121926479,"data":"Step in Epoch: 8/10, loss: 1.2586827278137207\n"}
+,{"stream_name":"stdout","time":10816.121931497,"data":"Step in Epoch: 8/10, loss: 1.2379753589630127\n"}
+,{"stream_name":"stdout","time":10816.121936383,"data":"Step in Epoch: 8/10, loss: 1.3050670623779297\n"}
+,{"stream_name":"stdout","time":10816.121941268,"data":"Step in Epoch: 8/10, loss: 1.2141779661178589\n"}
+,{"stream_name":"stdout","time":10816.121946227,"data":"Step in Epoch: 8/10, loss: 1.0648678541183472\n"}
+,{"stream_name":"stdout","time":10816.121950685,"data":"Step in Epoch: 8/10, loss: 1.2027020454406738\n"}
+,{"stream_name":"stdout","time":10816.121955033,"data":"Step in Epoch: 8/10, loss: 1.5186073780059814\n"}
+,{"stream_name":"stdout","time":10816.121959399,"data":"Step in Epoch: 8/10, loss: 1.39545738697052\n"}
+,{"stream_name":"stdout","time":10816.121964308,"data":"Step in Epoch: 8/10, loss: 1.5818663835525513\n"}
+,{"stream_name":"stdout","time":10816.121969255,"data":"Step in Epoch: 8/10, loss: 2.1004443168640137\n"}
+,{"stream_name":"stdout","time":10816.121973516,"data":"Step in Epoch: 8/10, loss: 1.549052119255066\n"}
+,{"stream_name":"stdout","time":10816.121978379,"data":"Step in Epoch: 8/10, loss: 1.2274376153945923\n"}
+,{"stream_name":"stdout","time":10816.121982936,"data":"Step in Epoch: 8/10, loss: 1.1236625909805298\n"}
+,{"stream_name":"stdout","time":10816.121988024,"data":"Step in Epoch: 8/10, loss: 1.1160880327224731\n"}
+,{"stream_name":"stdout","time":10816.121992747,"data":"Step in Epoch: 8/10, loss: 1.130279541015625\n"}
+,{"stream_name":"stdout","time":10816.121997632,"data":"Step in Epoch: 8/10, loss: 1.1795796155929565\n"}
+,{"stream_name":"stdout","time":10816.122003014,"data":"Step in Epoch: 8/10, loss: 1.199479579925537\n"}
+,{"stream_name":"stdout","time":10816.12200845,"data":"Step in Epoch: 8/10, loss: 1.1067194938659668\n"}
+,{"stream_name":"stdout","time":10816.122013312,"data":"Step in Epoch: 8/10, loss: 1.0617185831069946\n"}
+,{"stream_name":"stdout","time":10816.122018305,"data":"Step in Epoch: 8/10, loss: 1.103043556213379\n"}
+,{"stream_name":"stdout","time":10816.122056736,"data":"Step in Epoch: 8/10, loss: 1.096672773361206\n"}
+,{"stream_name":"stdout","time":10816.122063021,"data":"Step in Epoch: 8/10, loss: 1.0721604824066162\n"}
+,{"stream_name":"stdout","time":10816.122067298,"data":"Step in Epoch: 8/10, loss: 1.1153318881988525\n"}
+,{"stream_name":"stdout","time":10816.122071361,"data":"Step in Epoch: 8/10, loss: 1.0908516645431519\n"}
+,{"stream_name":"stdout","time":10816.122075414,"data":"Step in Epoch: 8/10, loss: 1.056774377822876\n"}
+,{"stream_name":"stdout","time":10816.122079643,"data":"Step in Epoch: 8/10, loss: 1.043702244758606\n"}
+,{"stream_name":"stdout","time":10816.122084399,"data":"Step in Epoch: 8/10, loss: 1.0920648574829102\n"}
+,{"stream_name":"stdout","time":10816.122089178,"data":"Step in Epoch: 8/10, loss: 1.0909162759780884\n"}
+,{"stream_name":"stdout","time":10816.122094121,"data":"Step in Epoch: 8/10, loss: 1.053502082824707\n"}
+,{"stream_name":"stdout","time":10816.12209909,"data":"Step in Epoch: 8/10, loss: 1.0324366092681885\n"}
+,{"stream_name":"stdout","time":10816.122103689,"data":"Step in Epoch: 8/10, loss: 1.0705534219741821\n"}
+,{"stream_name":"stdout","time":10816.122120253,"data":"Step in Epoch: 8/10, loss: 1.0885624885559082\n"}
+,{"stream_name":"stdout","time":10816.122138669,"data":"Step in Epoch: 8/10, loss: 1.0822277069091797\n"}
+,{"stream_name":"stdout","time":10816.122142394,"data":"Step in Epoch: 8/10, loss: 1.047504186630249\n"}
+,{"stream_name":"stdout","time":10816.122145466,"data":"Step in Epoch: 8/10, loss: 1.0392014980316162\n"}
+,{"stream_name":"stdout","time":10816.122148659,"data":"Step in Epoch: 8/10, loss: 1.085999608039856\n"}
+,{"stream_name":"stdout","time":10816.122151922,"data":"Step in Epoch: 8/10, loss: 1.0806399583816528\n"}
+,{"stream_name":"stdout","time":10816.122155228,"data":"Step in Epoch: 8/10, loss: 1.055953025817871\n"}
+,{"stream_name":"stdout","time":10816.122158435,"data":"Step in Epoch: 8/10, loss: 1.0330352783203125\n"}
+,{"stream_name":"stdout","time":10816.122161744,"data":"Step in Epoch: 8/10, loss: 1.0404679775238037\n"}
+,{"stream_name":"stdout","time":10816.122165451,"data":"Step in Epoch: 8/10, loss: 1.054121494293213\n"}
+,{"stream_name":"stdout","time":10816.122170742,"data":"Step in Epoch: 8/10, loss: 1.0633668899536133\n"}
+,{"stream_name":"stdout","time":10816.122174563,"data":"Step in Epoch: 8/10, loss: 1.0392435789108276\n"}
+,{"stream_name":"stdout","time":10816.122178489,"data":"Step in Epoch: 8/10, loss: 1.0368131399154663\n"}
+,{"stream_name":"stdout","time":10816.122182291,"data":"Step in Epoch: 8/10, loss: 1.0498141050338745\n"}
+,{"stream_name":"stdout","time":10816.122185809,"data":"Step in Epoch: 8/10, loss: 1.029982089996338\n"}
+,{"stream_name":"stdout","time":10816.122189061,"data":"Step in Epoch: 8/10, loss: 1.033151388168335\n"}
+,{"stream_name":"stdout","time":10816.122192518,"data":"Step in Epoch: 8/10, loss: 1.0627162456512451\n"}
+,{"stream_name":"stdout","time":10816.122195804,"data":"Step in Epoch: 8/10, loss: 1.044386386871338\n"}
+,{"stream_name":"stdout","time":10816.122199305,"data":"Step in Epoch: 8/10, loss: 1.02204167842865\n"}
+,{"stream_name":"stdout","time":10816.12220259,"data":"Step in Epoch: 8/10, loss: 1.0648479461669922\n"}
+,{"stream_name":"stdout","time":10816.122205954,"data":"Step in Epoch: 8/10, loss: 1.1174947023391724\n"}
+,{"stream_name":"stdout","time":10816.122209236,"data":"Step in Epoch: 8/10, loss: 1.2078118324279785\n"}
+,{"stream_name":"stdout","time":10816.122212526,"data":"Step in Epoch: 8/10, loss: 1.2918472290039062\n"}
+,{"stream_name":"stdout","time":10816.122215774,"data":"Step in Epoch: 8/10, loss: 1.4781945943832397\n"}
+,{"stream_name":"stdout","time":10816.122219078,"data":"Step in Epoch: 8/10, loss: 1.4256892204284668\n"}
+,{"stream_name":"stdout","time":10816.122222318,"data":"Step in Epoch: 8/10, loss: 1.6233062744140625\n"}
+,{"stream_name":"stdout","time":10816.122225949,"data":"Step in Epoch: 8/10, loss: 1.5590448379516602\n"}
+,{"stream_name":"stdout","time":10816.122230623,"data":"Step in Epoch: 8/10, loss: 1.7575093507766724\n"}
+,{"stream_name":"stdout","time":10816.122237982,"data":"Step in Epoch: 8/10, loss: 2.0541210174560547\n"}
+,{"stream_name":"stdout","time":10816.122240448,"data":"Step in Epoch: 8/10, loss: 2.1633799076080322\n"}
+,{"stream_name":"stdout","time":10816.122242689,"data":"Step in Epoch: 8/10, loss: 2.2780346870422363\n"}
+,{"stream_name":"stdout","time":10816.122244933,"data":"Step in Epoch: 8/10, loss: 2.395092010498047\n"}
+,{"stream_name":"stdout","time":10816.122247264,"data":"Step in Epoch: 8/10, loss: 2.519409656524658\n"}
+,{"stream_name":"stdout","time":10816.122249506,"data":"Step in Epoch: 8/10, loss: 2.5716896057128906\n"}
+,{"stream_name":"stdout","time":10816.122251732,"data":"Step in Epoch: 8/10, loss: 3.1477816104888916\n"}
+,{"stream_name":"stdout","time":10816.122258643,"data":"Step in Epoch: 8/10, loss: 3.2793920040130615\n"}
+,{"stream_name":"stdout","time":10816.122261091,"data":"Step in Epoch: 8/10, loss: 3.6627097129821777\n"}
+,{"stream_name":"stdout","time":10816.122263331,"data":"Step in Epoch: 8/10, loss: 3.6660664081573486\n"}
+,{"stream_name":"stdout","time":10816.122265576,"data":"Step in Epoch: 8/10, loss: 4.216541290283203\n"}
+,{"stream_name":"stdout","time":10816.122267823,"data":"Step in Epoch: 8/10, loss: 4.151334285736084\n"}
+,{"stream_name":"stdout","time":10816.122270163,"data":"Step in Epoch: 8/10, loss: 4.317445755004883\n"}
+,{"stream_name":"stdout","time":10816.122272519,"data":"Step in Epoch: 8/10, loss: 3.8695895671844482\n"}
+,{"stream_name":"stdout","time":10816.122274767,"data":"Step in Epoch: 8/10, loss: 3.5967788696289062\n"}
+,{"stream_name":"stdout","time":10816.122277026,"data":"Step in Epoch: 8/10, loss: 3.422633171081543\n"}
+,{"stream_name":"stdout","time":10816.122279342,"data":"Step in Epoch: 8/10, loss: 2.674570083618164\n"}
+,{"stream_name":"stdout","time":10816.12228161,"data":"Step in Epoch: 8/10, loss: 3.33828067779541\n"}
+,{"stream_name":"stdout","time":10816.122283849,"data":"Step in Epoch: 8/10, loss: 4.006237983703613\n"}
+,{"stream_name":"stdout","time":10816.122286093,"data":"Step in Epoch: 8/10, loss: 3.963998794555664\n"}
+,{"stream_name":"stdout","time":10816.122288505,"data":"Step in Epoch: 8/10, loss: 4.076564788818359\n"}
+,{"stream_name":"stdout","time":10816.122290774,"data":"Step in Epoch: 8/10, loss: 4.782066822052002\n"}
+,{"stream_name":"stdout","time":10816.12229302,"data":"Step in Epoch: 8/10, loss: 4.9900898933410645\n"}
+,{"stream_name":"stdout","time":10816.122295549,"data":"Step in Epoch: 8/10, loss: 4.708270072937012\n"}
+,{"stream_name":"stdout","time":10816.122298122,"data":"Step in Epoch: 8/10, loss: 4.674892902374268\n"}
+,{"stream_name":"stdout","time":10816.122300381,"data":"Step in Epoch: 8/10, loss: 5.495867729187012\n"}
+,{"stream_name":"stdout","time":10816.122302694,"data":"Step in Epoch: 8/10, loss: 5.8979010581970215\n"}
+,{"stream_name":"stdout","time":10816.122305617,"data":"Step in Epoch: 8/10, loss: 6.541412353515625\n"}
+,{"stream_name":"stdout","time":10816.122307903,"data":"Step in Epoch: 8/10, loss: 6.989498615264893\n"}
+,{"stream_name":"stdout","time":10816.122310183,"data":"Step in Epoch: 8/10, loss: 7.509896755218506\n"}
+,{"stream_name":"stdout","time":10816.122312519,"data":"Epoch: 8/10, loss: 2.119650449441827\n"}
+,{"stream_name":"stderr","time":11113.171286945,"data":"\rTesting:   0%|          | 0/31 [00:00\u003c?, ?it/s]\rTesting:   3%|▎         | 1/31 [00:09\u003c04:53,  9.77s/it]\rTesting:   6%|▋         | 2/31 [00:19\u003c04:45,  9.84s/it]\rTesting:  10%|▉         | 3/31 [00:29\u003c04:40, 10.03s/it]\rTesting:  13%|█▎        | 4/31 [00:40\u003c04:32, 10.10s/it]\rTesting:  16%|█▌        | 5/31 [00:50\u003c04:23, 10.12s/it]\rTesting:  19%|█▉        | 6/31 [00:59\u003c04:06,  9.87s/it]\rTesting:  23%|██▎       | 7/31 [01:09\u003c03:59,  9.97s/it]\rTesting:  26%|██▌       | 8/31 [01:19\u003c03:46,  9.85s/it]\rTesting:  29%|██▉       | 9/31 [01:29\u003c03:34,  9.76s/it]\rTesting:  32%|███▏      | 10/31 [01:39\u003c03:28,  9.91s/it]\rTesting:  35%|███▌      | 11/31 [01:49\u003c03:19,  9.96s/it]\rTesting:  39%|███▊      | 12/31 [01:58\u003c03:06,  9.80s/it]\rTesting:  42%|████▏     | 13/31 [02:08\u003c02:57,  9.88s/it]\rTesting:  45%|████▌     | 14/31 [02:18\u003c02:46,  9.80s/it]\rTesting:  48%|████▊     | 15/31 [02:28\u003c02:36,  9.80s/it]\rTesting:  52%|█████▏    | 16/31 [02:38\u003c02:27,  9.84s/it]\rTesting:  55%|█████▍    | 17/31 [02:47\u003c02:16,  9.78s/it]\rTesting:  58%|█████▊    | 18/31 [02:57\u003c02:07,  9.84s/it]\rTesting:  61%|██████▏   | 19/31 [03:07\u003c01:57,  9.83s/it]\rTesting:  65%|██████▍   | 20/31 [03:16\u003c01:46,  9.64s/it]\rTesting:  68%|██████▊   | 21/31 [03:25\u003c01:34,  9.50s/it]\rTesting:  71%|███████   | 22/31 [03:35\u003c01:25,  9.45s/it]\rTesting:  74%|███████▍  | 23/31 [03:45\u003c01:16,  9.61s/it]\rTesting:  77%|███████▋  | 24/31 [03:54\u003c01:06,  9.47s/it]\rTesting:  81%|████████  | 25/31 [04:03\u003c00:56,  9.49s/it]\rTesting:  84%|████████▍ | 26/31 [04:13\u003c00:47,  9.51s/it]\rTesting:  87%|████████▋ | 27/31 [04:22\u003c00:37,  9.48s/it]\rTesting:  90%|█████████ | 28/31 [04:32\u003c00:28,  9.40s/it]\rTesting:  94%|█████████▎| 29/31 [04:41\u003c00:19,  9.51s/it]\rTesting:  97%|█████████▋| 30/31 [04:51\u003c00:09,  9.44s/it]\rTesting: 100%|██████████| 31/31 [04:57\u003c00:00,  8.36s/it]\rTesting: 100%|██████████| 31/31 [04:57\u003c00:00,  9.58s/it]\n"}
+,{"stream_name":"stderr","time":11403.19535022,"data":"\rTesting:   0%|          | 0/31 [00:00\u003c?, ?it/s]\rTesting:   3%|▎         | 1/31 [00:11\u003c05:30, 11.01s/it]\rTesting:   6%|▋         | 2/31 [00:20\u003c04:52, 10.08s/it]\rTesting:  10%|▉         | 3/31 [00:30\u003c04:39,  9.98s/it]\rTesting:  13%|█▎        | 4/31 [00:40\u003c04:33, 10.12s/it]\rTesting:  16%|█▌        | 5/31 [00:49\u003c04:09,  9.60s/it]\rTesting:  19%|█▉        | 6/31 [00:58\u003c03:54,  9.36s/it]\rTesting:  23%|██▎       | 7/31 [01:07\u003c03:42,  9.29s/it]\rTesting:  26%|██▌       | 8/31 [01:16\u003c03:34,  9.34s/it]\rTesting:  29%|██▉       | 9/31 [01:25\u003c03:24,  9.29s/it]\rTesting:  32%|███▏      | 10/31 [01:35\u003c03:17,  9.39s/it]\rTesting:  35%|███▌      | 11/31 [01:44\u003c03:07,  9.39s/it]\rTesting:  39%|███▊      | 12/31 [01:54\u003c02:58,  9.42s/it]\rTesting:  42%|████▏     | 13/31 [02:03\u003c02:49,  9.43s/it]\rTesting:  45%|████▌     | 14/31 [02:13\u003c02:41,  9.47s/it]\rTesting:  48%|████▊     | 15/31 [02:22\u003c02:29,  9.32s/it]\rTesting:  52%|█████▏    | 16/31 [02:31\u003c02:18,  9.26s/it]\rTesting:  55%|█████▍    | 17/31 [02:41\u003c02:10,  9.34s/it]\rTesting:  58%|█████▊    | 18/31 [02:50\u003c02:01,  9.35s/it]\rTesting:  61%|██████▏   | 19/31 [02:59\u003c01:50,  9.19s/it]\rTesting:  65%|██████▍   | 20/31 [03:08\u003c01:42,  9.29s/it]\rTesting:  68%|██████▊   | 21/31 [03:18\u003c01:33,  9.37s/it]\rTesting:  71%|███████   | 22/31 [03:28\u003c01:25,  9.52s/it]\rTesting:  74%|███████▍  | 23/31 [03:37\u003c01:14,  9.29s/it]\rTesting:  77%|███████▋  | 24/31 [03:46\u003c01:05,  9.32s/it]\rTesting:  81%|████████  | 25/31 [03:55\u003c00:56,  9.40s/it]\rTesting:  84%|████████▍ | 26/31 [04:05\u003c00:47,  9.54s/it]\rTesting:  87%|████████▋ | 27/31 [04:15\u003c00:38,  9.68s/it]\rTesting:  90%|█████████ | 28/31 [04:25\u003c00:28,  9.54s/it]\rTesting:  94%|█████████▎| 29/31 [04:35\u003c00:19,  9.73s/it]\rTesting:  97%|█████████▋| 30/31 [04:45\u003c00:09,  9.86s/it]\rTesting: 100%|██████████| 31/31 [04:49\u003c00:00,  8.28s/it]\rTesting: 100%|██████████| 31/31 [04:50\u003c00:00,  9.36s/it]\n"}
+,{"stream_name":"stdout","time":11407.283542809,"data":"Vali Combined Loss: 71.56333163191563, Vali MSE Loss: 62.69882422008086, Vali MAE Loss: 7.861569875748962, Vali Contrastive Loss: 1.0029375360858055\n"}
+,{"stream_name":"stdout","time":11407.283574338,"data":"Test Combined loss: 22.997320650126305, Test MSE Loss: 18.030640362628738, Test MAE Loss: 3.9636144014615238, Test Contrastive Loss: 1.0030658860360422\n"}
+,{"stream_name":"stdout","time":11407.28358256,"data":"Model saved successfully to /kaggle/working/out_time/lastest_model.pth\n"}
+,{"stream_name":"stdout","time":11407.283597215,"data":"Tokenizer saved successfully to /kaggle/working/out_time/tokenizer\n"}
+,{"stream_name":"stdout","time":12213.8776034,"data":"Step in Epoch: 9/10, loss: 1.339723825454712\n"}
+,{"stream_name":"stdout","time":12213.877657162,"data":"Step in Epoch: 9/10, loss: 1.4602510929107666\n"}
+,{"stream_name":"stdout","time":12213.877664726,"data":"Step in Epoch: 9/10, loss: 1.49953293800354\n"}
+,{"stream_name":"stdout","time":12213.877669918,"data":"Step in Epoch: 9/10, loss: 1.331043004989624\n"}
+,{"stream_name":"stdout","time":12213.877674678,"data":"Step in Epoch: 9/10, loss: 1.3240630626678467\n"}
+,{"stream_name":"stdout","time":12213.877684491,"data":"Step in Epoch: 9/10, loss: 1.6862030029296875\n"}
+,{"stream_name":"stdout","time":12213.877689205,"data":"Step in Epoch: 9/10, loss: 1.6343826055526733\n"}
+,{"stream_name":"stdout","time":12213.877694285,"data":"Step in Epoch: 9/10, loss: 1.668165922164917\n"}
+,{"stream_name":"stdout","time":12213.87769923,"data":"Step in Epoch: 9/10, loss: 1.5340532064437866\n"}
+,{"stream_name":"stdout","time":12213.877703632,"data":"Step in Epoch: 9/10, loss: 1.5093309879302979\n"}
+,{"stream_name":"stdout","time":12213.87770806,"data":"Step in Epoch: 9/10, loss: 1.338655948638916\n"}
+,{"stream_name":"stdout","time":12213.877714101,"data":"Step in Epoch: 9/10, loss: 1.3559608459472656\n"}
+,{"stream_name":"stdout","time":12213.877721493,"data":"Step in Epoch: 9/10, loss: 1.588748574256897\n"}
+,{"stream_name":"stdout","time":12213.877740018,"data":"Step in Epoch: 9/10, loss: 1.2600923776626587\n"}
+,{"stream_name":"stdout","time":12213.877745521,"data":"Step in Epoch: 9/10, loss: 1.0993636846542358\n"}
+,{"stream_name":"stdout","time":12213.877750377,"data":"Step in Epoch: 9/10, loss: 1.1195422410964966\n"}
+,{"stream_name":"stdout","time":12213.877755641,"data":"Step in Epoch: 9/10, loss: 1.1614527702331543\n"}
+,{"stream_name":"stdout","time":12213.877760314,"data":"Step in Epoch: 9/10, loss: 1.4206063747406006\n"}
+,{"stream_name":"stdout","time":12213.8777647,"data":"Step in Epoch: 9/10, loss: 1.567705512046814\n"}
+,{"stream_name":"stdout","time":12213.877769009,"data":"Step in Epoch: 9/10, loss: 1.7524199485778809\n"}
+,{"stream_name":"stdout","time":12213.877773389,"data":"Step in Epoch: 9/10, loss: 1.8797526359558105\n"}
+,{"stream_name":"stdout","time":12213.877777705,"data":"Step in Epoch: 9/10, loss: 1.7301299571990967\n"}
+,{"stream_name":"stdout","time":12213.87778666,"data":"Step in Epoch: 9/10, loss: 1.8412801027297974\n"}
+,{"stream_name":"stdout","time":12213.877790456,"data":"Step in Epoch: 9/10, loss: 1.9335474967956543\n"}
+,{"stream_name":"stdout","time":12213.87779353,"data":"Step in Epoch: 9/10, loss: 1.6518232822418213\n"}
+,{"stream_name":"stdout","time":12213.87779654,"data":"Step in Epoch: 9/10, loss: 1.426393747329712\n"}
+,{"stream_name":"stdout","time":12213.877799553,"data":"Step in Epoch: 9/10, loss: 1.3840036392211914\n"}
+,{"stream_name":"stdout","time":12213.877802537,"data":"Step in Epoch: 9/10, loss: 1.2771929502487183\n"}
+,{"stream_name":"stdout","time":12213.877805621,"data":"Step in Epoch: 9/10, loss: 1.3295929431915283\n"}
+,{"stream_name":"stdout","time":12213.877808626,"data":"Step in Epoch: 9/10, loss: 1.2881500720977783\n"}
+,{"stream_name":"stdout","time":12213.87781163,"data":"Step in Epoch: 9/10, loss: 1.1852648258209229\n"}
+,{"stream_name":"stdout","time":12213.877814719,"data":"Step in Epoch: 9/10, loss: 1.0848641395568848\n"}
+,{"stream_name":"stdout","time":12213.877817721,"data":"Step in Epoch: 9/10, loss: 1.0305171012878418\n"}
+,{"stream_name":"stdout","time":12213.87782145,"data":"Step in Epoch: 9/10, loss: 1.0681490898132324\n"}
+,{"stream_name":"stdout","time":12213.877851032,"data":"Step in Epoch: 9/10, loss: 1.0926063060760498\n"}
+,{"stream_name":"stdout","time":12213.877855893,"data":"Step in Epoch: 9/10, loss: 1.1195623874664307\n"}
+,{"stream_name":"stdout","time":12213.877859301,"data":"Step in Epoch: 9/10, loss: 1.1667243242263794\n"}
+,{"stream_name":"stdout","time":12213.877862639,"data":"Step in Epoch: 9/10, loss: 1.2046494483947754\n"}
+,{"stream_name":"stdout","time":12213.877866025,"data":"Step in Epoch: 9/10, loss: 1.3207876682281494\n"}
+,{"stream_name":"stdout","time":12213.877869413,"data":"Step in Epoch: 9/10, loss: 1.2953417301177979\n"}
+,{"stream_name":"stdout","time":12213.877872715,"data":"Step in Epoch: 9/10, loss: 1.1896319389343262\n"}
+,{"stream_name":"stdout","time":12213.87787603,"data":"Step in Epoch: 9/10, loss: 1.178040862083435\n"}
+,{"stream_name":"stdout","time":12213.877879401,"data":"Step in Epoch: 9/10, loss: 1.0745816230773926\n"}
+,{"stream_name":"stdout","time":12213.877882702,"data":"Step in Epoch: 9/10, loss: 1.0359231233596802\n"}
+,{"stream_name":"stdout","time":12213.877887162,"data":"Step in Epoch: 9/10, loss: 1.073870062828064\n"}
+,{"stream_name":"stdout","time":12213.877890516,"data":"Step in Epoch: 9/10, loss: 1.0843753814697266\n"}
+,{"stream_name":"stdout","time":12213.877893857,"data":"Step in Epoch: 9/10, loss: 1.0569419860839844\n"}
+,{"stream_name":"stdout","time":12213.87789727,"data":"Step in Epoch: 9/10, loss: 1.057820200920105\n"}
+,{"stream_name":"stdout","time":12213.877905589,"data":"Step in Epoch: 9/10, loss: 1.1037263870239258\n"}
+,{"stream_name":"stdout","time":12213.877907961,"data":"Step in Epoch: 9/10, loss: 1.125749945640564\n"}
+,{"stream_name":"stdout","time":12213.877910218,"data":"Step in Epoch: 9/10, loss: 1.1534290313720703\n"}
+,{"stream_name":"stdout","time":12213.877912524,"data":"Step in Epoch: 9/10, loss: 1.0703399181365967\n"}
+,{"stream_name":"stdout","time":12213.877914866,"data":"Step in Epoch: 9/10, loss: 1.066643476486206\n"}
+,{"stream_name":"stdout","time":12213.87791711,"data":"Step in Epoch: 9/10, loss: 1.1006814241409302\n"}
+,{"stream_name":"stdout","time":12213.877919866,"data":"Step in Epoch: 9/10, loss: 1.1371569633483887\n"}
+,{"stream_name":"stdout","time":12213.877933674,"data":"Step in Epoch: 9/10, loss: 1.2110404968261719\n"}
+,{"stream_name":"stdout","time":12213.877937888,"data":"Step in Epoch: 9/10, loss: 1.2833738327026367\n"}
+,{"stream_name":"stdout","time":12213.877941622,"data":"Step in Epoch: 9/10, loss: 1.459493637084961\n"}
+,{"stream_name":"stdout","time":12213.877945672,"data":"Step in Epoch: 9/10, loss: 1.4051581621170044\n"}
+,{"stream_name":"stdout","time":12213.87794936,"data":"Step in Epoch: 9/10, loss: 1.6004886627197266\n"}
+,{"stream_name":"stdout","time":12213.877953403,"data":"Step in Epoch: 9/10, loss: 1.5361180305480957\n"}
+,{"stream_name":"stdout","time":12213.877956705,"data":"Step in Epoch: 9/10, loss: 1.7341099977493286\n"}
+,{"stream_name":"stdout","time":12213.877959993,"data":"Step in Epoch: 9/10, loss: 2.0289831161499023\n"}
+,{"stream_name":"stdout","time":12213.87796336,"data":"Step in Epoch: 9/10, loss: 2.137877941131592\n"}
+,{"stream_name":"stdout","time":12213.877966673,"data":"Step in Epoch: 9/10, loss: 2.252326011657715\n"}
+,{"stream_name":"stdout","time":12213.877969947,"data":"Step in Epoch: 9/10, loss: 2.369363784790039\n"}
+,{"stream_name":"stdout","time":12213.877973227,"data":"Step in Epoch: 9/10, loss: 2.493635654449463\n"}
+,{"stream_name":"stdout","time":12213.877976551,"data":"Step in Epoch: 9/10, loss: 2.5460405349731445\n"}
+,{"stream_name":"stdout","time":12213.877979788,"data":"Step in Epoch: 9/10, loss: 3.1198291778564453\n"}
+,{"stream_name":"stdout","time":12213.877986975,"data":"Step in Epoch: 9/10, loss: 3.2513065338134766\n"}
+,{"stream_name":"stdout","time":12213.87799033,"data":"Step in Epoch: 9/10, loss: 3.63325834274292\n"}
+,{"stream_name":"stdout","time":12213.877993662,"data":"Step in Epoch: 9/10, loss: 3.636925220489502\n"}
+,{"stream_name":"stdout","time":12213.877996945,"data":"Step in Epoch: 9/10, loss: 4.185288906097412\n"}
+,{"stream_name":"stdout","time":12213.878000235,"data":"Step in Epoch: 9/10, loss: 4.120534420013428\n"}
+,{"stream_name":"stdout","time":12213.87800351,"data":"Step in Epoch: 9/10, loss: 4.286168575286865\n"}
+,{"stream_name":"stdout","time":12213.878008675,"data":"Step in Epoch: 9/10, loss: 3.8404064178466797\n"}
+,{"stream_name":"stdout","time":12213.878041131,"data":"Step in Epoch: 9/10, loss: 3.5688889026641846\n"}
+,{"stream_name":"stdout","time":12213.878045693,"data":"Step in Epoch: 9/10, loss: 3.3956797122955322\n"}
+,{"stream_name":"stdout","time":12213.878049202,"data":"Step in Epoch: 9/10, loss: 2.6512551307678223\n"}
+,{"stream_name":"stdout","time":12213.878052556,"data":"Step in Epoch: 9/10, loss: 3.3118577003479004\n"}
+,{"stream_name":"stdout","time":12213.878055851,"data":"Step in Epoch: 9/10, loss: 3.976846218109131\n"}
+,{"stream_name":"stdout","time":12213.878059128,"data":"Step in Epoch: 9/10, loss: 3.934830665588379\n"}
+,{"stream_name":"stdout","time":12213.878062441,"data":"Step in Epoch: 9/10, loss: 4.046932697296143\n"}
+,{"stream_name":"stdout","time":12213.878065685,"data":"Step in Epoch: 9/10, loss: 4.749523162841797\n"}
+,{"stream_name":"stdout","time":12213.878068955,"data":"Step in Epoch: 9/10, loss: 4.956676483154297\n"}
+,{"stream_name":"stdout","time":12213.878072213,"data":"Step in Epoch: 9/10, loss: 4.6759514808654785\n"}
+,{"stream_name":"stdout","time":12213.878075523,"data":"Step in Epoch: 9/10, loss: 4.642665386199951\n"}
+,{"stream_name":"stdout","time":12213.878078877,"data":"Step in Epoch: 9/10, loss: 5.460301876068115\n"}
+,{"stream_name":"stdout","time":12213.878082118,"data":"Step in Epoch: 9/10, loss: 5.860696315765381\n"}
+,{"stream_name":"stdout","time":12213.878086051,"data":"Step in Epoch: 9/10, loss: 6.50169563293457\n"}
+,{"stream_name":"stdout","time":12213.878089374,"data":"Step in Epoch: 9/10, loss: 6.947988510131836\n"}
+,{"stream_name":"stdout","time":12213.878092673,"data":"Step in Epoch: 9/10, loss: 7.466304779052734\n"}
+,{"stream_name":"stdout","time":12213.878095963,"data":"Epoch: 9/10, loss: 2.2038083283797554\n"}
+,{"stream_name":"stderr","time":12511.167877078,"data":"\rTesting:   0%|          | 0/31 [00:00\u003c?, ?it/s]\rTesting:   3%|▎         | 1/31 [00:09\u003c04:53,  9.77s/it]\rTesting:   6%|▋         | 2/31 [00:19\u003c04:45,  9.84s/it]\rTesting:  10%|▉         | 3/31 [00:29\u003c04:40, 10.01s/it]\rTesting:  13%|█▎        | 4/31 [00:40\u003c04:31, 10.07s/it]\rTesting:  16%|█▌        | 5/31 [00:50\u003c04:22, 10.11s/it]\rTesting:  19%|█▉        | 6/31 [00:59\u003c04:06,  9.87s/it]\rTesting:  23%|██▎       | 7/31 [01:09\u003c03:59,  9.99s/it]\rTesting:  26%|██▌       | 8/31 [01:19\u003c03:47,  9.87s/it]\rTesting:  29%|██▉       | 9/31 [01:29\u003c03:35,  9.79s/it]\rTesting:  32%|███▏      | 10/31 [01:39\u003c03:29,  9.96s/it]\rTesting:  35%|███▌      | 11/31 [01:49\u003c03:20, 10.00s/it]\rTesting:  39%|███▊      | 12/31 [01:58\u003c03:06,  9.84s/it]\rTesting:  42%|████▏     | 13/31 [02:09\u003c02:58,  9.92s/it]\rTesting:  45%|████▌     | 14/31 [02:18\u003c02:47,  9.85s/it]\rTesting:  48%|████▊     | 15/31 [02:28\u003c02:37,  9.86s/it]\rTesting:  52%|█████▏    | 16/31 [02:38\u003c02:28,  9.90s/it]\rTesting:  55%|█████▍    | 17/31 [02:48\u003c02:17,  9.83s/it]\rTesting:  58%|█████▊    | 18/31 [02:58\u003c02:08,  9.88s/it]\rTesting:  61%|██████▏   | 19/31 [03:08\u003c01:58,  9.86s/it]\rTesting:  65%|██████▍   | 20/31 [03:17\u003c01:46,  9.65s/it]\rTesting:  68%|██████▊   | 21/31 [03:26\u003c01:34,  9.49s/it]\rTesting:  71%|███████   | 22/31 [03:35\u003c01:24,  9.44s/it]\rTesting:  74%|███████▍  | 23/31 [03:45\u003c01:16,  9.60s/it]\rTesting:  77%|███████▋  | 24/31 [03:54\u003c01:06,  9.45s/it]\rTesting:  81%|████████  | 25/31 [04:04\u003c00:56,  9.46s/it]\rTesting:  84%|████████▍ | 26/31 [04:13\u003c00:47,  9.48s/it]\rTesting:  87%|████████▋ | 27/31 [04:23\u003c00:37,  9.45s/it]\rTesting:  90%|█████████ | 28/31 [04:32\u003c00:28,  9.37s/it]\rTesting:  94%|█████████▎| 29/31 [04:42\u003c00:18,  9.49s/it]\rTesting:  97%|█████████▋| 30/31 [04:51\u003c00:09,  9.42s/it]\rTesting: 100%|██████████| 31/31 [04:57\u003c00:00,  8.34s/it]\rTesting: 100%|██████████| 31/31 [04:57\u003c00:00,  9.59s/it]\n"}
+,{"stream_name":"stderr","time":12801.568150538,"data":"\rTesting:   0%|          | 0/31 [00:00\u003c?, ?it/s]\rTesting:   3%|▎         | 1/31 [00:11\u003c05:32, 11.07s/it]\rTesting:   6%|▋         | 2/31 [00:20\u003c04:54, 10.15s/it]\rTesting:  10%|▉         | 3/31 [00:30\u003c04:42, 10.08s/it]\rTesting:  13%|█▎        | 4/31 [00:41\u003c04:36, 10.24s/it]\rTesting:  16%|█▌        | 5/31 [00:49\u003c04:11,  9.68s/it]\rTesting:  19%|█▉        | 6/31 [00:58\u003c03:55,  9.44s/it]\rTesting:  23%|██▎       | 7/31 [01:07\u003c03:44,  9.37s/it]\rTesting:  26%|██▌       | 8/31 [01:17\u003c03:36,  9.40s/it]\rTesting:  29%|██▉       | 9/31 [01:26\u003c03:24,  9.30s/it]\rTesting:  32%|███▏      | 10/31 [01:36\u003c03:16,  9.37s/it]\rTesting:  35%|███▌      | 11/31 [01:45\u003c03:07,  9.36s/it]\rTesting:  39%|███▊      | 12/31 [01:54\u003c02:58,  9.38s/it]\rTesting:  42%|████▏     | 13/31 [02:04\u003c02:49,  9.41s/it]\rTesting:  45%|████▌     | 14/31 [02:13\u003c02:41,  9.48s/it]\rTesting:  48%|████▊     | 15/31 [02:22\u003c02:29,  9.33s/it]\rTesting:  52%|█████▏    | 16/31 [02:32\u003c02:19,  9.29s/it]\rTesting:  55%|█████▍    | 17/31 [02:41\u003c02:11,  9.38s/it]\rTesting:  58%|█████▊    | 18/31 [02:51\u003c02:02,  9.39s/it]\rTesting:  61%|██████▏   | 19/31 [02:59\u003c01:50,  9.23s/it]\rTesting:  65%|██████▍   | 20/31 [03:09\u003c01:42,  9.32s/it]\rTesting:  68%|██████▊   | 21/31 [03:18\u003c01:33,  9.37s/it]\rTesting:  71%|███████   | 22/31 [03:28\u003c01:25,  9.52s/it]\rTesting:  74%|███████▍  | 23/31 [03:37\u003c01:14,  9.29s/it]\rTesting:  77%|███████▋  | 24/31 [03:46\u003c01:05,  9.31s/it]\rTesting:  81%|████████  | 25/31 [03:56\u003c00:56,  9.38s/it]\rTesting:  84%|████████▍ | 26/31 [04:06\u003c00:47,  9.51s/it]\rTesting:  87%|████████▋ | 27/31 [04:16\u003c00:38,  9.66s/it]\rTesting:  90%|█████████ | 28/31 [04:25\u003c00:28,  9.51s/it]\rTesting:  94%|█████████▎| 29/31 [04:35\u003c00:19,  9.70s/it]\rTesting:  97%|█████████▋| 30/31 [04:45\u003c00:09,  9.85s/it]\rTesting: 100%|██████████| 31/31 [04:50\u003c00:00,  8.27s/it]\rTesting: 100%|██████████| 31/31 [04:50\u003c00:00,  9.37s/it]\n"}
+,{"stream_name":"stdout","time":12805.659499757,"data":"Vali Combined Loss: 66.34573761758104, Vali MSE Loss: 57.79410708985679, Vali MAE Loss: 7.548708988756015, Vali Contrastive Loss: 1.00292153896824\n"}
+,{"stream_name":"stdout","time":12805.659534025,"data":"Test Combined loss: 22.503373772786425, Test MSE Loss: 17.568260521031604, Test MAE Loss: 3.932068838772742, Test Contrastive Loss: 1.0030444129820792\n"}
+,{"stream_name":"stdout","time":12805.659562726,"data":"Model saved successfully to /kaggle/working/out_time/lastest_model.pth\n"}
+,{"stream_name":"stdout","time":12805.659568155,"data":"Tokenizer saved successfully to /kaggle/working/out_time/tokenizer\n"}
+,{"stream_name":"stdout","time":13611.835998963,"data":"Step in Epoch: 10/10, loss: 1.350989580154419\n"}
+,{"stream_name":"stdout","time":13611.836068262,"data":"Step in Epoch: 10/10, loss: 1.4736182689666748\n"}
+,{"stream_name":"stdout","time":13611.836075013,"data":"Step in Epoch: 10/10, loss: 1.5138870477676392\n"}
+,{"stream_name":"stdout","time":13611.836080139,"data":"Step in Epoch: 10/10, loss: 1.343986988067627\n"}
+,{"stream_name":"stdout","time":13611.836085691,"data":"Step in Epoch: 10/10, loss: 1.338132619857788\n"}
+,{"stream_name":"stdout","time":13611.836090867,"data":"Step in Epoch: 10/10, loss: 1.7168527841567993\n"}
+,{"stream_name":"stdout","time":13611.836095635,"data":"Step in Epoch: 10/10, loss: 1.669776201248169\n"}
+,{"stream_name":"stdout","time":13611.83610055,"data":"Step in Epoch: 10/10, loss: 1.7385704517364502\n"}
+,{"stream_name":"stdout","time":13611.836105598,"data":"Step in Epoch: 10/10, loss: 2.012169361114502\n"}
+,{"stream_name":"stdout","time":13611.836110612,"data":"Step in Epoch: 10/10, loss: 2.3106191158294678\n"}
+,{"stream_name":"stdout","time":13611.836115615,"data":"Step in Epoch: 10/10, loss: 2.139042377471924\n"}
+,{"stream_name":"stdout","time":13611.836120497,"data":"Step in Epoch: 10/10, loss: 2.2668700218200684\n"}
+,{"stream_name":"stdout","time":13611.836125279,"data":"Step in Epoch: 10/10, loss: 2.6893482208251953\n"}
+,{"stream_name":"stdout","time":13611.836129667,"data":"Step in Epoch: 10/10, loss: 2.185822010040283\n"}
+,{"stream_name":"stdout","time":13611.836134158,"data":"Step in Epoch: 10/10, loss: 1.8080569505691528\n"}
+,{"stream_name":"stdout","time":13611.836139463,"data":"Step in Epoch: 10/10, loss: 1.6049582958221436\n"}
+,{"stream_name":"stdout","time":13611.83614453,"data":"Step in Epoch: 10/10, loss: 1.5138753652572632\n"}
+,{"stream_name":"stdout","time":13611.836148932,"data":"Step in Epoch: 10/10, loss: 1.2044084072113037\n"}
+,{"stream_name":"stdout","time":13611.836153088,"data":"Step in Epoch: 10/10, loss: 1.0752081871032715\n"}
+,{"stream_name":"stdout","time":13611.836157045,"data":"Step in Epoch: 10/10, loss: 1.066138744354248\n"}
+,{"stream_name":"stdout","time":13611.836161286,"data":"Step in Epoch: 10/10, loss: 1.1691093444824219\n"}
+,{"stream_name":"stdout","time":13611.836166205,"data":"Step in Epoch: 10/10, loss: 1.1472902297973633\n"}
+,{"stream_name":"stdout","time":13611.83617055,"data":"Step in Epoch: 10/10, loss: 1.2499603033065796\n"}
+,{"stream_name":"stdout","time":13611.836175123,"data":"Step in Epoch: 10/10, loss: 1.3130552768707275\n"}
+,{"stream_name":"stdout","time":13611.836179652,"data":"Step in Epoch: 10/10, loss: 1.229971170425415\n"}
+,{"stream_name":"stdout","time":13611.83618447,"data":"Step in Epoch: 10/10, loss: 1.149838924407959\n"}
+,{"stream_name":"stdout","time":13611.836189216,"data":"Step in Epoch: 10/10, loss: 1.1575331687927246\n"}
+,{"stream_name":"stdout","time":13611.836194253,"data":"Step in Epoch: 10/10, loss: 1.1217262744903564\n"}
+,{"stream_name":"stdout","time":13611.836199405,"data":"Step in Epoch: 10/10, loss: 1.130996823310852\n"}
+,{"stream_name":"stdout","time":13611.836203995,"data":"Step in Epoch: 10/10, loss: 1.0444941520690918\n"}
+,{"stream_name":"stdout","time":13611.83620843,"data":"Step in Epoch: 10/10, loss: 1.0952489376068115\n"}
+,{"stream_name":"stdout","time":13611.836213204,"data":"Step in Epoch: 10/10, loss: 1.1749321222305298\n"}
+,{"stream_name":"stdout","time":13611.836217821,"data":"Step in Epoch: 10/10, loss: 1.1572661399841309\n"}
+,{"stream_name":"stdout","time":13611.83623429,"data":"Step in Epoch: 10/10, loss: 1.1506749391555786\n"}
+,{"stream_name":"stdout","time":13611.836237906,"data":"Step in Epoch: 10/10, loss: 1.1033464670181274\n"}
+,{"stream_name":"stdout","time":13611.836241186,"data":"Step in Epoch: 10/10, loss: 1.0753329992294312\n"}
+,{"stream_name":"stdout","time":13611.836244928,"data":"Step in Epoch: 10/10, loss: 1.0673048496246338\n"}
+,{"stream_name":"stdout","time":13611.836248481,"data":"Step in Epoch: 10/10, loss: 1.0448148250579834\n"}
+,{"stream_name":"stdout","time":13611.83625226,"data":"Step in Epoch: 10/10, loss: 1.0452040433883667\n"}
+,{"stream_name":"stdout","time":13611.836255891,"data":"Step in Epoch: 10/10, loss: 1.0620254278182983\n"}
+,{"stream_name":"stdout","time":13611.836259428,"data":"Step in Epoch: 10/10, loss: 1.1105983257293701\n"}
+,{"stream_name":"stdout","time":13611.836263178,"data":"Step in Epoch: 10/10, loss: 1.1115517616271973\n"}
+,{"stream_name":"stdout","time":13611.836266745,"data":"Step in Epoch: 10/10, loss: 1.1402705907821655\n"}
+,{"stream_name":"stdout","time":13611.836272795,"data":"Step in Epoch: 10/10, loss: 1.1342030763626099\n"}
+,{"stream_name":"stdout","time":13611.836276571,"data":"Step in Epoch: 10/10, loss: 1.1047834157943726\n"}
+,{"stream_name":"stdout","time":13611.836280855,"data":"Step in Epoch: 10/10, loss: 1.0618778467178345\n"}
+,{"stream_name":"stdout","time":13611.836284514,"data":"Step in Epoch: 10/10, loss: 1.034127950668335\n"}
+,{"stream_name":"stdout","time":13611.836288125,"data":"Step in Epoch: 10/10, loss: 1.0430498123168945\n"}
+,{"stream_name":"stdout","time":13611.836291708,"data":"Step in Epoch: 10/10, loss: 1.0347775220870972\n"}
+,{"stream_name":"stdout","time":13611.836295448,"data":"Step in Epoch: 10/10, loss: 1.029723048210144\n"}
+,{"stream_name":"stdout","time":13611.836299088,"data":"Step in Epoch: 10/10, loss: 1.0398284196853638\n"}
+,{"stream_name":"stdout","time":13611.83630293,"data":"Step in Epoch: 10/10, loss: 1.062514305114746\n"}
+,{"stream_name":"stdout","time":13611.836306873,"data":"Step in Epoch: 10/10, loss: 1.0358723402023315\n"}
+,{"stream_name":"stdout","time":13611.83631074,"data":"Step in Epoch: 10/10, loss: 1.0522146224975586\n"}
+,{"stream_name":"stdout","time":13611.836313983,"data":"Step in Epoch: 10/10, loss: 1.1030012369155884\n"}
+,{"stream_name":"stdout","time":13611.836317394,"data":"Step in Epoch: 10/10, loss: 1.1920750141143799\n"}
+,{"stream_name":"stdout","time":13611.836320717,"data":"Step in Epoch: 10/10, loss: 1.2754663228988647\n"}
+,{"stream_name":"stdout","time":13611.836324103,"data":"Step in Epoch: 10/10, loss: 1.453308343887329\n"}
+,{"stream_name":"stdout","time":13611.836327439,"data":"Step in Epoch: 10/10, loss: 1.4046639204025269\n"}
+,{"stream_name":"stdout","time":13611.836330799,"data":"Step in Epoch: 10/10, loss: 1.5932773351669312\n"}
+,{"stream_name":"stdout","time":13611.836334047,"data":"Step in Epoch: 10/10, loss: 1.5323302745819092\n"}
+,{"stream_name":"stdout","time":13611.836337386,"data":"Step in Epoch: 10/10, loss: 1.7247921228408813\n"}
+,{"stream_name":"stdout","time":13611.836342644,"data":"Step in Epoch: 10/10, loss: 2.0142908096313477\n"}
+,{"stream_name":"stdout","time":13611.836351019,"data":"Step in Epoch: 10/10, loss: 2.121846914291382\n"}
+,{"stream_name":"stdout","time":13611.836353462,"data":"Step in Epoch: 10/10, loss: 2.235011339187622\n"}
+,{"stream_name":"stdout","time":13611.836355933,"data":"Step in Epoch: 10/10, loss: 2.3506827354431152\n"}
+,{"stream_name":"stdout","time":13611.836358219,"data":"Step in Epoch: 10/10, loss: 2.4733521938323975\n"}
+,{"stream_name":"stdout","time":13611.836360488,"data":"Step in Epoch: 10/10, loss: 2.52510666847229\n"}
+,{"stream_name":"stdout","time":13611.836367467,"data":"Step in Epoch: 10/10, loss: 3.094113826751709\n"}
+,{"stream_name":"stdout","time":13611.83637004,"data":"Step in Epoch: 10/10, loss: 3.224285125732422\n"}
+,{"stream_name":"stdout","time":13611.836390683,"data":"Step in Epoch: 10/10, loss: 3.6033997535705566\n"}
+,{"stream_name":"stdout","time":13611.83639467,"data":"Step in Epoch: 10/10, loss: 3.6065726280212402\n"}
+,{"stream_name":"stdout","time":13611.836398641,"data":"Step in Epoch: 10/10, loss: 4.151336193084717\n"}
+,{"stream_name":"stdout","time":13611.83640252,"data":"Step in Epoch: 10/10, loss: 4.086443901062012\n"}
+,{"stream_name":"stdout","time":13611.836406638,"data":"Step in Epoch: 10/10, loss: 4.250657558441162\n"}
+,{"stream_name":"stdout","time":13611.836415978,"data":"Step in Epoch: 10/10, loss: 3.8071441650390625\n"}
+,{"stream_name":"stdout","time":13611.836419463,"data":"Step in Epoch: 10/10, loss: 3.5367560386657715\n"}
+,{"stream_name":"stdout","time":13611.836422818,"data":"Step in Epoch: 10/10, loss: 3.3641719818115234\n"}
+,{"stream_name":"stdout","time":13611.836426176,"data":"Step in Epoch: 10/10, loss: 2.624800682067871\n"}
+,{"stream_name":"stdout","time":13611.836429496,"data":"Step in Epoch: 10/10, loss: 3.279778003692627\n"}
+,{"stream_name":"stdout","time":13611.836432748,"data":"Step in Epoch: 10/10, loss: 3.9398555755615234\n"}
+,{"stream_name":"stdout","time":13611.836436198,"data":"Step in Epoch: 10/10, loss: 3.8975400924682617\n"}
+,{"stream_name":"stdout","time":13611.836439483,"data":"Step in Epoch: 10/10, loss: 4.008391857147217\n"}
+,{"stream_name":"stdout","time":13611.836442867,"data":"Step in Epoch: 10/10, loss: 4.706245422363281\n"}
+,{"stream_name":"stdout","time":13611.836446161,"data":"Step in Epoch: 10/10, loss: 4.911523818969727\n"}
+,{"stream_name":"stdout","time":13611.836449466,"data":"Step in Epoch: 10/10, loss: 4.631745338439941\n"}
+,{"stream_name":"stdout","time":13611.836452771,"data":"Step in Epoch: 10/10, loss: 4.597949504852295\n"}
+,{"stream_name":"stdout","time":13611.836458561,"data":"Step in Epoch: 10/10, loss: 5.410057544708252\n"}
+,{"stream_name":"stdout","time":13611.836464406,"data":"Step in Epoch: 10/10, loss: 5.807311058044434\n"}
+,{"stream_name":"stdout","time":13611.836466645,"data":"Step in Epoch: 10/10, loss: 6.44366979598999\n"}
+,{"stream_name":"stdout","time":13611.83646892,"data":"Step in Epoch: 10/10, loss: 6.886298179626465\n"}
+,{"stream_name":"stdout","time":13611.836471201,"data":"Step in Epoch: 10/10, loss: 7.400335788726807\n"}
+,{"stream_name":"stdout","time":13611.836473496,"data":"Epoch: 10/10, loss: 2.1954069513341654\n"}
+,{"stream_name":"stderr","time":13908.682165279,"data":"\rTesting:   0%|          | 0/31 [00:00\u003c?, ?it/s]\rTesting:   3%|▎         | 1/31 [00:09\u003c04:52,  9.75s/it]\rTesting:   6%|▋         | 2/31 [00:19\u003c04:44,  9.81s/it]\rTesting:  10%|▉         | 3/31 [00:29\u003c04:40, 10.01s/it]\rTesting:  13%|█▎        | 4/31 [00:40\u003c04:32, 10.08s/it]\rTesting:  16%|█▌        | 5/31 [00:50\u003c04:22, 10.11s/it]\rTesting:  19%|█▉        | 6/31 [00:59\u003c04:06,  9.86s/it]\rTesting:  23%|██▎       | 7/31 [01:09\u003c03:59,  9.97s/it]\rTesting:  26%|██▌       | 8/31 [01:19\u003c03:46,  9.85s/it]\rTesting:  29%|██▉       | 9/31 [01:28\u003c03:34,  9.75s/it]\rTesting:  32%|███▏      | 10/31 [01:39\u003c03:28,  9.91s/it]\rTesting:  35%|███▌      | 11/31 [01:49\u003c03:19,  9.95s/it]\rTesting:  39%|███▊      | 12/31 [01:58\u003c03:05,  9.79s/it]\rTesting:  42%|████▏     | 13/31 [02:08\u003c02:57,  9.87s/it]\rTesting:  45%|████▌     | 14/31 [02:18\u003c02:46,  9.80s/it]\rTesting:  48%|████▊     | 15/31 [02:28\u003c02:36,  9.79s/it]\rTesting:  52%|█████▏    | 16/31 [02:38\u003c02:27,  9.84s/it]\rTesting:  55%|█████▍    | 17/31 [02:47\u003c02:16,  9.78s/it]\rTesting:  58%|█████▊    | 18/31 [02:57\u003c02:07,  9.84s/it]\rTesting:  61%|██████▏   | 19/31 [03:07\u003c01:57,  9.83s/it]\rTesting:  65%|██████▍   | 20/31 [03:16\u003c01:46,  9.64s/it]\rTesting:  68%|██████▊   | 21/31 [03:25\u003c01:34,  9.50s/it]\rTesting:  71%|███████   | 22/31 [03:35\u003c01:25,  9.45s/it]\rTesting:  74%|███████▍  | 23/31 [03:45\u003c01:16,  9.62s/it]\rTesting:  77%|███████▋  | 24/31 [03:54\u003c01:06,  9.47s/it]\rTesting:  81%|████████  | 25/31 [04:03\u003c00:56,  9.48s/it]\rTesting:  84%|████████▍ | 26/31 [04:13\u003c00:47,  9.50s/it]\rTesting:  87%|████████▋ | 27/31 [04:22\u003c00:37,  9.46s/it]\rTesting:  90%|█████████ | 28/31 [04:31\u003c00:28,  9.38s/it]\rTesting:  94%|█████████▎| 29/31 [04:41\u003c00:18,  9.50s/it]\rTesting:  97%|█████████▋| 30/31 [04:50\u003c00:09,  9.43s/it]\rTesting: 100%|██████████| 31/31 [04:56\u003c00:00,  8.35s/it]\rTesting: 100%|██████████| 31/31 [04:56\u003c00:00,  9.58s/it]\n"}
+,{"stream_name":"stderr","time":14197.862492549,"data":"\rTesting:   0%|          | 0/31 [00:00\u003c?, ?it/s]\rTesting:   3%|▎         | 1/31 [00:11\u003c05:30, 11.02s/it]\rTesting:   6%|▋         | 2/31 [00:20\u003c04:52, 10.08s/it]\rTesting:  10%|▉         | 3/31 [00:30\u003c04:39,  9.99s/it]\rTesting:  13%|█▎        | 4/31 [00:40\u003c04:33, 10.14s/it]\rTesting:  16%|█▌        | 5/31 [00:49\u003c04:09,  9.61s/it]\rTesting:  19%|█▉        | 6/31 [00:58\u003c03:54,  9.39s/it]\rTesting:  23%|██▎       | 7/31 [01:07\u003c03:43,  9.33s/it]\rTesting:  26%|██▌       | 8/31 [01:16\u003c03:35,  9.36s/it]\rTesting:  29%|██▉       | 9/31 [01:26\u003c03:24,  9.28s/it]\rTesting:  32%|███▏      | 10/31 [01:35\u003c03:16,  9.35s/it]\rTesting:  35%|███▌      | 11/31 [01:44\u003c03:06,  9.33s/it]\rTesting:  39%|███▊      | 12/31 [01:54\u003c02:57,  9.33s/it]\rTesting:  42%|████▏     | 13/31 [02:03\u003c02:48,  9.37s/it]\rTesting:  45%|████▌     | 14/31 [02:13\u003c02:40,  9.42s/it]\rTesting:  48%|████▊     | 15/31 [02:22\u003c02:28,  9.27s/it]\rTesting:  52%|█████▏    | 16/31 [02:31\u003c02:18,  9.22s/it]\rTesting:  55%|█████▍    | 17/31 [02:40\u003c02:10,  9.32s/it]\rTesting:  58%|█████▊    | 18/31 [02:50\u003c02:01,  9.33s/it]\rTesting:  61%|██████▏   | 19/31 [02:58\u003c01:50,  9.18s/it]\rTesting:  65%|██████▍   | 20/31 [03:08\u003c01:41,  9.27s/it]\rTesting:  68%|██████▊   | 21/31 [03:17\u003c01:33,  9.33s/it]\rTesting:  71%|███████   | 22/31 [03:27\u003c01:25,  9.48s/it]\rTesting:  74%|███████▍  | 23/31 [03:36\u003c01:14,  9.26s/it]\rTesting:  77%|███████▋  | 24/31 [03:45\u003c01:05,  9.29s/it]\rTesting:  81%|████████  | 25/31 [03:55\u003c00:56,  9.35s/it]\rTesting:  84%|████████▍ | 26/31 [04:05\u003c00:47,  9.48s/it]\rTesting:  87%|████████▋ | 27/31 [04:15\u003c00:38,  9.63s/it]\rTesting:  90%|█████████ | 28/31 [04:24\u003c00:28,  9.49s/it]\rTesting:  94%|█████████▎| 29/31 [04:34\u003c00:19,  9.69s/it]\rTesting:  97%|█████████▋| 30/31 [04:44\u003c00:09,  9.83s/it]\rTesting: 100%|██████████| 31/31 [04:49\u003c00:00,  8.26s/it]\rTesting: 100%|██████████| 31/31 [04:49\u003c00:00,  9.33s/it]\n"}
+,{"stream_name":"stdout","time":14202.84854249,"data":"Vali Combined Loss: 68.3199527057739, Vali MSE Loss: 59.641093945669674, Vali MAE Loss: 7.675957775124782, Vali Contrastive Loss: 1.002900984979445\n"}
+,{"stream_name":"stdout","time":14202.848579733,"data":"Test Combined loss: 23.87764555801824, Test MSE Loss: 18.826919534533875, Test MAE Loss: 4.0477088440567535, Test Contrastive Loss: 1.0030171794276084\n"}
+,{"stream_name":"stdout","time":14202.848602551,"data":"Model saved successfully to /kaggle/working/out_time/lastest_model.pth\n"}
+,{"stream_name":"stdout","time":14202.848606929,"data":"Tokenizer saved successfully to /kaggle/working/out_time/tokenizer\n"}
+,{"stream_name":"stdout","time":14206.715870496,"data":"[time] train exited rc=0 after 14062s\n"}
+,{"stream_name":"stdout","time":14206.715925995,"data":"[time] checkpoint: /kaggle/working/out_time/best_model.pth exists: True (walled=False)\n"}
+,{"stream_name":"stdout","time":14206.715933113,"data":"[time] --- authors' log.txt (last 20 lines) ---\n"}
+,{"stream_name":"stdout","time":14206.716284009,"data":"     Step in Epoch: 10/10, loss: 3.8071441650390625\n"}
+,{"stream_name":"stdout","time":14206.716317953,"data":"     Step in Epoch: 10/10, loss: 3.5367560386657715\n"}
+,{"stream_name":"stdout","time":14206.716324929,"data":"     Step in Epoch: 10/10, loss: 3.3641719818115234\n"}
+,{"stream_name":"stdout","time":14206.716331643,"data":"     Step in Epoch: 10/10, loss: 2.624800682067871\n"}
+,{"stream_name":"stdout","time":14206.716338609,"data":"     Step in Epoch: 10/10, loss: 3.279778003692627\n"}
+,{"stream_name":"stdout","time":14206.71634545,"data":"     Step in Epoch: 10/10, loss: 3.9398555755615234\n"}
+,{"stream_name":"stdout","time":14206.71635194,"data":"     Step in Epoch: 10/10, loss: 3.8975400924682617\n"}
+,{"stream_name":"stdout","time":14206.71635787,"data":"     Step in Epoch: 10/10, loss: 4.008391857147217\n"}
+,{"stream_name":"stdout","time":14206.71636388,"data":"     Step in Epoch: 10/10, loss: 4.706245422363281\n"}
+,{"stream_name":"stdout","time":14206.716370134,"data":"     Step in Epoch: 10/10, loss: 4.911523818969727\n"}
+,{"stream_name":"stdout","time":14206.716376874,"data":"     Step in Epoch: 10/10, loss: 4.631745338439941\n"}
+,{"stream_name":"stdout","time":14206.716383423,"data":"     Step in Epoch: 10/10, loss: 4.597949504852295\n"}
+,{"stream_name":"stdout","time":14206.716390037,"data":"     Step in Epoch: 10/10, loss: 5.410057544708252\n"}
+,{"stream_name":"stdout","time":14206.716396037,"data":"     Step in Epoch: 10/10, loss: 5.807311058044434\n"}
+,{"stream_name":"stdout","time":14206.716416236,"data":"     Step in Epoch: 10/10, loss: 6.44366979598999\n"}
+,{"stream_name":"stdout","time":14206.716421904,"data":"     Step in Epoch: 10/10, loss: 6.886298179626465\n"}
+,{"stream_name":"stdout","time":14206.716427041,"data":"     Step in Epoch: 10/10, loss: 7.400335788726807\n"}
+,{"stream_name":"stdout","time":14206.716432218,"data":"     Epoch: 10/10, loss: 2.1954069513341654\n"}
+,{"stream_name":"stdout","time":14206.716437454,"data":"     Vali Combined Loss: 68.3199527057739, Vali MSE Loss: 59.641093945669674, Vali MAE Loss: 7.675957775124782\n"}
+,{"stream_name":"stdout","time":14206.716449516,"data":"     Test Combined loss: 23.87764555801824, Test MSE Loss: 18.826919534533875, Test MAE Loss: 4.0477088440567535\n"}
+,{"stream_name":"stdout","time":14206.716547767,"data":"\n"}
+,{"stream_name":"stdout","time":14206.716561648,"data":"$ /usr/bin/python3 test.py --checkpoint /kaggle/working/out_time/best_model.pth --moment-model AutonLab/MOMENT-1-large --event-dir data/event --series-dir data/series --series-id SP500 --seq-len 35 --pred-len 35 --batch-size 10 --split test --split-by-time\n"}
+,{"stream_name":"stderr","time":14229.516530304,"data":"Some weights of RobertaModel were not initialized from the model checkpoint at FacebookAI/roberta-base and are newly initialized: ['roberta.pooler.dense.bias', 'roberta.pooler.dense.weight']\n"}
+,{"stream_name":"stderr","time":14229.516586647,"data":"You should probably TRAIN this model on a down-stream task to be able to use it for predictions and inference.\n"}
+,{"stream_name":"stdout","time":14236.800981459,"data":"Data Loaded: TRAIN: 916, VALI: 306, TEST: 305 [split: by time (6:2:2)]\n"}
+,{"stream_name":"stdout","time":14236.801042592,"data":"Model loaded successfully from /kaggle/working/out_time/best_model.pth\n"}
+,{"stream_name":"stderr","time":14236.923762789,"data":"\rTesting:   0%|          | 0/31 [00:00\u003c?, ?it/s]Token indices sequence length is longer than the specified maximum sequence length for this model (664 \u003e 512). Running this sequence through the model will result in indexing errors\n"}
+,{"stream_name":"stderr","time":14530.11604326,"data":"\rTesting:   3%|▎         | 1/31 [00:11\u003c05:54, 11.83s/it]\rTesting:   6%|▋         | 2/31 [00:21\u003c05:05, 10.54s/it]\rTesting:  10%|▉         | 3/31 [00:31\u003c04:54, 10.52s/it]\rTesting:  13%|█▎        | 4/31 [00:43\u003c04:49, 10.72s/it]\rTesting:  16%|█▌        | 5/31 [00:51\u003c04:21, 10.07s/it]\rTesting:  19%|█▉        | 6/31 [01:00\u003c04:02,  9.69s/it]\rTesting:  23%|██▎       | 7/31 [01:10\u003c03:48,  9.51s/it]\rTesting:  26%|██▌       | 8/31 [01:19\u003c03:37,  9.45s/it]\rTesting:  29%|██▉       | 9/31 [01:28\u003c03:24,  9.30s/it]\rTesting:  32%|███▏      | 10/31 [01:37\u003c03:16,  9.36s/it]\rTesting:  35%|███▌      | 11/31 [01:47\u003c03:07,  9.35s/it]\rTesting:  39%|███▊      | 12/31 [01:56\u003c02:58,  9.39s/it]\rTesting:  42%|████▏     | 13/31 [02:06\u003c02:50,  9.45s/it]\rTesting:  45%|████▌     | 14/31 [02:15\u003c02:42,  9.55s/it]\rTesting:  48%|████▊     | 15/31 [02:25\u003c02:30,  9.41s/it]\rTesting:  52%|█████▏    | 16/31 [02:34\u003c02:20,  9.35s/it]\rTesting:  55%|█████▍    | 17/31 [02:43\u003c02:12,  9.43s/it]\rTesting:  58%|█████▊    | 18/31 [02:53\u003c02:02,  9.41s/it]\rTesting:  61%|██████▏   | 19/31 [03:02\u003c01:50,  9.24s/it]\rTesting:  65%|██████▍   | 20/31 [03:11\u003c01:42,  9.33s/it]\rTesting:  68%|██████▊   | 21/31 [03:21\u003c01:33,  9.38s/it]\rTesting:  71%|███████   | 22/31 [03:31\u003c01:25,  9.55s/it]\rTesting:  74%|███████▍  | 23/31 [03:39\u003c01:14,  9.34s/it]\rTesting:  77%|███████▋  | 24/31 [03:49\u003c01:05,  9.37s/it]\rTesting:  81%|████████  | 25/31 [03:59\u003c00:56,  9.45s/it]\rTesting:  84%|████████▍ | 26/31 [04:08\u003c00:47,  9.59s/it]\rTesting:  87%|████████▋ | 27/31 [04:18\u003c00:38,  9.72s/it]\rTesting:  90%|█████████ | 28/31 [04:28\u003c00:28,  9.57s/it]\rTesting:  94%|█████████▎| 29/31 [04:38\u003c00:19,  9.76s/it]\rTesting:  97%|█████████▋| 30/31 [04:48\u003c00:09,  9.89s/it]\rTesting: 100%|██████████| 31/31 [04:53\u003c00:00,  8.31s/it]\rTesting: 100%|██████████| 31/31 [04:53\u003c00:00,  9.46s/it]\n"}
+,{"stream_name":"stdout","time":14530.184175777,"data":"Evaluation results: Combined=20.279419976659636, MSE=15.503679717998567, MAE=3.7723883280120214, Contrastive=1.00335193064905\n"}
+,{"stream_name":"stdout","time":14531.066625653,"data":"(exit 0, 324s)\n"}
+,{"stream_name":"stdout","time":14531.066664885,"data":"[time] test.py exit 0\n"}
+,{"stream_name":"stdout","time":14531.06705939,"data":"\n"}
+,{"stream_name":"stdout","time":14531.067078622,"data":"DONE [time]. Full log at /kaggle/working/camef_repro_log_time.txt\n"}
+,{"stream_name":"stderr","time":14533.654193312,"data":"/usr/local/lib/python3.12/dist-packages/mistune.py:435: SyntaxWarning: invalid escape sequence '\\|'\n"}
+,{"stream_name":"stderr","time":14533.654240507,"data":"  cells[i][c] = re.sub('\\\\\\\\\\|', '|', cell)\n"}
+,{"stream_name":"stderr","time":14533.952317407,"data":"/usr/local/lib/python3.12/dist-packages/nbconvert/filters/filter_links.py:36: SyntaxWarning: invalid escape sequence '\\_'\n"}
+,{"stream_name":"stderr","time":14533.952357042,"data":"  text = re.sub(r'_', '\\_', text) # Escape underscores in display text\n"}
+,{"stream_name":"stderr","time":14534.631637108,"data":"[NbConvertApp] Converting notebook __script__.ipynb to html\n"}
+,{"stream_name":"stderr","time":14535.923798641,"data":"[NbConvertApp] Writing 330461 bytes to __results__.html\n"}
+]

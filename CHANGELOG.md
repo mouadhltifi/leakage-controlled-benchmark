@@ -8,6 +8,15 @@ concept DOI 10.5281/zenodo.21431362.
 
 ## Unreleased (v1.0.8, the archival tag accompanying the submitted PDF)
 
+- **CAMEF ten-epoch retrain ships** (`audits/camef/camef-train-10ep/`,
+  both arms at the budget the CAMEF paper documents, T4, EPOCHS 5→10 the
+  only change): index MSE 0.000596 (1.22× the published 0.00048860 — the
+  budget explains the five-epoch positional shortfall), time MSE 15.50
+  (vs 15.27 at five epochs — the chronological collapse persists;
+  best-validation checkpoint saved in epoch 1, final-epoch loss steps
+  climb to 7.40 vs epoch mean 2.20). The paper's §4.3 now prices the
+  split at either documented budget; `REPRODUCE.md` §2b and
+  `audits/camef/PROGRESS.md` carry the full record.
 - **Certification loophole closed (adversarially discovered, reproduced,
   fixed, regression-tested):** the dual bar's classical-anchor floor is
   now computed over the FULL five-fold grid regardless of

@@ -335,3 +335,23 @@ train() saved. test.py printed: "Evaluation results: ... MSE=0.00248575220629840
   earliest test date sits at the very start of the 2008-2024 span, so almost every event post-dates it regardless of walk order.
 - VERDICT: the written "98%" should be CORRECTED to ~99.7% (913/916). Same point, slightly higher; the old 98% was the
   sample-with-synthetic-dates estimate. Figure is faithful + robust; no need to soften to qualitative.
+
+## 2026-07-23 — 10-EPOCH RETRAIN, BOTH ARMS (the budget the paper documents) = collapse PERSISTS
+- Kernels camef-train-10ep (index) + camef-train-time-10ep (time): same harness as camef-train/, EPOCHS 5->10
+  the ONLY diff (scripts in camef-train-10ep/; CAMEF_SPLIT is the one line differing between arms).
+  Env: torch 2.10.0+cu128, Tesla T4, transformers 4.43.1 pinned; clone --depth 1 -b publish-camef-code;
+  branch tip verified still bd31b0cc327081f309d3f1510efa8855e351bb75 at pull time (git ls-remote).
+  Wall-clock: index 14,388s, time 14,062s (~24 min/epoch, ~2x the 5-epoch runs, as expected).
+- **INDEX @ 10 ep (authors' test.py, best_model): MSE 0.000595589, MAE 0.0160524** — 1.22x the published
+  0.00048860 (the 5-epoch read was 5.1x): budget explains the positional arm's from-scratch shortfall.
+  Best model saved @ iter10 (Vali improved through the final epoch); final-epoch steps flat ~1.01.
+- **TIME @ 10 ep: MSE 15.5036797, MAE 3.7723883** — vs 15.2655597 at 5 ep: the chronological collapse
+  PERSISTS (marginally worse with double budget). Best model saved @ iter1 (Vali MSE 44.94 — validation
+  never improved after the first epoch); final-epoch loss steps climb 6.44 -> 6.89 -> 7.40 against an
+  epoch mean of 2.1954 (the 5-epoch "7.5 vs 2.8" diagnostic repeats at 10).
+- Ratio time/index @ 10 ep ~ 26,000x; the runbook's pre-registered Path A. Paper updated: S1 bullet,
+  S4.3 (retrain parenthetical + "either documented budget"), fig caption clause, App-C walkthrough.
+- Evidence in camef-train-10ep/: both harness scripts, scrubbed kernel metadata, both master logs, both
+  full rendered stdout logs (per-epoch trajectory incl. the iter1-best line and the epoch-10 climb).
+  Unseeded single runs by design, same as the 5-epoch arms; the orders-of-magnitude separation, not
+  replication, carries the inference.

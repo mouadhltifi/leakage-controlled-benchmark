@@ -117,12 +117,17 @@ The CAMEF audit was run on a free Kaggle T4. The evidence pack
 (`audits/camef/`) contains the master log (`PROGRESS.md`), the training harness
 (`camef-train/`), the released-checkpoint evaluation (`camef-eval/`, whose
 full console log including the `Evaluation results: ... MSE=0.000431...` line
-is `camef-eval/camef_eval_console_full.log`), and the
-split-leakage probe (`camef-splitcheck/splitcheck.py`). The headline finding:
+is `camef-eval/camef_eval_console_full.log`), the
+split-leakage probe (`camef-splitcheck/splitcheck.py`), and the
+ten-epoch re-run of both arms at the budget the CAMEF paper documents
+(`camef-train-10ep/`: scripts, kernel metadata, master logs, and the full
+rendered stdout of both runs — index MSE 0.000596 vs time MSE 15.50; the
+per-epoch trajectory backs the paper's epoch-1-best and loss-climb
+statements). The headline finding:
 the code's default **positional** split (file order, not time order) places
 ~99.7% of training events *after* the earliest test event; forcing a
 **chronological** split collapses the result (MSE rises by orders of
-magnitude). To reproduce:
+magnitude) at both documented budgets. To reproduce:
 
 ```bash
 git clone https://github.com/lakebodhi/CAMEF.git    # @ commit bd31b0c

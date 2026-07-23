@@ -1,0 +1,13 @@
+{
+  "id": "<ANON-KAGGLE-USER>/camef-train-time-10ep",
+  "title": "camef-train-time-10ep",
+  "code_file": "camef_time10.py",
+  "language": "python",
+  "kernel_type": "script",
+  "is_private": true,
+  "enable_gpu": true,
+  "enable_internet": true,
+  "dataset_sources": [],
+  "competition_sources": [],
+  "kernel_sources": []
+}
