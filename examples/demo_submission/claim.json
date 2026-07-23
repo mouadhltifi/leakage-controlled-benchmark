@@ -33,6 +33,8 @@
     "3": 0.017231412569326268,
     "4": 0.009718983694063266
   },
+  "anchor_cleared": false,
+  "anchor_p": 0.5950783803111499,
   "pooled_d": 0.20469219657545346,
   "verdict": "WITHIN THE REFERENCE NULL"
 }

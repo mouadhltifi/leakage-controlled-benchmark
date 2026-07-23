@@ -9,5 +9,5 @@ p_fold (n=5)     : 0.384
 p_bonf (k=1)     : 0.384
 pooled d (n=15, descriptive): +0.205
 fold conformance  : OK (n_test matches the frozen folds)
-vs logistic anchor: F0:-0.0604  F1:+0.0144  F2:-0.0239  F3:+0.0172  F4:+0.0097   mean -0.0086   (untuned anchor; descriptive)
+vs logistic anchor: F0:-0.0604  F1:+0.0144  F2:-0.0239  F3:+0.0172  F4:+0.0097   mean -0.0086  p=0.595   (hard floor for certification: NOT cleared)
 VERDICT           : WITHIN THE REFERENCE NULL

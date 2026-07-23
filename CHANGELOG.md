@@ -2,6 +2,25 @@
 
 All tags, newest first.
 
+## v1.0.7 — 2026-07-24 (dual-bar certification; all-day labels)
+
+- **Dual-bar certification**: a SUPPORTED claim must now clear BOTH the
+  declared tuned baseline arm (corrected fold-level significance, as
+  before) AND the untuned logistic-price anchor (a hard positive-contrast
+  floor whose p is reported). C1's own rationale — killing weak-baseline
+  inflation — forbids certifying below a simple runnable price model;
+  previously a challenger could in principle certify against the tuned
+  neural arm while sitting under the logistic anchor. Refusals carry an
+  explicit verdict tag. Validated: a crafted challenger significant vs
+  the arm (p_bonf≈0) but below the anchor is refused; the oracle
+  predictions case still certifies.
+- **All-day three-class labels ship**
+  (`data/processed/labels_direction_allday.parquet`: 62,315 test-window
+  rows, y_true ∈ {−1, 0, +1} with 0 = dead-zone) so the all-day task is
+  runnable today; its reference results remain a planned extension.
+- README null phrasing aligned with the paper ("establishes a
+  multiplicity-corrected gain"); SUBMITTING documents the dual bar.
+
 ## v1.0.6 — 2026-07-24 (evaluator hardening: fail-closed certification)
 
 - **`evaluate_submission.py` no longer has a test-selected default

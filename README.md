@@ -14,7 +14,8 @@ the **harness** that enforces it end to end, **availability-timed
 (release-lag aligned) feature datasets** for five source families (price, news, social, macro, inter-stock
 graphs; 55 liquid US large-caps, 2015–2023), and **reference baselines**
 distilled from 2,468 runs (2,151 controlled). Under the protocol, no source
-combination beats the tuned price-only baseline — a reference null any future
+combination establishes a multiplicity-corrected gain over the tuned
+price-only baseline — a reference null any future
 multi-source claim can be measured against. Two reproducibility audits price
 individual safeguards: test-set model selection is worth +0.04 to +0.07 MCC
 within a run, and a released macro-event model's from-scratch retrain at its

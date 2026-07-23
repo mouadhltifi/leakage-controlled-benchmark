@@ -73,6 +73,29 @@ def main() -> int:
     df.to_parquet(OUT, index=False)
     print(f"wrote {OUT.relative_to(ROOT)}: {len(df)} rows, "
           f"{df['y_true'].eq(1).mean():.3f} up-share")
+
+    # All-day three-class labels (planned-extension task): every test-window
+    # row, y_true in {-1, 0, +1} with 0 = the dead-zone class. Reference
+    # results for this task are a planned extension; the labels ship so the
+    # task is runnable today.
+    frames3 = []
+    with h5py.File(H5, "r") as h:
+        reg = h["label_reg"][:]
+        dates = h["dates"][:].astype(str)
+        stock_idx = h["stock_idx"][:]
+    for i, (a, b) in enumerate(FOLDS):
+        m = (dates >= a) & (dates <= b)
+        y = np.zeros(int(m.sum()), dtype="int8")
+        y[reg[m] >= DEADZONE] = 1
+        y[reg[m] <= -DEADZONE] = -1
+        frames3.append(pd.DataFrame({
+            "date": dates[m], "ticker": tickers[stock_idx[m]],
+            "fold_idx": i, "y_true": y}))
+    df3 = pd.concat(frames3, ignore_index=True)
+    out3 = OUT.with_name("labels_direction_allday.parquet")
+    df3.to_parquet(out3, index=False)
+    print(f"wrote {out3.relative_to(ROOT)}: {len(df3)} rows "
+          f"(three-class; {int((df3['y_true'] == 0).sum())} dead-zone)")
     return 0
 
 

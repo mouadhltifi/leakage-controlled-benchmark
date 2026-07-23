@@ -35,6 +35,14 @@ Fail-closed rules (a claim cannot certify without them):
     by construction.
   * Certification also requires the full declared fold coverage and the
     three contract seeds (42/123/456) paired in every covered fold.
+  * DUAL BAR: a SUPPORTED claim must clear BOTH references -- corrected
+    fold-level significance against the declared tuned arm, AND a
+    positive fold-level contrast against the strongest shipped classical
+    anchor (untuned logistic-price). C1 exists to kill weak-baseline
+    inflation; a claim can therefore never certify below a simple
+    runnable price model. The anchor leg is a hard floor (its p is
+    reported); the significance requirement stays on the tuned-arm
+    contrast.
 """
 from __future__ import annotations
 
@@ -271,10 +279,36 @@ def main() -> int:
     else:
         seeds_ok = False
 
+    # dual bar, leg 2: the challenger's fold-level contrast against the
+    # untuned logistic-price anchor must be positive (hard floor)
+    anchor_ok = None
+    anchor_fold_deltas = None
+    anchor_p = float("nan")
+    if ANCHORS_JSON.exists():
+        _anchors = json.loads(ANCHORS_JSON.read_text())
+        _lp = _anchors.get("anchors", {}).get("logistic-price", {})
+        _pf = _lp.get("mcc_per_fold")
+        if _pf:
+            _sub_means = merged.groupby("fold_idx")["mcc_sub"].mean()
+            anchor_fold_deltas = {int(f): float(_sub_means[f] - _pf[int(f)])
+                                  for f in _sub_means.index if int(f) < len(_pf)}
+            _vals = list(anchor_fold_deltas.values())
+            anchor_ok = float(np.mean(_vals)) > 0
+            if len(_vals) > 1:
+                _, anchor_p = stats.ttest_1samp(_vals, 0.0)
+
     certifiable = (k_declared and assembly_verified and coverage_ok
-                   and seeds_ok and a.baseline_arch != "envelope")
-    supported = mean_delta > 0 and p_bonf < 0.05 and certifiable
+                   and seeds_ok and a.baseline_arch != "envelope"
+                   and anchor_ok is not None)
+    supported = (mean_delta > 0 and p_bonf < 0.05 and certifiable
+                 and bool(anchor_ok))
     verdict = "SUPPORTED" if supported else "WITHIN THE REFERENCE NULL"
+    if (mean_delta > 0 and p_bonf < 0.05 and certifiable
+            and anchor_ok is False):
+        verdict += ("  [SIGNIFICANT VS THE TUNED ARM BUT DOES NOT CLEAR "
+                    "THE CLASSICAL ANCHOR -- certification refused; C1 "
+                    "forbids certifying below a simple runnable price "
+                    "model]")
     if not k_declared:
         verdict = ("UNCERTIFIED -- comparison family undeclared (pass --k "
                    "covering every configuration you compared, rule 3)")
@@ -313,23 +347,16 @@ def main() -> int:
     if conforms is not None:
         print(f"fold conformance  : "
               f"{'OK (n_test matches the frozen folds)' if conforms else 'FAILED -- ' + str(bad)}")
-    # descriptive read against the untuned logistic-price anchor (C1's bar
-    # is the TUNED baseline; the anchor shows where a simple untuned model
-    # sits -- SUBMITTING.md tells every challenger to report both reads)
-    anchor_deltas = None
-    if ANCHORS_JSON.exists():
-        anchors = json.loads(ANCHORS_JSON.read_text())
-        lp = anchors.get("anchors", {}).get("logistic-price", {})
-        per_fold = lp.get("mcc_per_fold")
-        if per_fold:
-            sub_fold_means = merged.groupby("fold_idx")["mcc_sub"].mean()
-            anchor_deltas = {int(f): float(sub_fold_means[f] - per_fold[int(f)])
-                             for f in sub_fold_means.index
-                             if int(f) < len(per_fold)}
-            mean_anchor = float(np.mean(list(anchor_deltas.values())))
-            print("vs logistic anchor: "
-                  + "  ".join(f"F{f}:{v:+.4f}" for f, v in anchor_deltas.items())
-                  + f"   mean {mean_anchor:+.4f}   (untuned anchor; descriptive)")
+    # dual bar, leg 2 readout: the untuned logistic-price anchor (the
+    # significance test lives on the tuned-arm contrast; the anchor is the
+    # hard floor a SUPPORTED claim must also clear)
+    if anchor_fold_deltas:
+        mean_anchor = float(np.mean(list(anchor_fold_deltas.values())))
+        print("vs logistic anchor: "
+              + "  ".join(f"F{f}:{v:+.4f}" for f, v in anchor_fold_deltas.items())
+              + f"   mean {mean_anchor:+.4f}  p={anchor_p:.3f}"
+              + f"   (hard floor for certification: "
+              + f"{'cleared' if anchor_ok else 'NOT cleared'})")
     print(f"VERDICT           : {verdict}")
     if not k_declared:
         print("NOTE: family size not declared; statistics shown at k=1 are "
@@ -347,7 +374,9 @@ def main() -> int:
             "p_fold": float(p_fold), "k": a.k, "k_declared": k_declared,
             "p_bonf": p_bonf, "seed_contract_met": seeds_ok,
             "assembly_verified": bool(assembly_verified),
-            "anchor_deltas": anchor_deltas,
+            "anchor_deltas": anchor_fold_deltas,
+            "anchor_cleared": anchor_ok,
+            "anchor_p": None if math.isnan(anchor_p) else float(anchor_p),
             "pooled_d": float(d), "verdict": verdict}, indent=2))
     return 0
 

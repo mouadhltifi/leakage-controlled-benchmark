@@ -73,7 +73,7 @@
   }
  ],
  "datePublished": "2026",
- "version": "1.0.6",
+ "version": "1.0.7",
  "keywords": [
   "evaluation protocol",
   "benchmark",
@@ -129,6 +129,15 @@
    "contentUrl": "data/processed/labels_direction.parquet",
    "encodingFormat": "application/x-parquet",
    "sha256": "91a94c573db1f035b50b6606df3443d7393dcc58c86deee10a9a301c6ac2f3da"
+  },
+  {
+   "@type": "cr:FileObject",
+   "@id": "labels-table-allday",
+   "name": "labels-table-allday",
+   "description": "All-day three-class labels (y_true in {-1,0,+1}; 0 = dead-zone class) for every test-window row (62,315 rows) - the planned-extension all-day task, runnable today; reference results for it are a planned extension.",
+   "contentUrl": "data/processed/labels_direction_allday.parquet",
+   "encodingFormat": "application/x-parquet",
+   "sha256": "50545c6b2771c29641179ac12134df1e6301511244b60b81f79e461fd7789904"
   },
   {
    "@type": "cr:FileSet",

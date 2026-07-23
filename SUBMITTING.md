@@ -110,16 +110,21 @@ Two arguments are **required and fail closed**:
 
 The script prints the claim block: per-fold deltas, ΔMCC, fold-block
 bootstrap 95% CI (descriptive), the certifying fold-t CI, p_fold (n=5),
-Bonferroni-corrected p at your declared k, descriptive pooled d, a
-descriptive per-fold read against the untuned logistic-price anchor
-(the bar C1 enforces is a *tuned* baseline, not the strongest possible
-model; the anchor sits descriptively above it at +0.014 pooled — if your
-model does not clear the anchor, say so), and the verdict:
+Bonferroni-corrected p at your declared k, descriptive pooled d, the
+per-fold contrast against the untuned logistic-price anchor (the second
+leg of the dual bar: the anchor sits descriptively above the tuned
+neural baseline at +0.014 pooled, and certification requires clearing
+it), and the verdict:
 
-- **SUPPORTED** — positive delta with corrected fold-level significance,
-  full coverage, the three contract seeds per fold, verified assembly,
-  and a runnable baseline arm (rules 1–6 honored). This is a Level-1
-  claim until released (Level 2) and independently audited (Level 3).
+- **SUPPORTED** — positive delta with corrected fold-level significance
+  against the declared tuned arm, **and** a positive fold-level contrast
+  against the untuned logistic-price anchor (the dual bar: C1 exists to
+  kill weak-baseline inflation, so a claim can never certify below a
+  simple runnable price model — the anchor leg is a hard floor whose $p$
+  is reported), with full coverage, the three contract seeds per fold,
+  verified assembly, and a runnable baseline arm (rules 1–6 honored).
+  This is a Level-1 claim until released (Level 2) and independently
+  audited (Level 3).
 - **WITHIN THE REFERENCE NULL** — the reference outcome: no combination
   of news, social, macro, or graph features has cleared it (2,468 runs;
   2,151 controlled).
