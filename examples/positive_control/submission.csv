@@ -1,0 +1,16 @@
+challenger,fold_idx,seed,mcc,n_test
+synthetic_positive_control,1,42,0.074131,9851
+synthetic_positive_control,0,123,0.077484,10100
+synthetic_positive_control,3,42,0.059252,9994
+synthetic_positive_control,2,42,0.048525,9979
+synthetic_positive_control,0,42,0.061972,10100
+synthetic_positive_control,4,42,0.048139,4514
+synthetic_positive_control,1,123,0.069232,9851
+synthetic_positive_control,2,123,0.042522,9979
+synthetic_positive_control,3,123,0.053527,9994
+synthetic_positive_control,1,456,0.076756,9851
+synthetic_positive_control,0,456,0.039384,10100
+synthetic_positive_control,2,456,0.030838,9979
+synthetic_positive_control,4,123,0.024742,4514
+synthetic_positive_control,3,456,0.039681,9994
+synthetic_positive_control,4,456,0.041288,4514

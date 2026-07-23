@@ -3,8 +3,8 @@
 > Paper B work item (plan Task 2). Campaign: 360 runs, both arms fresh under
 > the same code+cache state (mmfp, thread-capped, byte-exact GICS restore
 > verified post-campaign). Analysis: paired per (fold, seed, fusion, arch),
-> 180 matched cells. Script: `work/scripts/kdd_sector_equivalence.py`;
-> data: `work/experiments/phase4r/sector_ff12/sector_{gics,ff12}_{ff,lstm}.csv`.
+> 180 matched cells. Script: the released generator (`scripts/analysis/make_appendix_tables.py`);
+> data: the committed results (`results/sector/`, `results/native_core/`){gics,ff12}_{ff,lstm}.csv`.
 
 ## Result: NOT equivalent at the ±0.005 bar — the fallback is invoked
 

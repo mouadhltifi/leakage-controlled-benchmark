@@ -31,11 +31,15 @@ made cheap to adopt.
 python -m venv .venv && source .venv/bin/activate
 pip install -r requirements.txt
 
-# The reference null (paired stats vs the tuned price-only baseline):
-python scripts/analysis/analyze_ablation.py --section rq1
+# The paper's reference table (Table 3), regenerated from committed results:
+python scripts/analysis/make_reference_table_v2.py
 
 # The availability-timed macro re-run:
 python scripts/analysis/analyze_macrolag.py
+
+# Historical-grid provenance analysis (the superseded pre-native grid,
+# kept as provenance -- its numbers differ from the paper's Table 3):
+python scripts/analysis/analyze_ablation.py --section rq1
 ```
 
 Every reference-table and audit number regenerates from the committed

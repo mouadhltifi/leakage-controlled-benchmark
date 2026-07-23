@@ -187,6 +187,8 @@ def main() -> int:
     a = ap.parse_args()
 
     if a.baseline_arch == "stronger":
+        print("NOTE: --baseline-arch 'stronger' is a deprecated alias for "
+              "'envelope' (per-cell max; non-certifiable).", file=sys.stderr)
         a.baseline_arch = "envelope"
     k_declared = a.k is not None
     if not k_declared:
@@ -224,6 +226,12 @@ def main() -> int:
                                "mcc_base": b.reindex(s.index).values,
                                "seed": -1})
     merged["delta"] = merged["mcc_sub"] - merged["mcc_base"]
+    # the anchor leg is ALWAYS computed over the full submitted grid,
+    # BEFORE any restriction -- restricting the anchor to a fold subset
+    # would let a submitter drop the anchor's strongest fold and certify
+    # below the full-universe logistic reference (fold selection through
+    # the tool that polices selection)
+    full_grid = merged.copy()
     if a.restrict_folds:
         keep = [int(x) for x in a.restrict_folds.split(",")]
         merged = merged[merged["fold_idx"].isin(keep)]
@@ -267,7 +275,14 @@ def main() -> int:
     required = ({int(x) for x in a.restrict_folds.split(",")}
                 if a.restrict_folds else set(range(5)))
     covered = {int(f) for f in fold_means.index}
-    coverage_ok = covered == required and n_folds >= (4 if a.restrict_folds else 5)
+    # a certifying restriction is hard-gated to the ONE documented
+    # coverage-rule subset {0,1,2,3} (rule 8, social-family coverage
+    # tail); every other subset is analysis, never certification --
+    # otherwise --restrict-folds is best-k-of-5 fold selection
+    restriction_certifiable = (not a.restrict_folds) or (required == {0, 1, 2, 3})
+    coverage_ok = (covered == required
+                   and n_folds >= (4 if a.restrict_folds else 5)
+                   and restriction_certifiable)
     # seed-contract gate: certification requires the three contract seeds
     # (42/123/456) paired at seed level in EVERY covered fold (rule 1) --
     # a best-seed-per-fold selection must not certify through the tool
@@ -280,7 +295,8 @@ def main() -> int:
         seeds_ok = False
 
     # dual bar, leg 2: the challenger's fold-level contrast against the
-    # untuned logistic-price anchor must be positive (hard floor)
+    # untuned logistic-price anchor must be positive (hard floor),
+    # computed on the FULL five-fold grid regardless of --restrict-folds
     anchor_ok = None
     anchor_fold_deltas = None
     anchor_p = float("nan")
@@ -289,11 +305,12 @@ def main() -> int:
         _lp = _anchors.get("anchors", {}).get("logistic-price", {})
         _pf = _lp.get("mcc_per_fold")
         if _pf:
-            _sub_means = merged.groupby("fold_idx")["mcc_sub"].mean()
+            _sub_means = full_grid.groupby("fold_idx")["mcc_sub"].mean()
             anchor_fold_deltas = {int(f): float(_sub_means[f] - _pf[int(f)])
                                   for f in _sub_means.index if int(f) < len(_pf)}
             _vals = list(anchor_fold_deltas.values())
-            anchor_ok = float(np.mean(_vals)) > 0
+            # the floor binds only when all five folds are present
+            anchor_ok = (len(_vals) == 5 and float(np.mean(_vals)) > 0)
             if len(_vals) > 1:
                 _, anchor_p = stats.ttest_1samp(_vals, 0.0)
 
@@ -318,8 +335,12 @@ def main() -> int:
     if a.baseline_arch == "envelope":
         verdict += ("  [ENVELOPE REFERENCE -- test-selected sensitivity "
                     "read; not certifiable]")
-    if a.restrict_folds:
+    if a.restrict_folds and restriction_certifiable:
         verdict += f"  [RESTRICTED COVERAGE -- folds {sorted(covered)} per rule 8]"
+    elif a.restrict_folds:
+        verdict += (f"  [NON-CERTIFYING RESTRICTION -- folds {sorted(covered)} "
+                    "is not the documented rule-8 subset {0,1,2,3}; "
+                    "analysis only]")
     if k_declared and assembly_verified and not seeds_ok:
         verdict += ("  [SEED CONTRACT NOT MET -- certification requires seeds "
                     "42/123/456 paired per covered fold (rule 1)]")

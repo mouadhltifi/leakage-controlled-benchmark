@@ -26,7 +26,7 @@ reproduce:  ## Full headline reproduction from committed results (no GPU, no dow
 	$(PYTHON) scripts/figures/make_paper_figures.py
 
 smoke:  ## Fast sanity subset.
-	$(PYTHON) scripts/analysis/analyze_ablation.py --section rq1
+	$(PYTHON) scripts/analysis/make_reference_table_v2.py
 	$(PYTHON) scripts/analysis/analyze_macrolag.py
 
 figures:  ## Regenerate the paper figures (vector PDFs into figures/).

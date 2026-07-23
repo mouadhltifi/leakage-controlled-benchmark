@@ -5,10 +5,15 @@ Two tiers: the **headline path** (no GPU, no large data, minutes) and the
 headline path.
 
 Before either path, fixity: `python3 scripts/verify_integrity.py` checks
-`MANIFEST.sha256` covering the reproduction tree (code, configs,
-tables, results, audits, experiments, examples) and the materialized raw
-inputs (`data/raw/macro/`); top-level docs, LICENSE, and `croissant.json`
-sit outside its scope (see the manifest's header line).
+`MANIFEST.sha256` covering the reproduction tree (code, configs, tables,
+results, audits, experiments, examples), the materialized raw inputs
+(`data/raw/macro/`), the derived-feature deposit (`data/processed/`), and
+the normative top-level files (README, SUBMITTING, REPRODUCE, MAINTENANCE,
+CHANGELOG, data statements, datasheet, LICENSE, CITATION.cff,
+croissant.json); only the manifest itself sits outside its scope.
+`scripts/release_gate.py` runs this plus the evaluator regression battery
+and the byte-compared Section-6 demo — no tag is cut unless it passes on
+a fresh clone.
 
 ## 0. Environment
 
@@ -38,11 +43,16 @@ These read only the CSVs/JSON under `results/` and finish in seconds.
 ### 1a. The ablation null (RQ1)
 
 ```bash
-python scripts/analysis/analyze_ablation.py --section rq1     # the null table
-python scripts/analysis/analyze_ablation.py                   # full analysis
+python scripts/analysis/make_reference_table_v2.py       # Table 3 (the paper's reference rows)
+python scripts/analysis/make_appendix_tables.py          # appendix tables (self-checks vs Table 3)
+python scripts/analysis/analyze_ablation.py --section rq1  # HISTORICAL grid (provenance, not Table 3)
 ```
 
-Expect every multi-source configuration to be non-significant against the
+`make_reference_table_v2.py` regenerates the paper's Table 3 from the
+committed result files; `analyze_ablation.py` analyzes the superseded
+historical grid, kept as provenance -- its numbers differ from Table 3 by
+design (pre-native codebase, same-day macro). Expect every multi-source
+configuration to be non-significant against the
 price-only baseline (A7) after Bonferroni (p_bonf = 1.0). Sections: `rq1`,
 `rq2`, `rq3`, `arch`, `overview`, `financial`, `fin_metrics`.
 
@@ -247,6 +257,10 @@ CPU bit-identical results under a fixed seed.
 ## Determinism
 
 Seeds are fixed via `mmfp/utils/seeding.py::set_all_seeds` (Python, NumPy,
-PyTorch CPU/CUDA/MPS, `PYTHONHASHSEED`, deterministic cuDNN). The published
+PyTorch CPU/CUDA/MPS, `PYTHONHASHSEED`, deterministic cuDNN). The
+determinism scope also pins the THREAD configuration (thread count changes
+floating-point reduction order; up to ~0.04 MCC on a single run): every
+documented entry point sets `OMP_NUM_THREADS=MKL_NUM_THREADS=OPENBLAS_NUM_THREADS=2`
+by default -- keep it for bit-identical reproduction. The published
 grids use 3 seeds x 5 folds per config (the v3 A4 retest adds 5 more seeds).
 Results are bit-identical on CPU; GPU/MPS carry a small documented tolerance.

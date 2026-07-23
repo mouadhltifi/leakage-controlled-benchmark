@@ -1,8 +1,49 @@
 # Changelog
 
-All tags, newest first.
+All tags, newest first. Result CSVs under `results/` are unchanged across
+every entry below — every reference number regenerates identically at every
+tag; the changes are to data-file correctness, tooling, and documentation.
+"Archived" = published as a GitHub Release and ingested by Zenodo under the
+concept DOI 10.5281/zenodo.21431362.
 
-## v1.0.7 — 2026-07-24 (dual-bar certification; all-day labels)
+## Unreleased (v1.0.8, the archival tag accompanying the submitted PDF)
+
+- **Certification loophole closed (adversarially discovered, reproduced,
+  fixed, regression-tested):** the dual bar's classical-anchor floor is
+  now computed over the FULL five-fold grid regardless of
+  `--restrict-folds`, and a certifying restriction is hard-gated to the
+  one documented rule-8 subset {0,1,2,3} (every other subset is analysis,
+  never certification). Previously, restricting to folds {1,2,3,4}
+  dropped the anchor's strongest fold and let a challenger genuinely
+  below the full-universe logistic reference certify.
+- **Regression battery ships** (`scripts/analysis/test_evaluate_submission.py`,
+  10 cases incl. both discovered exploits and a non-oracle positive
+  control) and a **pre-tag release gate**
+  (`scripts/release_gate.py`: fresh-tree integrity, the battery, the
+  byte-compared S6 demo, metadata consistency). No tag is cut without it
+  — MANIFEST staleness shipped three times before this gate existed.
+- **Positive-control example ships** (`examples/positive_control/`,
+  clearly synthetic: baseline +0.05/fold certifies SUPPORTED —
+  certification is demonstrably reachable without an oracle).
+- **The 117-run calibration grid ships** (`results/calibration/`: the
+  four validation-metric studies behind C1's frozen shared defaults).
+- Thread pins (`OMP/MKL/OPENBLAS_NUM_THREADS=2`) added to every
+  documented entry point; REPRODUCE's Determinism section documents the
+  thread scope explicitly.
+- Front door rewired: README/Makefile/REPRODUCE now lead with
+  `make_reference_table_v2.py` (the paper's Table 3); the historical
+  grid analysis is labeled provenance.
+- MANIFEST coverage extended over the normative top-level docs
+  (SUBMITTING, MAINTENANCE, CHANGELOG, DATA-STATEMENTS, DATASHEET,
+  REPRODUCE, README, ECONOMIC-CONTEXT, LICENSE, CITATION.cff,
+  croissant.json) so the rule text submitters are bound by is inside the
+  tamper-evidence scope.
+- Doc hygiene: sector-equivalence provenance repointed at released
+  paths; deprecated `--baseline-arch stronger` alias now prints a
+  warning; demo `--k 1` annotated (honest only for a single-configuration
+  replay); CHANGELOG tag dates corrected to actual tag dates.
+
+## v1.0.7 — 2026-07-23 (dual-bar certification; all-day labels)
 
 - **Dual-bar certification**: a SUPPORTED claim must now clear BOTH the
   declared tuned baseline arm (corrected fold-level significance, as
@@ -21,7 +62,7 @@ All tags, newest first.
 - README null phrasing aligned with the paper ("establishes a
   multiplicity-corrected gain"); SUBMITTING documents the dual bar.
 
-## v1.0.6 — 2026-07-24 (evaluator hardening: fail-closed certification)
+## v1.0.6 — 2026-07-23 (evaluator hardening: fail-closed certification)
 
 - **`evaluate_submission.py` no longer has a test-selected default
   reference.** `--baseline-arch` is REQUIRED: `ff`/`lstm` pair
@@ -47,11 +88,7 @@ All tags, newest first.
   (`--k 1 --baseline-arch ff`): ΔMCC +0.0033, within the reference null
   (the envelope sensitivity read, −0.0066, remains documented).
 - SUBMITTING.md rewritten for the two input modes and the fail-closed
-  rules; README updated. Result CSVs under `results/` are unchanged across
-every entry below — every reference number regenerates identically at every
-tag; the changes are to data-file correctness, tooling, and documentation.
-"Archived" = published as a GitHub Release and ingested by Zenodo under the
-concept DOI 10.5281/zenodo.21431362.
+  rules; README updated.
 
 ## v1.0.5 — 2026-07-21 (the archived release accompanying the KDD submission)
 

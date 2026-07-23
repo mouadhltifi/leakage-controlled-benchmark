@@ -25,16 +25,24 @@ MANIFEST = ROOT / "MANIFEST.sha256"
 COVERED = ("src", "scripts", "configs", "tables",
            "results", "audits", "experiments", "examples",
            "data/raw/macro", "data/processed")
+# Normative top-level files: the rule text submitters are bound by is
+# inside the tamper-evidence scope, not outside it.
+COVERED_FILES = ("README.md", "SUBMITTING.md", "REPRODUCE.md",
+                 "MAINTENANCE.md", "CHANGELOG.md", "DATA-STATEMENTS.md",
+                 "DATASHEET.md", "ECONOMIC-CONTEXT.md", "LICENSE",
+                 "CITATION.cff", "croissant.json")
 SKIP_PARTS = {"__pycache__", ".pytest_cache", ".DS_Store"}
 # Outputs that documented steps materialize on demand (REPRODUCE §3e);
 # never manifested, never reported as UNTRACKED.
 EXPECTED_UNTRACKED = {"data/processed/graphs/sector_adjacency_gics.npy"}
 SCOPE_HEADER = (
     "# Scope: the reproduction tree (code, configs, tables, results, audits,"
-    " experiments, examples) plus the materialized raw inputs"
-    " (data/raw/macro) and the derived-feature deposit (data/processed)."
-    " Excluded: top-level docs, LICENSE, croissant.json,"
-    " and this manifest itself. Verify: python3 scripts/verify_integrity.py"
+    " experiments, examples), the materialized raw inputs (data/raw/macro),"
+    " the derived-feature deposit (data/processed), and the normative"
+    " top-level files (README, SUBMITTING, REPRODUCE, MAINTENANCE,"
+    " CHANGELOG, DATA-STATEMENTS, DATASHEET, ECONOMIC-CONTEXT, LICENSE,"
+    " CITATION.cff, croissant.json). Excluded: this manifest itself."
+    " Verify: python3 scripts/verify_integrity.py"
 )
 
 
@@ -45,6 +53,10 @@ def covered_files() -> list[Path]:
             if (p.is_file() and not (set(p.parts) & SKIP_PARTS)
                     and str(p.relative_to(ROOT)) not in EXPECTED_UNTRACKED):
                 files.append(p)
+    for name in COVERED_FILES:
+        p = ROOT / name
+        if p.is_file():
+            files.append(p)
     return files
 
 

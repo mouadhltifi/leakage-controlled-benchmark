@@ -23,6 +23,14 @@ Expected wall-clock: ~10-15 hours on M1 Max CPU, parallelism=4.
 """
 from __future__ import annotations
 
+import os
+# Pinned-state thread configuration (S3.2 determinism scope): thread count
+# changes floating-point reduction order and can move a single run by up
+# to ~0.04 MCC. The shipped grids ran under this pin; keep it for
+# bit-identical reproduction (override only knowingly).
+for _v in ("OMP_NUM_THREADS", "MKL_NUM_THREADS", "OPENBLAS_NUM_THREADS"):
+    os.environ.setdefault(_v, "2")
+
 import argparse
 import logging
 import sys
