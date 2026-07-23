@@ -73,7 +73,7 @@
   }
  ],
  "datePublished": "2026",
- "version": "1.0.5",
+ "version": "1.0.6",
  "keywords": [
   "evaluation protocol",
   "benchmark",
@@ -120,6 +120,15 @@
    "contentUrl": "data/processed/features/macro_features.parquet",
    "encodingFormat": "application/x-parquet",
    "sha256": "5f667f45101ef7d7f0343be10513c91f4f644b0bac60b1dd500f822ca085ed02"
+  },
+  {
+   "@type": "cr:FileObject",
+   "@id": "labels-table",
+   "name": "labels-table",
+   "description": "Frozen test-set labels for predictions-mode evaluation: one row per scoreable test example (date, ticker, fold_idx, y_true in {-1,+1}); 44,438 rows matching the frozen per-fold n_test exactly; dead-zone days excluded. Generated + self-checked by scripts/analysis/make_labels_table.py.",
+   "contentUrl": "data/processed/labels_direction.parquet",
+   "encodingFormat": "application/x-parquet",
+   "sha256": "91a94c573db1f035b50b6606df3443d7393dcc58c86deee10a9a301c6ac2f3da"
   },
   {
    "@type": "cr:FileSet",

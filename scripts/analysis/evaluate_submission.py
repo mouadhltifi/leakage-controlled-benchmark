@@ -4,26 +4,43 @@
 Pairs a challenger's per-(fold, seed) test MCC against the shipped tuned
 price-only baseline (natcore_A7) and reports the statistics the protocol
 requires: per-fold mean deltas (the honest unit, n=5), fold-block bootstrap
-95% CI, p_fold, Bonferroni-corrected p at the declared family size k, and
-the descriptive pooled effect size. Statistics mirror
-make_reference_table_v2.py (same bootstrap: 10,000 resamples, seed 42).
+95% CI, p_fold, Bonferroni-corrected p at the declared family size k, the
+descriptive pooled effect size, and a descriptive read against the untuned
+logistic-price anchor. Statistics mirror make_reference_table_v2.py
+(same bootstrap: 10,000 resamples, seed 42).
 
-Usage:
-    evaluate_submission.py SUBMISSION.csv [--k 1]
-        [--baseline-arch {ff,lstm,envelope}] [--restrict-folds 0,1,2,3]
-        [--json OUT.json]
+Usage (score mode -- per-(fold, seed) MCC values you computed):
+    evaluate_submission.py SUBMISSION.csv --k K --baseline-arch {ff,lstm}
+        [--restrict-folds 0,1,2,3] [--json OUT.json]
 
-The default baseline is the per-(fold, seed) upper envelope of the two
-shipped arms (max over ff/lstm): a conservative bar, not a runnable
-model; pass --baseline-arch ff|lstm for like-for-like pairing. With
---restrict-folds (coverage rule 8), certification requires the declared
-fold subset with at least four folds, and the verdict is tagged
-RESTRICTED COVERAGE.
+Usage (predictions mode -- the evaluator recomputes MCC itself):
+    evaluate_submission.py --predictions PREDS.csv --k K
+        --baseline-arch {ff,lstm} [--name my_model] [--json OUT.json]
+    PREDS.csv columns: seed, date (YYYY-MM-DD), ticker, y_pred (-1/+1 or 0/1).
+    Scores are recomputed against the frozen labels table
+    (data/processed/labels_direction.parquet); every (fold, seed) must cover
+    the frozen test set exactly, so assembly conformance is intrinsic.
+
+Fail-closed rules (a claim cannot certify without them):
+  * --baseline-arch is REQUIRED. ff|lstm pair like-for-like against a
+    runnable, validation-selected baseline arm. `envelope` (per-cell max
+    over both arms) is available as an explicit conservative SENSITIVITY
+    read only -- it is test-selected and not a runnable model, so it can
+    never yield SUPPORTED.
+  * --k (the declared comparison-family size, rule 3) is REQUIRED for
+    certification. Without it the verdict is UNCERTIFIED.
+  * Score-mode submissions must carry per-row n_test matching the frozen
+    folds; without it the verdict is UNCERTIFIED (assembly unverified),
+    and a mismatch is NOT COMPARABLE. Predictions mode verifies assembly
+    by construction.
+  * Certification also requires the full declared fold coverage and the
+    three contract seeds (42/123/456) paired in every covered fold.
 """
 from __future__ import annotations
 
 import argparse
 import json
+import math
 import sys
 from pathlib import Path
 
@@ -34,6 +51,8 @@ from scipy import stats
 ROOT = Path(__file__).resolve().parents[2]
 BASELINE_GLOB = "results/native_core/native_core_*.csv"
 BASELINE_PREFIX = "natcore_A7_"
+LABELS_PARQUET = ROOT / "data" / "processed" / "labels_direction.parquet"
+ANCHORS_JSON = ROOT / "results" / "analysis" / "naive_anchors.json"
 SEEDS = (42, 123, 456)
 N_BOOT, BOOT_SEED = 10_000, 42
 
@@ -49,9 +68,9 @@ def load_baseline(arch: str) -> pd.DataFrame:
     if arch in ("ff", "lstm"):
         base = base[base["arch"] == arch]
         return base[["fold_idx", "seed", "mcc"]]
-    # conservative default: the per-(fold, seed) upper ENVELOPE of the two
-    # shipped arms (max over ff/lstm) -- a test-selected bar, not a
-    # runnable model
+    # explicit sensitivity option: the per-(fold, seed) upper ENVELOPE of
+    # the two shipped arms (max over ff/lstm) -- test-selected, not a
+    # runnable model; can never certify
     return (base.groupby(["fold_idx", "seed"], as_index=False)["mcc"].max())
 
 
@@ -63,6 +82,62 @@ def expected_n_test() -> dict[int, int]:
     base = base[base["experiment_name"].str.startswith(BASELINE_PREFIX)]
     return base.groupby("fold_idx")["n_test"].agg(
         lambda s: int(s.mode().iloc[0])).to_dict()
+
+
+def mcc_binary(y_true: np.ndarray, y_pred: np.ndarray) -> float:
+    """MCC for labels in {-1, +1} from confusion counts."""
+    tp = int(((y_true == 1) & (y_pred == 1)).sum())
+    tn = int(((y_true == -1) & (y_pred == -1)).sum())
+    fp = int(((y_true == -1) & (y_pred == 1)).sum())
+    fn = int(((y_true == 1) & (y_pred == -1)).sum())
+    denom = math.sqrt(float(tp + fp) * (tp + fn) * (tn + fp) * (tn + fn))
+    return ((tp * tn - fp * fn) / denom) if denom > 0 else 0.0
+
+
+def score_predictions(preds_path: Path, name: str) -> pd.DataFrame:
+    """Predictions mode: recompute per-(fold, seed) MCC against the frozen
+    labels; exit NOT COMPARABLE on any coverage violation."""
+    if not LABELS_PARQUET.exists():
+        sys.exit(f"frozen labels table missing at {LABELS_PARQUET} -- run "
+                 "scripts/analysis/make_labels_table.py")
+    labels = pd.read_parquet(LABELS_PARQUET)
+    preds = pd.read_csv(preds_path, dtype={"date": str, "ticker": str})
+    need = {"seed", "date", "ticker", "y_pred"}
+    if not need.issubset(preds.columns):
+        sys.exit(f"predictions file must have columns {sorted(need)}")
+    # normalize 0/1 predictions to -1/+1
+    vals = set(pd.unique(preds["y_pred"]))
+    if vals <= {0, 1}:
+        preds["y_pred"] = preds["y_pred"].map({0: -1, 1: 1})
+    elif not vals <= {-1, 1}:
+        sys.exit(f"y_pred must be in {{-1,+1}} or {{0,1}}; got {sorted(vals)[:6]}")
+    if preds.duplicated(subset=["seed", "date", "ticker"]).any():
+        sys.exit("NOT COMPARABLE: duplicate (seed, date, ticker) prediction rows")
+    n_frozen = len(labels)
+    rows = []
+    for seed, g in preds.groupby("seed"):
+        m = g.merge(labels, on=["date", "ticker"], how="inner")
+        extra = len(g) - len(m)
+        if extra:
+            sys.exit(f"NOT COMPARABLE: seed {seed} has {extra} prediction rows "
+                     "outside the frozen test set (wrong dates/tickers or "
+                     "dead-zone days)")
+        if len(m) != n_frozen:
+            sys.exit(f"NOT COMPARABLE: seed {seed} covers {len(m)} of the "
+                     f"{n_frozen} frozen test rows -- predictions mode "
+                     "requires exact full coverage per seed")
+        for fold, mf in m.groupby("fold_idx"):
+            rows.append({
+                "challenger": name, "fold_idx": int(fold), "seed": int(seed),
+                "mcc": mcc_binary(mf["y_true"].to_numpy(),
+                                  mf["y_pred"].to_numpy()),
+                "n_test": len(mf),
+            })
+    out = pd.DataFrame(rows)
+    print(f"predictions mode  : recomputed MCC for {out['seed'].nunique()} "
+          f"seed(s) x {out['fold_idx'].nunique()} folds against the frozen "
+          f"labels ({n_frozen} test rows; coverage exact)")
+    return out
 
 
 def fold_block_ci(cells: pd.DataFrame) -> tuple[float, float]:
@@ -79,15 +154,25 @@ def fold_block_ci(cells: pd.DataFrame) -> tuple[float, float]:
 
 def main() -> int:
     ap = argparse.ArgumentParser()
-    ap.add_argument("submission", type=Path)
+    ap.add_argument("submission", type=Path, nargs="?",
+                    help="score-mode CSV (challenger, fold_idx, seed, mcc "
+                         "[, n_test]); omit when using --predictions")
+    ap.add_argument("--predictions", type=Path, default=None,
+                    help="per-example predictions CSV (seed, date, ticker, "
+                         "y_pred); the evaluator recomputes MCC itself")
+    ap.add_argument("--name", default=None,
+                    help="challenger label for predictions mode "
+                         "(default: the predictions file stem)")
     ap.add_argument("--k", type=int, default=None,
-                    help="declared family size (every configuration compared, "
-                         "rule 3); omitting it defaults to 1 with a warning")
-    ap.add_argument("--baseline-arch", default="envelope",
+                    help="declared comparison-family size (rule 3); REQUIRED "
+                         "for certification -- without it the verdict is "
+                         "UNCERTIFIED")
+    ap.add_argument("--baseline-arch", required=True,
                     choices=["ff", "lstm", "envelope", "stronger"],
-                    help="ff|lstm = like-for-like; envelope (default) = "
-                         "per-cell max over both shipped arms ('stronger' "
-                         "is a deprecated alias for envelope)")
+                    help="REQUIRED. ff|lstm = like-for-like against a runnable "
+                         "arm; envelope = explicit conservative sensitivity "
+                         "read (test-selected; can never certify). 'stronger' "
+                         "is a deprecated alias for envelope")
     ap.add_argument("--restrict-folds", default=None,
                     help="comma-separated fold_idx subset (coverage rule 8)")
     ap.add_argument("--json", type=Path, default=None)
@@ -99,14 +184,24 @@ def main() -> int:
     if not k_declared:
         a.k = 1
 
-    sub = pd.read_csv(a.submission)
-    need = {"challenger", "fold_idx", "seed", "mcc"}
-    if not need.issubset(sub.columns):
-        sys.exit(f"submission must have columns {sorted(need)}")
-    if sub.duplicated(subset=["fold_idx", "seed"]).any():
-        sys.exit("submission has duplicate (fold_idx, seed) rows -- the "
-                 "contract is one row per (fold, seed); see SUBMITTING.md")
-    name = sub["challenger"].iloc[0]
+    if (a.predictions is None) == (a.submission is None):
+        sys.exit("provide exactly one input: a score-mode CSV or --predictions")
+
+    if a.predictions is not None:
+        name = a.name or a.predictions.stem
+        sub = score_predictions(a.predictions, name)
+        assembly_verified = True   # coverage checked against frozen labels
+    else:
+        sub = pd.read_csv(a.submission)
+        need = {"challenger", "fold_idx", "seed", "mcc"}
+        if not need.issubset(sub.columns):
+            sys.exit(f"submission must have columns {sorted(need)}")
+        if sub.duplicated(subset=["fold_idx", "seed"]).any():
+            sys.exit("submission has duplicate (fold_idx, seed) rows -- the "
+                     "contract is one row per (fold, seed); see SUBMITTING.md")
+        name = sub["challenger"].iloc[0]
+        assembly_verified = False  # resolved below via n_test conformance
+
     base = load_baseline(a.baseline_arch)
 
     merged = sub.merge(base, on=["fold_idx", "seed"], suffixes=("_sub", "_base"))
@@ -147,7 +242,7 @@ def main() -> int:
     d = float(mean_delta / sd) if len(merged) > 1 and sd > 0 else float("nan")
 
     conforms = None
-    if "n_test" in sub.columns:
+    if not assembly_verified and "n_test" in sub.columns:
         exp = expected_n_test()
         # check EVERY row per fold, not just the first — a submission whose
         # non-first rows carry a wrong n_test must not pass conformance
@@ -156,6 +251,7 @@ def main() -> int:
                if exp.get(int(f)) is not None
                and any(int(x) != exp[int(f)] for x in g)}
         conforms = not bad
+        assembly_verified = conforms
 
     # coverage gate: the full frozen grid by default; with --restrict-folds
     # (rule 8), the declared subset with at least four folds certifies and
@@ -174,11 +270,23 @@ def main() -> int:
         seeds_ok = bool(seeds_by_fold.all())
     else:
         seeds_ok = False
-    supported = mean_delta > 0 and p_bonf < 0.05 and coverage_ok and seeds_ok
+
+    certifiable = (k_declared and assembly_verified and coverage_ok
+                   and seeds_ok and a.baseline_arch != "envelope")
+    supported = mean_delta > 0 and p_bonf < 0.05 and certifiable
     verdict = "SUPPORTED" if supported else "WITHIN THE REFERENCE NULL"
+    if not k_declared:
+        verdict = ("UNCERTIFIED -- comparison family undeclared (pass --k "
+                   "covering every configuration you compared, rule 3)")
+    elif not assembly_verified and conforms is None:
+        verdict = ("UNCERTIFIED -- assembly unverified (score mode without "
+                   "n_test; add per-row n_test or use --predictions)")
+    if a.baseline_arch == "envelope":
+        verdict += ("  [ENVELOPE REFERENCE -- test-selected sensitivity "
+                    "read; not certifiable]")
     if a.restrict_folds:
         verdict += f"  [RESTRICTED COVERAGE -- folds {sorted(covered)} per rule 8]"
-    if not seeds_ok:
+    if k_declared and assembly_verified and not seeds_ok:
         verdict += ("  [SEED CONTRACT NOT MET -- certification requires seeds "
                     "42/123/456 paired per covered fold (rule 1)]")
     if conforms is False:
@@ -187,7 +295,7 @@ def main() -> int:
                    "with the frozen folds]")
 
     arm_label = ("envelope of the ff/lstm arms -- per-cell max; a "
-                 "conservative bar, not a runnable model"
+                 "test-selected sensitivity bar, not a runnable model"
                  if a.baseline_arch == "envelope" else f"{a.baseline_arch} arm")
     print(f"challenger        : {name}")
     print(f"baseline          : shipped tuned price-only "
@@ -205,21 +313,41 @@ def main() -> int:
     if conforms is not None:
         print(f"fold conformance  : "
               f"{'OK (n_test matches the frozen folds)' if conforms else 'FAILED -- ' + str(bad)}")
+    # descriptive read against the untuned logistic-price anchor (C1's bar
+    # is the TUNED baseline; the anchor shows where a simple untuned model
+    # sits -- SUBMITTING.md tells every challenger to report both reads)
+    anchor_deltas = None
+    if ANCHORS_JSON.exists():
+        anchors = json.loads(ANCHORS_JSON.read_text())
+        lp = anchors.get("anchors", {}).get("logistic-price", {})
+        per_fold = lp.get("mcc_per_fold")
+        if per_fold:
+            sub_fold_means = merged.groupby("fold_idx")["mcc_sub"].mean()
+            anchor_deltas = {int(f): float(sub_fold_means[f] - per_fold[int(f)])
+                             for f in sub_fold_means.index
+                             if int(f) < len(per_fold)}
+            mean_anchor = float(np.mean(list(anchor_deltas.values())))
+            print("vs logistic anchor: "
+                  + "  ".join(f"F{f}:{v:+.4f}" for f, v in anchor_deltas.items())
+                  + f"   mean {mean_anchor:+.4f}   (untuned anchor; descriptive)")
     print(f"VERDICT           : {verdict}")
     if not k_declared:
-        print("NOTE: family size not declared; defaulting to k=1 -- declare "
-              "the full set of configurations you compared (rule 3).")
+        print("NOTE: family size not declared; statistics shown at k=1 are "
+              "NOT a certification (rule 3).")
     if not seed_matched:
         print("NOTE: rule 1 expects seeds 42/123/456 matched to the baseline.")
     if a.json:
         a.json.write_text(json.dumps({
             "challenger": name, "baseline_arch": a.baseline_arch,
+            "mode": "predictions" if a.predictions is not None else "scores",
             "seed_matched": seed_matched, "n_cells": len(merged),
             "fold_means": {int(k): float(v) for k, v in fold_means.items()},
             "delta_mcc": mean_delta, "ci95": [lo, hi],
             "ci95_fold_t": [float(t_lo), float(t_hi)],
             "p_fold": float(p_fold), "k": a.k, "k_declared": k_declared,
             "p_bonf": p_bonf, "seed_contract_met": seeds_ok,
+            "assembly_verified": bool(assembly_verified),
+            "anchor_deltas": anchor_deltas,
             "pooled_d": float(d), "verdict": verdict}, indent=2))
     return 0
 

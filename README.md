@@ -45,9 +45,13 @@ re-runs, and the two audits).
 
 ## Submitting a model
 
-The I/O contract — frozen folds, seeds, label rule, the submission CSV
-schema, and the claim computation — is **`SUBMITTING.md`**. The claim block
-comes from `scripts/analysis/evaluate_submission.py`; a worked end-to-end
+The I/O contract — frozen folds, seeds, label rule, the submission
+schemas, and the claim computation — is **`SUBMITTING.md`**. The claim
+block comes from `scripts/analysis/evaluate_submission.py`, which in the
+preferred *predictions mode* recomputes the metric itself against the
+frozen labels table (`data/processed/labels_direction.parquet`) and fails
+closed on undeclared comparison families, unverified assembly, or a
+non-runnable reference; a worked end-to-end
 example (a shipped configuration replayed as an external challenger, with
 its committed claim) is `examples/demo_submission/`. Pre-registration for
 the pristine post-2023 window: `MAINTENANCE.md`.

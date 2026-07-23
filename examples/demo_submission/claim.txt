@@ -1,12 +1,13 @@
 challenger        : demo_price_news_ff
-baseline          : shipped tuned price-only (envelope of the ff/lstm arms -- per-cell max; a conservative bar, not a runnable model)
+baseline          : shipped tuned price-only (ff arm)
 cells paired      : 15  (folds: [0, 1, 2, 3, 4])
-per-fold mean dMCC: F0:+0.0016  F1:-0.0007  F2:-0.0024  F3:-0.0171  F4:-0.0146
-dMCC (mean)       : -0.0066
-95% CI fold-block : [-0.0133, -0.0001]   (10,000 resamples; descriptive)
-95% CI fold-t     : [-0.0173, +0.0040]   (t on 5 fold means; certifying scale)
-p_fold (n=5)     : 0.159
-p_bonf (k=1)     : 0.159
-pooled d (n=15, descriptive): -0.454
+per-fold mean dMCC: F0:+0.0151  F1:+0.0057  F2:-0.0024  F3:+0.0019  F4:-0.0038
+dMCC (mean)       : +0.0033
+95% CI fold-block : [-0.0019, +0.0098]   (10,000 resamples; descriptive)
+95% CI fold-t     : [-0.0061, +0.0128]   (t on 5 fold means; certifying scale)
+p_fold (n=5)     : 0.384
+p_bonf (k=1)     : 0.384
+pooled d (n=15, descriptive): +0.205
 fold conformance  : OK (n_test matches the frozen folds)
+vs logistic anchor: F0:-0.0604  F1:+0.0144  F2:-0.0239  F3:+0.0172  F4:+0.0097   mean -0.0086   (untuned anchor; descriptive)
 VERDICT           : WITHIN THE REFERENCE NULL

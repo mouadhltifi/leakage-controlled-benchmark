@@ -1,6 +1,34 @@
 # Changelog
 
-All tags, newest first. Result CSVs under `results/` are unchanged across
+All tags, newest first.
+
+## v1.0.6 — 2026-07-24 (evaluator hardening: fail-closed certification)
+
+- **`evaluate_submission.py` no longer has a test-selected default
+  reference.** `--baseline-arch` is REQUIRED: `ff`/`lstm` pair
+  like-for-like against a runnable arm; `envelope` (per-cell max over both
+  arms) remains available as an explicit conservative sensitivity read and
+  **can never certify** (its verdict is tagged not-certifiable). This
+  closes the protocol inconsistency where the tool whose benchmark forbids
+  test-set selection (C3) defaulted to a test-selected reference.
+- **Certification fails closed** on: undeclared comparison family
+  (no `--k` ⇒ "UNCERTIFIED — comparison family undeclared"), unverified
+  assembly (score mode without per-row `n_test` ⇒ "UNCERTIFIED — assembly
+  unverified"), mismatched `n_test` (⇒ NOT COMPARABLE), missing contract
+  seeds, or incomplete fold coverage.
+- **Predictions mode** (`--predictions preds.csv`): the evaluator now
+  recomputes MCC itself from per-example predictions against the new
+  frozen labels table `data/processed/labels_direction.parquet`
+  (44,438 scoreable test rows; generated + self-checked against the frozen
+  per-fold `n_test` by `scripts/analysis/make_labels_table.py`), with
+  exact-coverage enforcement — assembly conformance by construction.
+- The claim block now prints a descriptive per-fold read against the
+  untuned logistic-price anchor alongside the tuned-baseline contrast.
+- Committed demo claim regenerated with the canonical command
+  (`--k 1 --baseline-arch ff`): ΔMCC +0.0033, within the reference null
+  (the envelope sensitivity read, −0.0066, remains documented).
+- SUBMITTING.md rewritten for the two input modes and the fail-closed
+  rules; README updated. Result CSVs under `results/` are unchanged across
 every entry below — every reference number regenerates identically at every
 tag; the changes are to data-file correctness, tooling, and documentation.
 "Archived" = published as a GitHub Release and ingested by Zenodo under the
