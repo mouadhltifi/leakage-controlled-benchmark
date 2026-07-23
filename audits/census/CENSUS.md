@@ -4,6 +4,8 @@
 
 **Selection protocol:** the eight core systems span the modality families of the multi-source literature (tweet, news, macro-event, image, report) among widely cited systems with released code or recoverable setups known at freeze time, plus one price-only reference (Adv-ALSTM); the two bonus tweet/news systems extend family coverage. This is a prominence-based convenience sample, not a systematic literature review — the census's claim is **existence** (zero of the eight report all five dimensions), not prevalence across the field.
 
+**Reliability (2026-07-24):** every cell was independently double-coded by blind coders (rubric-only, no access to this file or the repo); initial agreement 32/40 on the core grid, every disagreement adjudicated by re-fetching the primary text and quoting both sides — full table in [`DOUBLE-CODING.md`](DOUBLE-CODING.md). Three cells were corrected (MSGCA C3 R→P, CMTF C3 R→P, STONK C2 P→R); the headline conjunction m = 0/8 is unchanged. Two rubric rules were sharpened by the adjudication: **rule A** — the availability half of C2 requires an explicit availability/leakage-motivated lag or alignment statement (a task-formulation lookback window does not count); **rule C** — C3 R requires the validation split's selection/early-stopping role to be STATED, not merely a validation subset declared.
+
 **The five reporting dimensions** (in the benchmark's protocol, C1–C4 are
 the four enforced safeguards and C5, universe justification, is a scope
 condition; the census scores all five as reporting dimensions)
@@ -25,25 +27,25 @@ condition; the census scores all five as reporting dimensions)
 |---|----------------|:---:|:--:|:--:|:--:|:--:|:--:|:--:|
 | 1 | **StockNet** — Xu & Cohen, ACL 2018 | yes (tweets+price) | P | **R** | **R** | N | **R** | 3 |
 | 2 | **Adv-ALSTM** — Feng et al., IJCAI 2019 | no (price only)¹ | P | **R**¹ | **R** | N | **R** | 3¹ |
-| 3 | **MSGCA** — Zong & Zhou 2024 | yes (indicators+text+…) | P | P | **R** | N | **R** | 2 |
+| 3 | **MSGCA** — Zong & Zhou 2024 | yes (indicators+text+…) | P | P | P | N | **R** | 1 |
 | 4 | **CAMEF** — Zhang et al., KDD 2025 | yes (macro text+TS) | P | **N** | **R** | N | **R** | 2 |
 | 5 | **MSMF** — Qin 2024 | yes (TS+image+text) | P | **N** | **N** | N | **N** | 0 |
-| 6 | **CMTF** — Pei et al. 2025 | yes (price+news+reports) | P | P | **R** | N | P | 1 |
-| 7 | **STONK** — Khanna et al. 2025 | yes (numeric+sentiment) | P | P | **N** | N | P | 0 |
+| 6 | **CMTF** — Pei et al. 2025 | yes (price+news+reports) | P | P | P | N | P | 0 |
+| 7 | **STONK** — Khanna et al. 2025 | yes (numeric+sentiment) | P | **R** | **N** | N | P | 1 |
 | 8 | **Higher-Order-Transformers** — Omranpour et al. 2024² | yes (tweets+price) | P | P | **R** | N | **N** | 1 |
 
 ¹ Adv-ALSTM is **single-source** (price + adversarial training; no text/macro). Its temporal split is explicit, so C2's *chronological* half is met and the *text-availability* half is not applicable (no text to leak). Counted R with that caveat.
 ² Substitute for TEANet — see "Unverified" below.
 
-**How to read the columns:** C3 (validation set) and the *chronological* half of C2 are commonly reported; the missing links that break the conjunction are **C4** (nobody), the *comparable-baseline-tuning* half of **C1** (nobody), and the *text/macro availability-timing* half of **C2** (only StockNet).
+**How to read the columns:** C3 (validation set) and the *chronological* half of C2 are commonly reported; the missing links that break the conjunction are **C4** (nobody), the *comparable-baseline-tuning* half of **C1** (nobody), and the *text/macro availability-timing* half of **C2** (StockNet and STONK only).
 
 ---
 
 ## Headline counts (N = 8 verified)
 
 - **C1 (price-only baseline tuned comparably): 0 REPORTED.** A price-only/technical-only baseline is *present* in **8/8**, but **0/8** state that baselines were tuned comparably to the proposed model → all 8 scored **P**. MSGCA states the opposite explicitly ("baseline hyperparameters set as the numbers reported in the original papers").
-- **C2 (chronological split AND availability-timed features): 1 REPORTED in full** (StockNet). Breaking the conjunction apart: a **chronological split is reported by 6/8** (all but CAMEF and MSMF); the **text/macro availability-timing half is reported by only 1/8** (StockNet's trading-day alignment). Adv-ALSTM reports the split but is single-source.
-- **C3 (validation set insulated from test): 6 REPORTED** (StockNet, Adv-ALSTM, MSGCA, CAMEF, CMTF, HoT); **2 NOT** (MSMF, STONK).
+- **C2 (chronological split AND availability-timed features): 2 REPORTED in full** (StockNet, STONK). Breaking the conjunction apart: a **chronological split is reported by 6/8** (all but CAMEF and MSMF); the **text/macro availability-timing half is reported by 2/8** (StockNet, trading-day alignment; STONK, a named one-day availability lag with the text input stated as the previous day). Adv-ALSTM reports the split but is single-source.
+- **C3 (validation set insulated from test, with a STATED selection role): 4 REPORTED** (StockNet, Adv-ALSTM, CAMEF, HoT); **2 PARTIAL** (MSGCA, CMTF — a validation subset is declared but its selection/early-stopping role is never stated; rule C below); **2 NOT** (MSMF, STONK).
 - **C4 (multiplicity-corrected significance): 0 REPORTED.** In fact **0/8 report any significance test at all** (no t-test, McNemar, CI, or bootstrap), so multiplicity correction is moot. The strongest quantification of run-to-run variability among the eight is MSGCA's, which reports a per-seed spread only — "0.1112 ± 0.0037" over five seeds (Table IV), a standard deviation, not a significance test. No other system reports even that.
 - **C5 (liquid/efficient universe justification): 4 REPORTED** (StockNet, Adv-ALSTM, MSGCA, CAMEF), **2 PARTIAL** (CMTF, STONK), **2 NOT** (MSMF, HoT).
 
@@ -67,7 +69,7 @@ Dataset: StockNet (tweets + Yahoo prices), **88 stocks**, 01/01/2014–01/01/201
 
 ### 2. Adv-ALSTM — Feng et al., *Enhancing Stock Movement Prediction with Adversarial Training*, IJCAI 2019
 Datasets: ACL18 (88 stocks, 2014–2016), KDD17 (50 stocks, 2007–2017). **Single-source (price only).**
-- **C1 — P.** Baselines MOM, MR, LSTM, ALSTM, StockNet; "inherits the optimal settings from ALSTM … selected via grid-search"; StockNet numbers "directly copied" — no baseline-tuning parity.
+- **C1 — P** (closest call; double-coded R, adjudicated P). The price-only baselines LSTM/ALSTM are genuinely grid-searched with stated ranges ("We tune three hyper-parameters U, T, lambda"), but no parity statement exists, budgets are unequal (the challenger inherits the ALSTM optimum and adds an exclusive adversarial-hyperparameter search), and the baselines tuning split is never named — "stated but incompletely" = P.
 - **C2 — R (single-source caveat).** "We **temporally split** … training (Jan-01-2014 to Aug-01-2015) … testing (Oct-01-2015 to Jan-01-2016)." No text/macro modality to time; price features are lagged MAs.
 - **C3 — R.** "We search the optimal hyper-parameters … on the **validation set**" (validation distinct from test in the temporal split).
 - **C4 — N.** No t-test / Bonferroni / Holm / FDR reported.
@@ -77,7 +79,7 @@ Datasets: ACL18 (88 stocks, 2014–2016), KDD17 (50 stocks, 2007–2017). **Sing
 Datasets: InnoStock (369), BigData22 (50), ACL18 (87), CIKM18 (38).
 - **C1 — P.** §5.2: "**Indicator-only methods** … LSTM and ALSTM" (price-only present); §5.1: "All hyperparameters of the baseline methods are set as the numbers reported in the original papers" — explicitly **not** comparable tuning.
 - **C2 — P.** §5.1: "We **chronologically partitioned** each dataset into training, validation, and testing subsets" (chronological half met); **no** statement lagging text/news to availability.
-- **C3 — R.** §5.1: "chronologically partitioned … into training, **validation**, and testing subsets."
+- **C3 — P** (double-coding correction, was R). §5.1 declares "chronologically partitioned … into training, **validation**, and testing subsets," but no sentence anywhere states the validation subset use for selection or early stopping (rule C); consistent with our §4.2 code audit, which finds the released pipeline has no validation split at all.
 - **C4 — N.** No multiplicity correction / significance test.
 - **C5 — R.** §5.1: the established datasets are "**high-trade-volume stocks** in US stock markets."
 
@@ -102,14 +104,14 @@ Dataset: 6 macro-release types 2008–Apr 2024; instruments S&P 500, Dow, NASDAQ
 Dataset: **5 FTSE 100 stocks** (Shell, Unilever, BAT, BP, Diageo), 02/04/2019–05/22/2024 (1360 days).
 - **C1 — P.** Baselines Zero-Change, Linear Regression, ARIMA, RF, SVR, LSTM, Transformer (price-only present); per-baseline configs given but no parity with CMTF's "auto-training pipeline."
 - **C2 — P.** "partitioned **chronologically** … 804 training days (02/2019–07/2022) … 268 test days (10/2023–05/2024)" (chronological half met); **no** news/sentiment/report availability-lag statement.
-- **C3 — R.** "268 **validation days** (08/2022–09/2023)" distinct from test.
+- **C3 — P** (double-coding correction, was R). "268 **validation days** (08/2022–09/2023)" are declared distinct from test, but neither the Optuna tuning objective nor epoch selection is ever tied to the validation set (no early-stopping/selection sentence) — rule C.
 - **C4 — N.** No Bonferroni/Holm/FDR across ablations or baselines.
 - **C5 — P.** "five **representative** UK-headquartered multinational corporations listed in the **FTSE 100**" — liquid blue-chips named, but no explicit liquidity/efficiency/difficulty justification.
 
 ### 7. STONK — Khanna et al. 2025, *Towards Unified Multimodal Financial Forecasting* (arXiv 2508.13327)
 Data: FinSen (+ Financial PhraseBank, FiQA); "S&P 500 financial articles 2007–2023"; benchmarks 5 encoders (FinBERT, ModernBERT, Electra, DeBERTa, MiniLM).
 - **C1 — P.** §V-B1: "Logistic Regression … on the **numerical features** without … sentiment" (numeric-only present); no tuning-parity statement.
-- **C2 — P.** §V-A: "ordered **chronologically**, earliest 80% … training … recent 20% … testing" **AND** §III-A: "introduced a **one day time lag** for all numerical columns except Open"; but news-publication-time lag not explicit → chronological + numeric-leakage guard, text-availability half not stated.
+- **C2 — R** (double-coding correction, was P). §V-A: "ordered **chronologically**, earliest 80% … training … recent 20% … testing" **AND** §III-A introduces the **one-day lag** as a named availability control ("only historically available information was used"), with the TEXT input stated as the prior day in three places ("the previous day aggregated textual embedding"; the prompt "news article from yesterday") — the same day-granularity availability discipline StockNet is credited for.
 - **C3 — N.** No separate validation set for selection/early stopping mentioned.
 - **C4 — N.** No significance test / correction.
 - **C5 — P.** "**S&P 500** financial articles from 2007 to 2023" — liquid index named, but no deliberate stock-universe/liquidity justification.
