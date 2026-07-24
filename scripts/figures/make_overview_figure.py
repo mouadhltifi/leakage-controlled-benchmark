@@ -41,6 +41,7 @@ ORANGE_FILL = "#fdf3ec"
 GREY = "#8a8a8a"
 
 F_BAND, F_LABEL, F_BODY, F_FINE = 7.4, 6.6, 6.0, 5.4
+F_TILE_SUB = 4.9   # source-family tile subtitles: must fit inside the tile
 # ladder-rung headings sit a step below the three column headers so the
 # longest one ("Level 3 . independently audited") fits its box with margin
 F_RUNG = 6.2
@@ -95,7 +96,11 @@ def main():
     fams = [
         ("Price", "10 indicators"),
         ("News", "day-level sentiment"),
-        ("Social", "17 aggregates + flag"),
+        # 17 aggregate columns ship, 15 of them informative (two dispersion
+        # columns are constant placeholders -- StockTwits labels are
+        # categorical). State the informative count explicitly, matching
+        # Table 2; "15 aggregates" alone would misreport the column count.
+        ("Social", "15 informative + flag"),
         ("Macro", "6 series + FOMC"),
         ("Graph", "sector + correlation"),
     ]
@@ -107,7 +112,9 @@ def main():
         box(ax, X_TIL0, y, X_TIL1 - X_TIL0, t_h, "white", SLATE, lw=W_BOX, r=R_IN)
         ax.text(X_TIL0 + 1.4, y + t_h / 2 + 0.85, name, fontsize=F_LABEL,
                 va="center", fontweight="bold", color=INK)
-        ax.text(X_TIL0 + 1.4, y + t_h / 2 - 1.05, sub, fontsize=F_FINE,
+        # subtitle sized to keep the longest string inside the tile border
+        # (it shares the title's left inset, so alignment is preserved)
+        ax.text(X_TIL0 + 1.4, y + t_h / 2 - 1.05, sub, fontsize=F_TILE_SUB,
                 va="center", color=GREY)
         arrow(ax, X_TIL1 + 0.2, y + t_h / 2, X_HAR0 - 0.2, y + t_h / 2,
               lw=0.6, ms=5)
@@ -165,7 +172,9 @@ def main():
             ax.text((x0d + x1d) / 2, y_div, "the scope, not a control",
                     fontsize=F_FINE, style="italic", color=GREY,
                     ha="center", va="center", zorder=5,
-                    bbox=dict(facecolor="white", edgecolor="none", pad=1.2))
+                    # knockout must match the panel fill it sits on, not white,
+                    # or a white rectangle floats on the slate panel
+                    bbox=dict(facecolor=SLATE_FILL, edgecolor="none", pad=1.2))
 
     # ---- audit ladder (fills the band; B adds a peer container) -----------
     lad_x0, lad_x1 = X_LAD0, X_LAD1

@@ -153,10 +153,13 @@ def fig_forest():
                   fontsize=7.0)
     ax.set_xlim(-0.030, 0.024)
     ax.set_ylim(-1.6, n - 0.4)
+    # the x=0 rule crosses this line; a background knockout keeps the text
+    # legible without moving it off the axes
     ax.text(-0.029, -1.25,
             "no configuration clears the corrected bar "
             "(all $p_{\\mathrm{bonf}} \\geq 0.57$)",
-            fontsize=6.2, color=INK, style="italic", va="center")
+            fontsize=6.2, color=INK, style="italic", va="center", zorder=6,
+            bbox=dict(facecolor="white", edgecolor="none", pad=0.8))
     ax.grid(axis="x", color=GRID, lw=0.4, zorder=0)
     ax.tick_params(axis="y", length=0)
     despine(ax, keep=("bottom",))
@@ -257,8 +260,12 @@ def fig_sectorband():
                 xy=(0.0102, 3), xytext=(0.0125, 1.55), fontsize=6.0,
                 color=INK, ha="left", va="center", linespacing=1.25,
                 arrowprops=dict(arrowstyle="-", color=SLATE, lw=0.6))
+    # sits inside the shaded band and on the x=0 rule, so it needs a knockout
+    # -- matched to the band's composited fill (SLATE at alpha 0.10 over white)
+    # rather than white, or the patch reads as a hole punched in the band
     ax.text(0.0048, 3.62, "±0.005 band", fontsize=5.6, color=GREY,
-            ha="right", va="bottom")
+            ha="right", va="bottom", zorder=6,
+            bbox=dict(facecolor="#eceef0", edgecolor="none", pad=0.8))
     ax.set_yticks(range(n))
     ax.set_yticklabels([r[0] for r in reversed(SECTOR)], fontsize=6.6)
     ax.set_xlabel("ΔMCC, released FF12 graph − proprietary GICS",
@@ -306,8 +313,12 @@ def fig_split():
                           arrowstyle="-|>", mutation_scale=8, color=ORANGE,
                           lw=1.0, zorder=3)
     ax.add_patch(arr)
-    ax.text(0.09, 0.5, "same recipe,\nsplit made chronological", fontsize=5.8,
-            color=ORANGE, ha="center", va="center", linespacing=1.2, zorder=5)
+    # left-aligned clear of the elbow's vertical leg (at x=retrain_random) and
+    # above its horizontal leg, so the arrow reads as one unbroken stroke and
+    # no glyph is struck through. A background knockout would fix the glyph but
+    # punch a hole in the arrow, which is worse.
+    ax.text(0.006, 0.5, "same recipe,\nsplit made chronological", fontsize=5.8,
+            color=ORANGE, ha="left", va="center", linespacing=1.2, zorder=5)
     ax.set_xscale("log")
     ax.set_xticks([1e-3, 1e-2, 1e-1, 1e0, 1e1, 1e2])
     ax.set_ylim(-0.55, 3.1)

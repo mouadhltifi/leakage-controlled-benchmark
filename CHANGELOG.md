@@ -6,7 +6,152 @@ tag; the changes are to data-file correctness, tooling, and documentation.
 "Archived" = published as a GitHub Release and ingested by Zenodo under the
 concept DOI 10.5281/zenodo.21431362.
 
-## Unreleased (v1.0.10, the archival tag accompanying the submitted PDF)
+## v1.0.11 — 2026-07-24
+
+Fix release. Everything below was found by adversarial review — two external
+model reviews and a seven-lens internal one — and every item was reproduced
+before it was fixed. **No reference number moves:** the labels tables, the
+reference tables, and the Section-6 demo claim block all regenerate
+byte-identically.
+
+- **Certification harness — fabrication tripwire hardened, fails closed.**
+  Surfaced by two post-v1.0.10 external adversarial reviews that executed the
+  harness. (a) An in-range oracle (predictions echoing the frozen labels:
+  finite, within `[-1,1]`, clearing both bars) used to print
+  `SUPPORTED  [FABRICATION CHECK ...]`, so a consumer grepping the verdict for
+  `SUPPORTED` could read a pass; certification now WITHHOLDS — the verdict token
+  becomes `NOT CERTIFIED`, `supported` is set false, and the JSON gains an
+  explicit `certified` boolean. (b) The tripwire threshold was 0.5, roughly 6x
+  above anything this task produces, so a partial label-echo scoring ~0.42
+  certified clean; tightened to 0.15. Calibration, ascending: reference cells
+  ~0.01, highest shipped test MCC 0.087, highest validation-selection MCC 0.104,
+  the literature's leakage-inflated headline for this task shape 0.116 — 0.15
+  clears all four, so it cannot fire on a defensible result. The battery gains
+  two cases (in-range oracle, 0.30 partial-echo); the +0.05 positive controls
+  (~0.06 max cell) still certify. No reference number changes.
+- **Certification harness — two seed-contract bypasses closed.** Both found by
+  an external adversarial review and reproduced here. (a) **Seed padding:** the
+  gate tested only that the labels 42/123/456 were *present* per fold, never
+  that the three rows were distinct runs — so a best-seed-per-fold test-set
+  selection, written three times under the three labels, certified SUPPORTED,
+  defeating the very gate whose stated purpose is policing that selection (and
+  reducing the >=3-seed rule to a formality). Certification now also requires
+  the seeds to be genuine replicates: an identical MCC across all three seeds in
+  *every* fold is one result relabelled, not three runs. The test is all-folds,
+  so a legitimate tie inside a single fold still certifies (measured against the
+  shipped grids: zero honest submissions affected). (b) **Restricted-coverage
+  seed prune:** the seed contract was evaluated on the post-`--restrict-folds`
+  frame while the classical-anchor floor scored the full submitted grid, so a
+  fold outside the restriction sat inside the hard floor yet escaped the
+  contract — letting a submitter prune that fold to its best seed and push the
+  floor over zero. The contract is now evaluated on the full submitted grid.
+  Battery gains three cases (seed padding, restricted seed-prune, and a
+  false-positive guard).
+- **Certification harness — one claim, one model.** The required `challenger`
+  column was read once, for a print statement, and never validated, so a file
+  assembled by taking the best cell across a family of models (one row per
+  cell, eleven different model names) certified SUPPORTED and was reported
+  under the first row's name. That is the challenger-side twin of the
+  `envelope` baseline the tool already refuses as "test-selected, not a
+  runnable model" — the guard was applied to one side of the comparison only.
+  A submission mixing challenger names is now NOT COMPARABLE. Both shipped
+  examples are unaffected (single name each).
+- **Certification harness — boundary validation extended beyond `mcc`.** The
+  v1.0.11 hardening covered only the `mcc` column, so malformed `n_test`, a
+  non-integer `fold_idx`, a `fold_idx` outside the frozen 0–4 grid, or an
+  empty file answered with a raw traceback instead of a verdict — and the
+  conformance line printed OK for folds it had never checked. All of these now
+  fail closed with a verdict. The JSON claim block also no longer emits bare
+  `NaN` tokens, which are not valid JSON (RFC 8259) and made a degenerate
+  run's claim unparseable by a strict reader.
+- **Regression battery — mutation-tested and the gaps closed.** Mutating each
+  certification gate in turn showed five whose deletion changed no assertion:
+  the envelope gate, `n_test` conformance, the duplicate-row check, the
+  `k`-declared gate, and the fabrication fail-closed behaviour — all because
+  those cases asserted against the already-null demo, i.e. they tested that a
+  *message* appears, not that a *gate* bites. Each now runs on input that
+  would certify if the gate were removed. The battery also never passed
+  `--json` (its `import json` was dead), so the printed verdict and the JSON
+  `certified` field could disagree unobserved; three cases now assert on the
+  JSON directly. **31 cases total**, demo claim block unchanged.
+- **Detectability-floor derivation corrected (`ECONOMIC-CONTEXT.md`, and the
+  paper's §3.2 + Appendix D).** The floor scaled the n=375 MDE by a per-arm
+  MCC SD (≈0.02) where a *paired* MDE requires the SD of the paired
+  differences (0.0259 measured). The floor is therefore ≈+0.0037 MCC, not
+  +0.003 (balanced accuracy 50.19%, not 50.15%). Separately, the basis-point
+  conversion used E[|move|] ≈ 1–1.5%, which is the ALL-day mean (1.42%
+  in-window) rather than the decisive-day conditional the formula names
+  (1.90% measured); the floor-sized edge is ≈0.7 bp, and one basis point
+  would need a 2.7% mean decisive-day move. Both corrections make the floor
+  *higher*, i.e. the null more conservative; the conclusion (the floor sits
+  below realistic 1–5 bp round-trip costs) is unchanged. The note also now
+  ships the corrected-MDE derivation for the stricter units, so the paper's
+  “80% power near |d|≈0.7 at n=30” reconciles to a formula (it is the
+  k=8-corrected value; the uncorrected one is ≈0.51).
+- **Documentation corrections found by the same review:** the news RecordSet in
+  `croissant.json` claimed one row per (ticker, day) *with* a tagged article,
+  but 34.2% of its rows are zero-filled no-news days; `REPRODUCE.md` said the
+  manifest was the only file outside its own scope (`.gitignore` is too) and
+  described the H5s as what the drivers consume (they are not); the seven-day
+  terminal news blackout (2023-12-19 to 2023-12-28, inside fold 4's test
+  window) is now stated in the datasheet and the paper; and the two shipped
+  label surfaces use *permuted* {−1,0,+1} encodings, now documented in
+  `data/README.md` (the H5's `label_cls` is +1 up / 0 down / −1 dead-zone).
+- **Release gate hardened.** Its Croissant leg used to SKIP when
+  `mlcroissant` was missing — failing open on the only automated check of a
+  headline D&B deliverable, with the validator absent from `requirements.txt`.
+  It now fails closed and the validator is pinned. The gate also gained the
+  deposit-consistency step above, which was negative-tested (injecting drift
+  into one H5 makes it exit non-zero).
+- **Social aggregate count corrected: 17 columns, 15 informative.** Two of the
+  seventeen social aggregate columns — `social_sent_std` and its rolling mean
+  `social_sent_std_w3` — are constant `0.0` on all 114,747 rows of
+  `social_features.parquet`, by construction: StockTwits labels messages
+  categorically (bullish / bearish / unlabeled), so there is no continuous
+  per-message score to take a within-day SD over. The derivation code documents
+  the placeholder (`src/mmfp/features/social_features.py`), but the user-facing
+  count did not, so the datasheet, `data/README.md`, and the Figure 1 source tile
+  advertised "17 aggregates" as though all were informative. Now stated as 15
+  informative + 2 inert placeholders + the coverage flag. **No result changes** —
+  the two columns are dead input dimensions carrying neither signal nor noise —
+  and message-level disagreement remains represented via
+  `social_bullish_ratio`(`_w3`). Surfaced by an external review re-audit.
+- **Deposit — model-ready H5 static graph corrected to FF12.** The eight
+  monolithic `data/processed/multimodal_dataset_v2*.h5` carried the GICS
+  110-edge partition in `static_adj`, contradicting the datasheet (which
+  documents the released FF12 133-edge graph) — a stale field from before the
+  v1.0.3 `.npy` fix, **never read on any results path** (the harness builds
+  `static_adj` from `sector_adjacency.npy` via `assemble.py`), so no reference
+  number is affected. Corrected in place to FF12; every other dataset in each
+  H5 verified byte-identical. A new release-gate step
+  (`scripts/data/check_h5_consistency.py`) fails closed if any H5's graph drifts
+  from the released `.npy` again.
+- **Deposit — assembled H5 macro block was pre-C2 (look-ahead); corrected.**
+  Found by an external adversarial review and reproduced independently. The same
+  eight H5s carried the **unlagged** macro block — macroeconomic values sitting
+  on dates before their public release, the exact look-ahead safeguard C2 exists
+  to remove, in a benchmark whose contribution is leakage control. Only the
+  zero-lag series (10y, VIX, FOMC flag) matched the shipped build, which is why
+  a spot check missed it; `fed_funds_rate_norm` and `cpi_norm` matched the C2
+  build on **0.000%** of rows, `unemployment_norm` on 0.796%, `gdp_norm` on
+  4.923%. Concretely, `multimodal_dataset_v2.h5` carried the April-2020
+  unemployment print on **2020-04-30**, eight days before its 2020-05-08 BLS
+  release. All seven macro columns in all eight files are now rewritten to the
+  publication-lagged `macro_features.parquet`; every byte outside the macro slice
+  is verified identical. **No reported number is affected** — the harness reads
+  `macro_features.parquet` through `assemble.py`, never the H5 (verified: the
+  labels tables regenerate byte-identically). The guard now also verifies the
+  macro and price blocks against the canonical tables on every release, and was
+  negative-tested: injecting drift into one file makes it exit non-zero.
+  Audited at the same time and found correct: the price block matches
+  `price_features.parquet` exactly, and the news block is correctly aligned to
+  the prior close (T-1).
+- **Correction to an earlier note in this section:** an interim draft of this
+  entry said the two constant social columns had their "complete values in
+  `social_features.parquet`". That is false — they are constant `0.0` in the
+  source parquet too, for the reason given above. See `data/README.md`.
+
+## v1.0.10 — 2026-07-24 (archived; the docs-only release accompanying the submitted PDF)
 
 - **Figure 1 legibility + four-controls framing** (paper schematic,
   regenerated from `scripts/figures/make_overview_figure.py`): the

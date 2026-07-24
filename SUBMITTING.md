@@ -140,8 +140,16 @@ it), and the verdict:
   This is a Level-1 claim until released (Level 2) and independently
   audited (Level 3).
 - **WITHIN THE REFERENCE NULL** — the reference outcome: no combination
-  of news, social, macro, or graph features has cleared it (2,468 runs;
-  2,151 controlled).
+  of news, social, macro, or graph features clears the bar at the
+  reference family size (k=8) and the architecture-pooled estimand of
+  Table 3 (2,467 runs; 2,151 controlled). Read that scope literally: a
+  single arm of a single configuration, declared at k=1, can clear both
+  bars — the shipped price+graph feedforward cells do (ΔMCC +0.0152,
+  5/5 folds positive, p_fold=0.012, anchor cleared), while the same
+  configuration's LSTM arm does not (+0.0029, 3/5 folds, anchor not
+  cleared). That is exactly the best-of-N selection the `--k` declaration
+  exists to price, which is why the reference family is k=8; at k=8 no
+  arm of any configuration certifies.
 - **UNCERTIFIED / NOT COMPARABLE** — the claim cannot be certified as
   submitted (undeclared family, unverified or mismatched assembly).
 

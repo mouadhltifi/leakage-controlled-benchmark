@@ -10,7 +10,8 @@ results, audits, experiments, examples), the materialized raw inputs
 (`data/raw/macro/`), the derived-feature deposit (`data/processed/`), and
 the normative top-level files (README, SUBMITTING, REPRODUCE, MAINTENANCE,
 CHANGELOG, data statements, datasheet, LICENSE, CITATION.cff,
-croissant.json); only the manifest itself sits outside its scope.
+croissant.json); the manifest itself and `.gitignore` are the only two
+files outside its scope (the header of `MANIFEST.sha256` states the same).
 `scripts/release_gate.py` runs this plus the evaluator regression battery
 and the byte-compared Section-6 demo — no tag is cut unless it passes on
 a fresh clone.
@@ -151,8 +152,9 @@ CAMEF_REPO=/path/to/CAMEF python scripts/audits/camef_split_audit.py
 
 ### 3a. Data
 
-The derived feature parquets, graphs, and assembled HDF5 datasets the drivers
-consume are **committed** under `data/processed/` (layout and provenance:
+The derived feature parquets and graphs the drivers consume — plus the
+assembled HDF5 convenience datasets, which the harness does *not* read
+(see `data/README.md`) — are **committed** under `data/processed/` (layout and provenance:
 `data/README.md`; hashes: `MANIFEST.sha256`), so the re-runs below work from a
 plain clone. Rebuilding that deposit itself from raw sources is the
 deep-verification path: fetch/regenerate per `data/README.md` (thin fetch stubs

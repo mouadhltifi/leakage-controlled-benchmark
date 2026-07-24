@@ -12,10 +12,14 @@ Checks, in order:
      adversarially discovered exploits).
   3. The paper's Section-6 demo command, byte-compared against the
      committed claim block.
-  4. Metadata: croissant.json loads (if mlcroissant is installed),
+  4. Metadata: croissant.json loads under mlcroissant (a missing
+     validator FAILS the gate -- it is pinned in requirements.txt),
      CITATION.cff parses with a scalar license (Zenodo loader
      constraint), and CITATION/croissant version strings agree (and
      match --expect-version when given).
+  5. Deposit consistency: the assembled H5s carry the released FF12
+     graph, the publication-lagged (C2) macro block, and the canonical
+     price block -- content checks the hash manifest cannot make.
 """
 from __future__ import annotations
 
@@ -86,9 +90,21 @@ def main() -> int:
         mlc.Dataset(str(ROOT / "croissant.json"))
         step("croissant loads under mlcroissant", True)
     except ImportError:
-        print("SKIP  croissant load (mlcroissant not installed)")
+        # fail CLOSED: this is the only automated guard on a headline D&B
+        # deliverable, so a missing validator is a gate failure, not a skip
+        # (mlcroissant is pinned in requirements.txt for exactly this reason)
+        step("croissant loads under mlcroissant", False,
+             "mlcroissant not installed -- pip install -r requirements.txt")
     except Exception as e:
         step("croissant loads under mlcroissant", False, str(e)[:80])
+
+    # 5. deposit consistency: H5 content vs the canonical tables
+    r = subprocess.run([sys.executable,
+                        str(ROOT / "scripts/data/check_h5_consistency.py")],
+                       capture_output=True, text=True)
+    step("H5 deposit matches the canonical tables (graph + macro + price)",
+         r.returncode == 0,
+         r.stdout.strip().splitlines()[-1] if r.stdout else "no output")
 
     print(f"\n{'RELEASE GATE: PASS' if not FAILS else 'RELEASE GATE: FAIL -- do not tag'}")
     return 1 if FAILS else 0

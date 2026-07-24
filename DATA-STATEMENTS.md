@@ -46,8 +46,10 @@
 
 - **Ships:** per-stock-day aggregate features only — message counts,
   bullish/bearish ratios, mean sentiment, and a has-data indicator
-  (17 features + flag), 2015–2022 coverage with the 2023 gap explicitly
-  flagged.
+  (17 aggregate columns + flag, of which 15 are informative — `social_sent_std`
+  and `social_sent_std_w3` are constant-`0.0` placeholders, StockTwits having
+  only categorical message labels; see `DATASHEET.md`), 2015–2022 coverage with
+  the 2023 gap explicitly flagged.
 - **Does not ship:** any message text, message ID, user ID, or per-message
   record.
 - **Basis:** StockTwits' terms prohibit redistribution/extraction and there

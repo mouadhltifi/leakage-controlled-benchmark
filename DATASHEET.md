@@ -43,10 +43,20 @@
      block) and PCA-reduced embedding features, derived from FNSPID-tagged
      articles (53/55 names have >=1 tagged article; HON and RTX are
      uncovered and zero-filled; LIN is covered but near-empty, 2
-     article-days across the window).
+     article-days across the window). The corpus also ends before the
+     feature window does: the last seven trading days (2023-12-19 to
+     2023-12-28) have zero tagged articles for **every** name, against a
+     daily mean of 26.9 covered names. These are the only zero-coverage
+     days in all 2,011 feature days; they fall inside fold 4's test
+     window (5.6% of its rows) and enter as flagged zeros, separable via
+     `has_news`.
   3. **Social** — per-stock-day StockTwits aggregates: counts, bull/bear
-     ratios, mean sentiment (17 aggregates) + a has-data flag; coverage
-     ends 2022-12-30, the 2023 gap is explicit.
+     ratios, mean sentiment (17 aggregate columns, of which **15 are
+     informative**: `social_sent_std` and `social_sent_std_w3` are constant
+     `0.0` placeholders, because StockTwits labels messages categorically and
+     has no continuous per-message score to take a within-day SD over — see
+     `data/README.md` and the `social_features.py` docstring) + a has-data
+     flag; coverage ends 2022-12-30, the 2023 gap is explicit.
   4. **Macro** — five federal FRED series resampled to business days, in
      original and **publication-lag-corrected** variants (+ FOMC dates);
      the deposit ships the VIXCLS (Cboe VIX) business-day extract with

@@ -33,6 +33,9 @@ tokenizers==0.22.2
 # ML tooling + storage + config + technical analysis + data fetch.
 scikit-learn==1.8.0
 h5py==3.15.1
+# Croissant metadata validation -- the release gate's croissant check is only
+# meaningful if this is installed; without it the gate would skip that leg.
+mlcroissant==1.1.0
 pyarrow==23.0.0
 pydantic==2.13.2
 ta==0.11.0

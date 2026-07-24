@@ -220,6 +220,36 @@ def main() -> int:
         need = {"challenger", "fold_idx", "seed", "mcc"}
         if not need.issubset(sub.columns):
             sys.exit(f"submission must have columns {sorted(need)}")
+        if sub.empty:
+            sys.exit("NOT COMPARABLE: the submission has no rows.")
+        # One claim, one model. The `challenger` column is required, so a file
+        # carrying several names is a per-cell selection over a family of
+        # models -- the challenger-side twin of the `envelope` baseline, which
+        # this tool already refuses as "test-selected, not a runnable model".
+        # (The duplicate-(fold, seed) check below catches the innocent case of
+        # a concatenated multi-model file, so what reaches here is a file with
+        # exactly one row per cell: deliberate selection.)
+        _names = sub["challenger"].astype(str).unique()
+        if len(_names) > 1:
+            sys.exit("NOT COMPARABLE: the submission mixes "
+                     f"{len(_names)} challenger names ({', '.join(sorted(_names)[:4])}"
+                     f"{', ...' if len(_names) > 4 else ''}). A claim covers ONE "
+                     "model: one row per (fold, seed), all rows the same "
+                     "challenger. Selecting the best cell across a family of "
+                     "models is test-set selection, not a result.")
+        # fold_idx / seed / n_test must be integers -- a non-finite or
+        # unparseable value here would otherwise surface as a raw traceback
+        # from a downstream groupby or comparison, which is not a verdict.
+        for _col in ("fold_idx", "seed") + (("n_test",) if "n_test" in sub.columns else ()):
+            _v = pd.to_numeric(sub[_col], errors="coerce")
+            if not np.isfinite(_v).all() or (_v % 1 != 0).any():
+                sys.exit(f"NOT COMPARABLE: every {_col} must be a finite "
+                         "integer; fix or drop the malformed rows.")
+            sub[_col] = _v.astype(int)
+        _bad_folds = sorted({int(f) for f in sub["fold_idx"]} - set(range(5)))
+        if _bad_folds:
+            sys.exit(f"NOT COMPARABLE: fold_idx {_bad_folds} is outside the "
+                     "frozen grid (0-4); see SUBMITTING.md.")
         # MCC is mathematically bounded to [-1, 1]; a non-finite or
         # out-of-range value is malformed input, not a score. Reject it
         # at the boundary -- a NaN cell would otherwise be skipped by the
@@ -288,10 +318,12 @@ def main() -> int:
         exp = expected_n_test()
         # check EVERY row per fold, not just the first — a submission whose
         # non-first rows carry a wrong n_test must not pass conformance
+        # a fold with no frozen expectation is NOT silently conformant --
+        # reporting OK for a fold never checked is a false assurance
         bad = {int(f): (sorted({int(x) for x in g}), exp.get(int(f)))
                for f, g in sub.groupby("fold_idx")["n_test"]
-               if exp.get(int(f)) is not None
-               and any(int(x) != exp[int(f)] for x in g)}
+               if exp.get(int(f)) is None
+               or any(int(x) != exp[int(f)] for x in g)}
         conforms = not bad
         assembly_verified = conforms
 
@@ -316,12 +348,29 @@ def main() -> int:
     # (42/123/456) paired at seed level in EVERY covered fold (rule 1) --
     # a best-seed-per-fold selection must not certify through the tool
     # whose purpose is policing selection
+    # The contract is evaluated on FULL_GRID, not the post-restriction frame.
+    # Under --restrict-folds the anchor leg still scores every submitted fold
+    # (see above), so a fold outside the restriction would otherwise sit inside
+    # the hard floor while escaping the seed contract -- letting a submitter
+    # prune that fold to its best seed and push the floor over zero.
     if seed_matched:
-        seeds_by_fold = merged.groupby("fold_idx")["seed"].agg(
+        seeds_by_fold = full_grid.groupby("fold_idx")["seed"].agg(
             lambda s: set(SEEDS).issubset({int(x) for x in s}))
         seeds_ok = bool(seeds_by_fold.all())
+        # ...and the three rows must be three RUNS, not one number relabelled.
+        # Presence of the labels 42/123/456 is not evidence of replication: a
+        # best-seed-per-fold selection can be written three times under the
+        # three labels and would otherwise satisfy the gate whose whole purpose
+        # is policing that selection. Seed-identical MCC in EVERY fold is the
+        # tell (a genuine run differs in the low-order digits); a tie inside a
+        # single fold is legitimate and does not trip this.
+        _by_fold_unique = full_grid.groupby("fold_idx")["mcc_sub"].nunique()
+        seeds_degenerate = bool((_by_fold_unique <= 1).all())
+        if seeds_degenerate:
+            seeds_ok = False
     else:
         seeds_ok = False
+        seeds_degenerate = False
 
     # dual bar, leg 2: the challenger's fold-level contrast against the
     # untuned logistic-price anchor must be positive (hard floor),
@@ -382,8 +431,15 @@ def main() -> int:
                         "is not the documented rule-8 subset {0,1,2,3}; "
                         f"analysis only; full five-fold mean delta {_fg:+.4f}]")
     if k_declared and assembly_verified and not seeds_ok:
-        verdict += ("  [SEED CONTRACT NOT MET -- certification requires seeds "
-                    "42/123/456 paired per covered fold (rule 1)]")
+        if seeds_degenerate:
+            verdict += ("  [SEED CONTRACT NOT MET -- the three contract seeds "
+                        "carry an identical MCC in every fold, so they are one "
+                        "result relabelled, not three runs; certification "
+                        "requires three genuine seed replicates (rule 1)]")
+        else:
+            verdict += ("  [SEED CONTRACT NOT MET -- certification requires "
+                        "seeds 42/123/456 paired in every submitted fold "
+                        "(rule 1)]")
     if conforms is False:
         supported = False
         verdict = ("NOT COMPARABLE  [ASSEMBLY MISMATCH -- n_test disagrees "
@@ -393,11 +449,27 @@ def main() -> int:
     # predictions scores a perfect MCC. Anything far above the task's
     # realistic ceiling is flagged for the mandatory Level-3 code audit
     # (the paper's stated defense), not silently certified.
-    if float(full_grid["mcc_sub"].abs().max()) > 0.5:
-        verdict += ("  [FABRICATION CHECK -- a per-fold MCC exceeds 0.5, far "
-                    "above this task's realistic ceiling (reference grid near "
-                    "0.01); recompute verifies assembly, not that predictions "
-                    "came from a model. Requires the Level-3 code audit.]")
+    # fabrication tripwire: an honest model cannot reach a high per-fold MCC on
+    # this task. Calibration, in ascending order: reference cells sit near 0.01;
+    # the highest test MCC anywhere in the shipped grid is 0.087; the highest
+    # validation-selection MCC is 0.104; the leakage-inflated headline the
+    # literature reports for this task shape is 0.116 (MSGCA, Sec. 4.2). The
+    # 0.15 cut sits above all four, so it cannot fire on a defensible result,
+    # while an echoed or partly-echoed answer key (>=0.3, typically ~0.42+)
+    # trips it. Above the cut, certification is WITHHELD and
+    # fails closed at the token -- not merely annotated. A naive consumer that
+    # greps the verdict for "SUPPORTED" (or reads the JSON "certified" field)
+    # must not see a pass. The Level-3 code audit stays the provenance
+    # authority; this only stops the harness certifying an impossible score.
+    if float(full_grid["mcc_sub"].abs().max()) > 0.15:
+        supported = False
+        tag = ("  [FABRICATION CHECK -- a per-fold MCC exceeds 0.15, above "
+               "every value this task has produced (shipped test-MCC max "
+               "0.087; the literature's leakage-inflated headline 0.116); "
+               "recompute verifies assembly, not that predictions came from a "
+               "model. Certification withheld pending the Level-3 code audit.]")
+        verdict = (("NOT CERTIFIED" + verdict[len("SUPPORTED"):])
+                   if verdict.startswith("SUPPORTED") else verdict) + tag
 
     arm_label = ("envelope of the ff/lstm arms -- per-cell max; a "
                  "test-selected sensitivity bar, not a runnable model"
@@ -435,20 +507,30 @@ def main() -> int:
     if not seed_matched:
         print("NOTE: rule 1 expects seeds 42/123/456 matched to the baseline.")
     if a.json:
+        # every float goes through _j: NaN/Infinity are not valid JSON
+        # (RFC 8259), and a claim block a strict parser rejects is not a claim
+        def _j(v):
+            try:
+                f = float(v)
+            except (TypeError, ValueError):
+                return None
+            return f if math.isfinite(f) else None
         a.json.write_text(json.dumps({
             "challenger": name, "baseline_arch": a.baseline_arch,
             "mode": "predictions" if a.predictions is not None else "scores",
             "seed_matched": seed_matched, "n_cells": len(merged),
-            "fold_means": {int(k): float(v) for k, v in fold_means.items()},
-            "delta_mcc": mean_delta, "ci95": [lo, hi],
-            "ci95_fold_t": [float(t_lo), float(t_hi)],
-            "p_fold": float(p_fold), "k": a.k, "k_declared": k_declared,
-            "p_bonf": p_bonf, "seed_contract_met": seeds_ok,
+            "fold_means": {int(k): _j(v) for k, v in fold_means.items()},
+            "delta_mcc": _j(mean_delta), "ci95": [_j(lo), _j(hi)],
+            "ci95_fold_t": [_j(t_lo), _j(t_hi)],
+            "p_fold": _j(p_fold), "k": a.k, "k_declared": k_declared,
+            "p_bonf": _j(p_bonf), "seed_contract_met": seeds_ok,
             "assembly_verified": bool(assembly_verified),
-            "anchor_deltas": anchor_fold_deltas,
+            "anchor_deltas": (None if anchor_fold_deltas is None else
+                              {int(f): _j(v) for f, v in anchor_fold_deltas.items()}),
             "anchor_cleared": anchor_ok,
-            "anchor_p": None if math.isnan(anchor_p) else float(anchor_p),
-            "pooled_d": float(d), "verdict": verdict}, indent=2))
+            "anchor_p": _j(anchor_p),
+            "pooled_d": _j(d), "certified": bool(supported),
+            "verdict": verdict}, indent=2))
     return 0
 
 

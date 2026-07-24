@@ -165,6 +165,157 @@ def main() -> int:
     check("out-of-range mcc rejected", out,
           ["NOT COMPARABLE", "finite value in"], ["SUPPORTED"])
 
+    # 10. in-range oracle (echoes the frozen labels): finite and within
+    # [-1, 1], so it clears the boundary guards, both bars, and would read
+    # SUPPORTED -- but a per-fold MCC far above the task ceiling must fail
+    # closed at the token (not merely annotate) and route to the Level-3 audit.
+    oracle = craft("oracle_echo", lambda f: 0.9)
+    out = run(str(oracle), "--k", "1", "--baseline-arch", "ff")
+    check("in-range oracle (echoed labels): withheld, not certified", out,
+          ["FABRICATION CHECK", "NOT CERTIFIED"], ["SUPPORTED"])
+
+    # 11. partial label-echo -- the blind band the old 0.5 tripwire missed.
+    # ~0.30 MCC is far above the 0.087 honest ceiling but was below the old
+    # 0.5 cutoff, so it used to certify clean; the tightened 0.15 threshold
+    # now withholds it. (The +0.05 positive controls above, ~0.06 max cell,
+    # stay well under 0.15 and still certify -- so the tightening is safe.)
+    partial = craft("partial_echo", lambda f: 0.30)
+    out = run(str(partial), "--k", "1", "--baseline-arch", "ff")
+    check("partial echo (0.30, old 0.15-0.5 blind band): withheld", out,
+          ["FABRICATION CHECK", "NOT CERTIFIED"], ["SUPPORTED"])
+
+    # 12. EXPLOIT (external-review-reproduced): seed PADDING. The gate used to
+    # test only that the labels 42/123/456 were present, so a best-seed-per-fold
+    # selection written three times under the three labels certified — defeating
+    # the very gate that polices that selection. Three identical rows per fold,
+    # in every fold, is one result relabelled, not three runs.
+    pad = Path(tempfile.mkdtemp()) / "seed_padded.csv"
+    s = pd.read_csv(DEMO)
+    win = s.loc[s.groupby("fold_idx")["mcc"].idxmax()]
+    pd.DataFrame([{"challenger": "seed_padded", "fold_idx": int(r.fold_idx),
+                   "seed": sd, "mcc": float(r.mcc), "n_test": N_TEST[int(r.fold_idx)]}
+                  for _, r in win.iterrows() for sd in (42, 123, 456)]
+                 ).to_csv(pad, index=False)
+    out = run(str(pad), "--k", "1", "--baseline-arch", "ff")
+    check("seed-padded cherry-pick refused (relabelled, not replicated)", out,
+          ["SEED CONTRACT NOT MET", "one result relabelled"], ["SUPPORTED  ["])
+
+    # 13. FALSE-POSITIVE GUARD: an honest submission whose seeds genuinely
+    # differ must still certify — the degeneracy test is all-folds, so a
+    # legitimate tie inside a single fold does not trip it.
+    honest = craft("honest_strong", lambda f: 0.05)
+    h = pd.read_csv(honest)
+    h.loc[(h.fold_idx == 0), "mcc"] = float(h.loc[h.fold_idx == 0, "mcc"].iloc[0])
+    h.to_csv(honest, index=False)   # fold 0 tied, folds 1-4 genuinely vary
+    out = run(str(honest), "--k", "1", "--baseline-arch", "ff")
+    check("honest submission with a single tied fold still certifies", out,
+          ["SUPPORTED"], ["SEED CONTRACT NOT MET"])
+
+    # 14. EXPLOIT (external-review-reproduced): under --restrict-folds the seed
+    # contract used to be evaluated on the POST-restriction frame while the
+    # anchor floor scored the FULL grid — so fold 4 sat inside the hard floor
+    # but outside the contract, and pruning it to its best seed pushed the floor
+    # over zero. The contract is now evaluated on the full submitted grid.
+    prune = Path(tempfile.mkdtemp()) / "anchor_prune.csv"
+    rows = []
+    for _, r in baseline_ff().iterrows():
+        f, sd = int(r.fold_idx), int(r.seed)
+        if f == 4 and sd != 42:
+            continue                      # prune F4 to its best seed only
+        rows.append({"challenger": "anchor_prune", "fold_idx": f, "seed": sd,
+                     "mcc": float(r.mcc) + (0.05 if f != 4 else 0.09),
+                     "n_test": N_TEST[f]})
+    pd.DataFrame(rows).to_csv(prune, index=False)
+    out = run(str(prune), "--k", "1", "--baseline-arch", "ff",
+              "--restrict-folds", "0,1,2,3", "--social-coverage-justified")
+    check("restricted claim with a seed-pruned out-of-scope fold refused", out,
+          ["SEED CONTRACT NOT MET"], ["SUPPORTED  ["])
+
+    # 15. MUTATION-COVERAGE cases. Mutation-testing this battery showed five
+    # gates whose deletion changed no assertion, because the cases above test
+    # them against the in-null DEMO -- i.e. they assert a MESSAGE is present,
+    # not that the GATE bites. Each case below is run on input that WOULD
+    # certify if the gate were removed, and each also checks the JSON claim
+    # block, which the battery previously never read.
+    def run_json(*args):
+        """Run the evaluator and return (stdout, parsed claim.json)."""
+        jp = Path(tempfile.mkdtemp()) / "claim.json"
+        out = run(*args, "--json", str(jp))
+        try:
+            return out, json.loads(jp.read_text())
+        except Exception:
+            return out, None
+
+    strong_path = str(craft("mut_strong", lambda f: 0.05))
+
+    # (M3) envelope must be non-certifiable even for a challenger that clears
+    # both bars -- previously only asserted against the in-null demo.
+    out, cj = run_json(strong_path, "--k", "1", "--baseline-arch", "envelope")
+    check("envelope refuses a both-bars-clearing challenger", out,
+          ["ENVELOPE REFERENCE"], ["SUPPORTED  ["])
+    check("envelope: JSON certified=false", "" if cj and cj.get("certified") is False else "MISSING",
+          [""])
+
+    # (M12) undeclared k must not certify, and the JSON must agree with the
+    # printed verdict -- the mutation that broke this was invisible before.
+    out, cj = run_json(strong_path, "--baseline-arch", "ff")
+    check("k undeclared on a strong challenger: UNCERTIFIED + JSON false", out,
+          ["UNCERTIFIED -- comparison family undeclared"], ["VERDICT           : SUPPORTED"])
+    check("k-undeclared JSON certified=false",
+          "" if cj and cj.get("certified") is False else "MISSING", [""])
+
+    # (M13) fabrication must FAIL CLOSED in the JSON too, not just annotate.
+    out, cj = run_json(str(craft("mut_fab", lambda f: 0.9)), "--k", "1",
+                       "--baseline-arch", "ff")
+    check("fabrication: JSON certified=false (not annotate-only)",
+          "" if cj and cj.get("certified") is False else "MISSING", [""])
+
+    # (M7) n_test conformance must bite on a NON-first row.
+    nt = Path(tempfile.mkdtemp()) / "bad_ntest.csv"
+    s = pd.read_csv(strong_path)
+    _i = s.index[s.fold_idx == 0][-1]
+    s.loc[_i, "n_test"] = N_TEST[0] + 7
+    s.to_csv(nt, index=False)
+    out = run(str(nt), "--k", "1", "--baseline-arch", "ff")
+    check("n_test wrong on a non-first row: NOT COMPARABLE", out,
+          ["NOT COMPARABLE"], ["VERDICT           : SUPPORTED"])
+
+    # (M10) duplicate (fold, seed) rows must be refused -- the exploit was
+    # duplicating a fold's best seed to swing the anchor mean.
+    dup = Path(tempfile.mkdtemp()) / "dup.csv"
+    s = pd.read_csv(strong_path)
+    pd.concat([s, s[s.fold_idx == 4]]).to_csv(dup, index=False)
+    out = run(str(dup), "--k", "1", "--baseline-arch", "ff")
+    check("duplicate (fold, seed) rows refused", out,
+          ["duplicate (fold_idx, seed)"], ["SUPPORTED"])
+
+    # 16. mixed-challenger per-cell selection (external-review-reproduced):
+    # one row per cell, but each row the best model for that cell.
+    mix = Path(tempfile.mkdtemp()) / "mixed.csv"
+    s = pd.read_csv(strong_path)
+    s["challenger"] = ["model_" + str(i % 3) for i in range(len(s))]
+    s.to_csv(mix, index=False)
+    out = run(str(mix), "--k", "1", "--baseline-arch", "ff")
+    check("mixed challenger names refused (per-cell model selection)", out,
+          ["NOT COMPARABLE", "mixes"], ["SUPPORTED"])
+
+    # 17. malformed non-mcc input must produce a verdict, not a traceback.
+    for label, mutate in (
+        ("NaN n_test", lambda df: df.assign(n_test=[float("nan")] * len(df))),
+        ("fold_idx 5", lambda df: df.assign(
+            fold_idx=[5] + list(df.fold_idx[1:]))),
+    ):
+        p = Path(tempfile.mkdtemp()) / "malformed.csv"
+        mutate(pd.read_csv(strong_path)).to_csv(p, index=False)
+        out = run(str(p), "--k", "1", "--baseline-arch", "ff")
+        check(f"malformed input ({label}) rejected cleanly", out,
+              ["NOT COMPARABLE"], ["Traceback"])
+    empty = Path(tempfile.mkdtemp()) / "empty.csv"
+    pd.read_csv(strong_path).head(0).to_csv(empty, index=False)
+    out = run(str(empty), "--k", "1", "--baseline-arch", "ff")
+    check("empty submission rejected cleanly", out,
+          ["NOT COMPARABLE"], ["Traceback"])
+
     print(f"\n{'ALL PASS' if not FAILS else f'{len(FAILS)} FAILURES'}")
     return 1 if FAILS else 0
 
