@@ -96,7 +96,7 @@ def main():
         ("Price", "10 indicators"),
         ("News", "day-level sentiment"),
         ("Social", "17 aggregates + flag"),
-        ("Macro", "6 series"),
+        ("Macro", "6 series + FOMC"),
         ("Graph", "sector + correlation"),
     ]
     n = len(fams)
