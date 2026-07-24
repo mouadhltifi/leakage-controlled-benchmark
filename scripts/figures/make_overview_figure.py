@@ -95,7 +95,7 @@ def main():
     fams = [
         ("Price", "10 indicators"),
         ("News", "day-level sentiment"),
-        ("Social", "17 aggregates"),
+        ("Social", "17 aggregates + flag"),
         ("Macro", "6 series"),
         ("Graph", "sector + correlation"),
     ]
