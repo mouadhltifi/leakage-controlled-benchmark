@@ -88,9 +88,16 @@ def main() -> int:
     # documented subset, strong effect clears both bars)
     strong = craft("strong_social", lambda f: 0.05)
     out = run(str(strong), "--k", "1", "--baseline-arch", "ff",
-              "--restrict-folds", "0,1,2,3")
-    check("rule-8 {0,1,2,3} certifies when both bars clear", out,
+              "--restrict-folds", "0,1,2,3", "--social-coverage-justified")
+    check("rule-8 {0,1,2,3} certifies when attested and both bars clear", out,
           ["SUPPORTED", "RESTRICTED COVERAGE"], ["NON-CERTIFYING"])
+    # rule-8 subset WITHOUT the entitlement attestation must not certify
+    # (a model weak on the F4 stub could otherwise drop it and certify)
+    out = run(str(strong), "--k", "1", "--baseline-arch", "ff",
+              "--restrict-folds", "0,1,2,3")
+    check("rule-8 subset unattested: NON-CERTIFYING", out,
+          ["NON-CERTIFYING RESTRICTION", "entitlement was not"],
+          ["SUPPORTED  ["])
 
     # 4. positive control: a plausible strong challenger certifies on the
     # full grid (the instrument can say yes without an oracle)
@@ -122,6 +129,41 @@ def main() -> int:
     out = run(str(cherry), "--k", "1", "--baseline-arch", "ff")
     check("best-seed-per-fold cherry-pick refused", out,
           ["SEED CONTRACT NOT MET"], ["SUPPORTED  ["])
+
+    # 7. EXPLOIT (decorrelated-gauntlet-reproduced): a below-significance
+    # challenger must not certify by declaring k<1, which zeros or inverts
+    # the Bonferroni gate. k=0 and k=-5 are rejected at the boundary.
+    kexploit = craft("k_zero_exploit", lambda f: 0.05)  # clears both bars but...
+    out = run(str(kexploit), "--k", "0", "--baseline-arch", "ff")
+    check("k=0 rejected (would zero the multiplicity gate)", out,
+          ["--k must be a positive integer"], ["SUPPORTED", "p_bonf (k=0)"])
+    out = run(str(kexploit), "--k", "-5", "--baseline-arch", "ff")
+    check("negative k rejected (would invert the gate)", out,
+          ["--k must be a positive integer"], ["SUPPORTED", "p_bonf (k=-5)"])
+
+    # 8. EXPLOIT (decorrelated-gauntlet-reproduced): NaN-poisoning bad seeds.
+    # Two of three seeds set to NaN (rows present) would flip WITHIN-NULL to
+    # SUPPORTED -- the per-fold mean skips NaN while the seed still counts as
+    # present. Non-finite mcc is rejected at the boundary.
+    nan_poison = Path(tempfile.mkdtemp()) / "nan_poison.csv"
+    rows = []
+    for _, r in baseline_ff().iterrows():
+        f, sd = int(r.fold_idx), int(r.seed)
+        rows.append({"challenger": "nan_poison", "fold_idx": f, "seed": sd,
+                     "mcc": (float(r.mcc) + 0.05 if sd == 42 else float("nan")),
+                     "n_test": N_TEST[f]})
+    pd.DataFrame(rows).to_csv(nan_poison, index=False)
+    out = run(str(nan_poison), "--k", "1", "--baseline-arch", "ff")
+    check("NaN-poisoned seeds rejected (not SUPPORTED)", out,
+          ["NOT COMPARABLE", "finite value in"], ["SUPPORTED"])
+
+    # 9. out-of-range mcc (fabrication via impossible value) rejected at the
+    # boundary -- MCC is bounded to [-1, 1]
+    oor = craft("out_of_range", lambda f: 0.0)
+    s = pd.read_csv(oor); s.loc[0, "mcc"] = 5.0; s.to_csv(oor, index=False)
+    out = run(str(oor), "--k", "1", "--baseline-arch", "ff")
+    check("out-of-range mcc rejected", out,
+          ["NOT COMPARABLE", "finite value in"], ["SUPPORTED"])
 
     print(f"\n{'ALL PASS' if not FAILS else f'{len(FAILS)} FAILURES'}")
     return 1 if FAILS else 0

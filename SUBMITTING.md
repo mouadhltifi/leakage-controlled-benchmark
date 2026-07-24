@@ -50,9 +50,16 @@ The reporting rules, condensed (they mirror the paper's §2–§3):
    (`--restrict-folds 0,1,2,3`; note F3's window runs to 2023-06 so its
    second half is uncovered, F4 lies entirely past coverage. The genuinely
    fully covered restriction is F0–F2; report it too if the verdict is
-   close). A `--restrict-folds` claim can reach SUPPORTED on the declared
-   subset when it spans at least four folds; the verdict is tagged
-   RESTRICTED COVERAGE so its scope is always visible.
+   close). A `--restrict-folds 0,1,2,3` claim can reach SUPPORTED only
+   with `--social-coverage-justified` — the attestation that your model
+   consumes the social source (whose coverage is why the tail folds are
+   dropped). The tool cannot see which sources a model consumes, so this
+   entitlement is your declaration, audit-verified at Level 3, not
+   machine-checked: asserting it for a model that does not consume social
+   is a fabrication the Level-3 audit catches. Without the flag the
+   restriction is analysis only (NON-CERTIFYING). Every restricted verdict
+   is tagged RESTRICTED COVERAGE and prints the full five-fold mean delta
+   alongside, so the dropped-fold scope is always visible.
 
 ## Submission file formats
 
@@ -70,7 +77,14 @@ seed,date,ticker,y_pred
 exactly (the 44,438 scoreable rows of `data/processed/labels_direction.parquet`;
 dead-zone days are not scoreable) — any missing or extra row is
 NOT COMPARABLE. MCC is recomputed against the frozen labels, so assembly
-conformance is verified by construction.
+conformance is verified by construction. Recomputation verifies
+**assembly, not provenance**: because the frozen labels ship, predictions
+echoing them score a perfect MCC — the evaluator flags any implausibly
+high MCC (FABRICATION CHECK) but cannot prove predictions came from a
+model. That is the label-history attack the benchmark defeats only with
+the Level-3 code audit (and, ultimately, the pristine future window); the
+recompute closes the *misaligned-assembly* gap, which is the common
+honest error.
 
 **Score mode:** a CSV with one row per (fold, seed) test evaluation:
 

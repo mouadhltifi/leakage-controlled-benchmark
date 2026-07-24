@@ -183,6 +183,14 @@ def main() -> int:
                          "is a deprecated alias for envelope")
     ap.add_argument("--restrict-folds", default=None,
                     help="comma-separated fold_idx subset (coverage rule 8)")
+    ap.add_argument("--social-coverage-justified", action="store_true",
+                    help="attest that the restriction is the rule-8 "
+                         "social-coverage tail (the submitted model consumes "
+                         "the social source, whose coverage ends 2022-12-30). "
+                         "REQUIRED for a --restrict-folds claim to certify -- "
+                         "the tool cannot see which sources a model consumes, "
+                         "so this entitlement is a submitter declaration, "
+                         "audit-verified at Level 3, not machine-checked.")
     ap.add_argument("--json", type=Path, default=None)
     a = ap.parse_args()
 
@@ -191,6 +199,12 @@ def main() -> int:
               "'envelope' (per-cell max; non-certifiable).", file=sys.stderr)
         a.baseline_arch = "envelope"
     k_declared = a.k is not None
+    if k_declared and a.k < 1:
+        sys.exit("--k must be a positive integer: the comparison-family size "
+                 "covers every configuration compared (rule 3), so the minimum "
+                 "is 1 (the submitted configuration itself). A k below 1 would "
+                 "zero or invert the Bonferroni correction -- the multiplicity "
+                 "gate certification depends on.")
     if not k_declared:
         a.k = 1
 
@@ -206,6 +220,18 @@ def main() -> int:
         need = {"challenger", "fold_idx", "seed", "mcc"}
         if not need.issubset(sub.columns):
             sys.exit(f"submission must have columns {sorted(need)}")
+        # MCC is mathematically bounded to [-1, 1]; a non-finite or
+        # out-of-range value is malformed input, not a score. Reject it
+        # at the boundary -- a NaN cell would otherwise be skipped by the
+        # per-fold mean while its seed still counts as present, letting a
+        # submitter poison bad seeds into a passing seed contract.
+        _mcc = pd.to_numeric(sub["mcc"], errors="coerce")
+        if not np.isfinite(_mcc).all() or (_mcc.abs() > 1).any():
+            sys.exit("NOT COMPARABLE: every mcc must be a finite value in "
+                     "[-1, 1] (MCC's range). Non-finite or out-of-range rows "
+                     "are malformed -- fix or drop them; a dropped (fold, seed) "
+                     "then fails the seed contract, as it should.")
+        sub["mcc"] = _mcc
         if sub.duplicated(subset=["fold_idx", "seed"]).any():
             sys.exit("submission has duplicate (fold_idx, seed) rows -- the "
                      "contract is one row per (fold, seed); see SUBMITTING.md")
@@ -277,9 +303,12 @@ def main() -> int:
     covered = {int(f) for f in fold_means.index}
     # a certifying restriction is hard-gated to the ONE documented
     # coverage-rule subset {0,1,2,3} (rule 8, social-family coverage
-    # tail); every other subset is analysis, never certification --
-    # otherwise --restrict-folds is best-k-of-5 fold selection
-    restriction_certifiable = (not a.restrict_folds) or (required == {0, 1, 2, 3})
+    # tail) AND requires the submitter's explicit entitlement attestation
+    # (the tool cannot see which sources a model consumes, so an
+    # unattested restriction is best-k-of-5 fold selection -- a model
+    # weak on the F4 stub could otherwise drop it and certify)
+    restriction_certifiable = (not a.restrict_folds) or (
+        required == {0, 1, 2, 3} and a.social_coverage_justified)
     coverage_ok = (covered == required
                    and n_folds >= (4 if a.restrict_folds else 5)
                    and restriction_certifiable)
@@ -335,12 +364,23 @@ def main() -> int:
     if a.baseline_arch == "envelope":
         verdict += ("  [ENVELOPE REFERENCE -- test-selected sensitivity "
                     "read; not certifiable]")
-    if a.restrict_folds and restriction_certifiable:
-        verdict += f"  [RESTRICTED COVERAGE -- folds {sorted(covered)} per rule 8]"
-    elif a.restrict_folds:
-        verdict += (f"  [NON-CERTIFYING RESTRICTION -- folds {sorted(covered)} "
-                    "is not the documented rule-8 subset {0,1,2,3}; "
-                    "analysis only]")
+    if a.restrict_folds:
+        _fg = float(full_grid.groupby("fold_idx")["delta"].mean().mean())
+        if restriction_certifiable:
+            verdict += (f"  [RESTRICTED COVERAGE -- folds {sorted(covered)}; "
+                        "submitter-declared rule-8 social-coverage entitlement, "
+                        "audit-verified at Level 3, not machine-checked; "
+                        f"full five-fold mean delta {_fg:+.4f}]")
+        elif required == {0, 1, 2, 3}:
+            verdict += (f"  [NON-CERTIFYING RESTRICTION -- folds {sorted(covered)} "
+                        "is the rule-8 subset but its entitlement was not "
+                        "declared; pass --social-coverage-justified only if the "
+                        "model consumes the social source (audited at Level 3); "
+                        f"full five-fold mean delta {_fg:+.4f}]")
+        else:
+            verdict += (f"  [NON-CERTIFYING RESTRICTION -- folds {sorted(covered)} "
+                        "is not the documented rule-8 subset {0,1,2,3}; "
+                        f"analysis only; full five-fold mean delta {_fg:+.4f}]")
     if k_declared and assembly_verified and not seeds_ok:
         verdict += ("  [SEED CONTRACT NOT MET -- certification requires seeds "
                     "42/123/456 paired per covered fold (rule 1)]")
@@ -348,6 +388,16 @@ def main() -> int:
         supported = False
         verdict = ("NOT COMPARABLE  [ASSEMBLY MISMATCH -- n_test disagrees "
                    "with the frozen folds]")
+    # fabrication check: recomputing the metric verifies ASSEMBLY, not
+    # provenance -- a submitter who echoes the shipped frozen labels as
+    # predictions scores a perfect MCC. Anything far above the task's
+    # realistic ceiling is flagged for the mandatory Level-3 code audit
+    # (the paper's stated defense), not silently certified.
+    if float(full_grid["mcc_sub"].abs().max()) > 0.5:
+        verdict += ("  [FABRICATION CHECK -- a per-fold MCC exceeds 0.5, far "
+                    "above this task's realistic ceiling (reference grid near "
+                    "0.01); recompute verifies assembly, not that predictions "
+                    "came from a model. Requires the Level-3 code audit.]")
 
     arm_label = ("envelope of the ff/lstm arms -- per-cell max; a "
                  "test-selected sensitivity bar, not a runnable model"

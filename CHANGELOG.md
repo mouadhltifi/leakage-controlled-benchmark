@@ -6,8 +6,38 @@ tag; the changes are to data-file correctness, tooling, and documentation.
 "Archived" = published as a GitHub Release and ingested by Zenodo under the
 concept DOI 10.5281/zenodo.21431362.
 
-## Unreleased (v1.0.8, the archival tag accompanying the submitted PDF)
+## Unreleased (v1.0.9, the archival tag accompanying the submitted PDF)
 
+- **Certification input-validation closed (two blocking bypasses,
+  adversarially discovered by a pre-publish decorrelated review round,
+  both reproduced, fixed, regression-tested):** (a) `--k` below 1 is
+  rejected at the boundary --- `--k 0` zeroed and negative `--k` inverted
+  the Bonferroni multiplicity gate, certifying noise or a swept challenger
+  as SUPPORTED; (b) a non-finite or out-of-`[-1,1]` `mcc` is rejected as
+  malformed --- NaN-poisoning two of three seed rows (rows present) let a
+  bad model's good seed carry the fold mean while the seed contract still
+  saw three seeds, flipping WITHIN-NULL to SUPPORTED. The battery gains
+  four cases (`--k 0`, `--k -5`, NaN-poison, out-of-range).
+- **Restricted-coverage entitlement made explicit:** a `--restrict-folds
+  0,1,2,3` claim now certifies only with `--social-coverage-justified`
+  (the submitter's attestation that the model consumes the social source,
+  audit-verified at Level 3, not machine-checked --- the tool cannot see
+  which sources a model consumes). Without it the rule-8 subset is
+  NON-CERTIFYING; a model weak on the F4 stub could otherwise drop it and
+  certify. Every restricted verdict now prints the full five-fold mean
+  delta alongside.
+- **Predictions-mode fabrication check:** recomputing MCC verifies
+  assembly, not provenance --- echoing the shipped frozen labels scores a
+  perfect MCC. Any per-fold MCC above 0.5 (far above the task's ~0.01
+  ceiling) prints a FABRICATION CHECK caveat routing to the Level-3 audit.
+- **MANIFEST fixity scope extended** over `requirements.txt` (the
+  environment pin the determinism claim rests on), `Makefile`, and
+  `data/README.md`; `.gitignore` named as an explicit exclusion. The
+  paper's "verify every shipped file" is now true as printed (479 files).
+- Doc reconciliations: SECTOR-EQUIVALENCE.md data-path reference repaired;
+  calibration README notes Study 1's val==test logging quirk (not a leak;
+  the reference grid selects on the calendar-tail split); SUBMITTING
+  documents the assembly-not-provenance scope of predictions mode.
 - **CAMEF ten-epoch retrain ships** (`audits/camef/camef-train-10ep/`,
   both arms at the budget the CAMEF paper documents, T4, EPOCHS 5→10 the
   only change): index MSE 0.000596 (1.22× the published 0.00048860 — the
@@ -51,6 +81,13 @@ concept DOI 10.5281/zenodo.21431362.
   paths; deprecated `--baseline-arch stronger` alias now prints a
   warning; demo `--k 1` annotated (honest only for a single-configuration
   replay); CHANGELOG tag dates corrected to actual tag dates.
+
+## v1.0.8 — 2026-07-23 (tag only; superseded before archiving)
+
+- Tagged and pushed, but never published as a GitHub Release and never
+  archived to Zenodo: a pre-publish decorrelated review round found two
+  blocking certification input-validation bypasses (see v1.0.9). v1.0.9
+  supersedes it as the archival tag; nothing external references v1.0.8.
 
 ## v1.0.7 — 2026-07-23 (dual-bar certification; all-day labels)
 

@@ -4,7 +4,8 @@
 > the same code+cache state (mmfp, thread-capped, byte-exact GICS restore
 > verified post-campaign). Analysis: paired per (fold, seed, fusion, arch),
 > 180 matched cells. Script: the released generator (`scripts/analysis/make_appendix_tables.py`);
-> data: the committed results (`results/sector/`, `results/native_core/`){gics,ff12}_{ff,lstm}.csv`.
+> data: the committed results (`results/sector/sector_{gics,ff12}_{ff,lstm}.csv`;
+> native anchor `results/native_core/native_core_{ff,lstm}.csv`).
 
 ## Result: NOT equivalent at the ±0.005 bar — the fallback is invoked
 

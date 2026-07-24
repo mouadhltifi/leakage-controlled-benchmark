@@ -30,7 +30,10 @@ COVERED = ("src", "scripts", "configs", "tables",
 COVERED_FILES = ("README.md", "SUBMITTING.md", "REPRODUCE.md",
                  "MAINTENANCE.md", "CHANGELOG.md", "DATA-STATEMENTS.md",
                  "DATASHEET.md", "ECONOMIC-CONTEXT.md", "LICENSE",
-                 "CITATION.cff", "croissant.json")
+                 "CITATION.cff", "croissant.json",
+                 # the environment pin the determinism claim rests on,
+                 # the documented Make entry point, and the data-tree README
+                 "requirements.txt", "Makefile", "data/README.md")
 SKIP_PARTS = {"__pycache__", ".pytest_cache", ".DS_Store"}
 # Outputs that documented steps materialize on demand (REPRODUCE §3e);
 # never manifested, never reported as UNTRACKED.
@@ -41,7 +44,9 @@ SCOPE_HEADER = (
     " the derived-feature deposit (data/processed), and the normative"
     " top-level files (README, SUBMITTING, REPRODUCE, MAINTENANCE,"
     " CHANGELOG, DATA-STATEMENTS, DATASHEET, ECONOMIC-CONTEXT, LICENSE,"
-    " CITATION.cff, croissant.json). Excluded: this manifest itself."
+    " CITATION.cff, croissant.json, requirements.txt, Makefile,"
+    " data/README.md). Excluded: this manifest itself and .gitignore"
+    " (repo hygiene, not a reproducibility artifact)."
     " Verify: python3 scripts/verify_integrity.py"
 )
 
