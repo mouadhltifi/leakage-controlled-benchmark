@@ -11,7 +11,7 @@ Source: the study's historical 750-run grid,
 see the provenance section of the README; these numbers set *scale*, they
 are not reference-floor rows). Price-only baseline (A7):
 
-- Directional accuracy: 0.520 (FF) – 0.522 (LSTM).
+- Directional accuracy: 0.522 (FF) – 0.520 (LSTM).
 - Sharpe: 0.427 (FF), 0.512 (LSTM) → "≈0.4–0.5".
 
 Definition: sign-of-prediction long/short next-day return, annualized by
