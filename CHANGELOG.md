@@ -6,7 +6,24 @@ tag; the changes are to data-file correctness, tooling, and documentation.
 "Archived" = published as a GitHub Release and ingested by Zenodo under the
 concept DOI 10.5281/zenodo.21431362.
 
-## Unreleased (v1.0.9, the archival tag accompanying the submitted PDF)
+## Unreleased (v1.0.10, the archival tag accompanying the submitted PDF)
+
+- **Figure 1 legibility + four-controls framing** (paper schematic,
+  regenerated from `scripts/figures/make_overview_figure.py`): the
+  "Level 3 · independently audited" rung heading no longer clips its box;
+  C5 is drawn as the scope condition (outline badge, set apart) rather
+  than a fifth identical control tile, matching the paper's "four controls
+  + a fixed universe"; source-family tiles show their flags (Social
+  "17 aggregates + flag", Macro "6 series + FOMC") to match Table 2.
+- **ECONOMIC-CONTEXT.md correction:** the FF/LSTM directional-accuracy
+  values were swapped (had 0.520 FF / 0.522 LSTM; source phase5 Table 4.3
+  is FF 0.5225 / LSTM 0.5201). Corrected; the Sharpe line was already
+  right, and the paper's "near 52%" is unaffected. Surfaced by the
+  pre-publish numbers-verification sweep (7 auditors, ~250 numbers
+  recomputed from shipped data, 0 material mismatches).
+- Schematic + doc only — no data, harness, or reference-results change.
+
+## v1.0.9 — 2026-07-24 (archived; the release first accompanying the submitted PDF)
 
 - **Certification input-validation closed (two blocking bypasses,
   adversarially discovered by a pre-publish decorrelated review round,
