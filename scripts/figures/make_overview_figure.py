@@ -41,6 +41,9 @@ ORANGE_FILL = "#fdf3ec"
 GREY = "#8a8a8a"
 
 F_BAND, F_LABEL, F_BODY, F_FINE = 7.4, 6.6, 6.0, 5.4
+# ladder-rung headings sit a step below the three column headers so the
+# longest one ("Level 3 . independently audited") fits its box with margin
+F_RUNG = 6.2
 W_CHIP, W_BOX, W_EMPH = 0.55, 0.7, 1.0
 R_OUT, R_IN = 0.8, 0.45
 
@@ -52,7 +55,7 @@ plt.rcParams.update({
 # grid
 X_TIL0, X_TIL1 = 1.5, 17.0
 X_HAR0, X_HAR1 = 21.5, 54.5
-X_LAD0, X_LAD1 = 67.5, 98.5
+X_LAD0, X_LAD1 = 67.5, 99.4
 Y_BAND0, Y_BAND1 = 5.2, 30.6
 
 
@@ -135,15 +138,21 @@ def main():
     c_top = Y_BAND1 - band_h - 2.3
     c_bot = Y_BAND0 + 0.9
     c_gap = 0.8
-    c_h = (c_top - c_bot - (n - 1) * c_gap) / n
+    scope_gap = 1.2   # C5 is the scope condition, set apart from the four controls
+    c_h = (c_top - c_bot - (n - 1) * c_gap - scope_gap) / n
     for i, (cid, txt) in enumerate(controls):
-        y = c_top - c_h - i * (c_h + c_gap)
+        is_scope = (i == n - 1)   # C5: scope, not a fourth-wall control
+        y = c_top - c_h - i * (c_h + c_gap) - (scope_gap if is_scope else 0)
         box(ax, X_HAR0 + inset, y, (X_HAR1 - X_HAR0) - 2 * inset, c_h,
             "white", SLATE, lw=W_CHIP, r=R_IN, z=3)
-        box(ax, X_HAR0 + inset + 0.55, y + 0.45, 3.1, c_h - 0.9, SLATE, SLATE,
+        # the four controls carry a filled badge; the scope condition an
+        # outline one, so the figure reads "four controls + a fixed universe"
+        badge_fill = "white" if is_scope else SLATE
+        badge_text = SLATE if is_scope else "white"
+        box(ax, X_HAR0 + inset + 0.55, y + 0.45, 3.1, c_h - 0.9, badge_fill, SLATE,
             lw=W_CHIP, r=R_IN, z=4)
         ax.text(X_HAR0 + inset + 2.1, y + c_h / 2 - 0.11, cid, fontsize=F_BODY,
-                va="center", ha="center", color="white", fontweight="bold",
+                va="center", ha="center", color=badge_text, fontweight="bold",
                 zorder=5)
         ax.text(X_HAR0 + inset + 4.5, y + c_h / 2, txt, fontsize=F_BODY,
                 va="center", color=INK, zorder=5)
@@ -169,9 +178,9 @@ def main():
         ybot = row_y[i]
         box(ax, lad_x0, ybot, lad_x1 - lad_x0, r_h, "white", SLATE,
             lw=W_EMPH if tag else W_BOX, r=R_IN, z=3)
-        ax.text(lad_x0 + 1.6, ybot + r_h - 1.8, lvl, fontsize=F_LABEL,
+        ax.text(lad_x0 + 1.3, ybot + r_h - 1.8, lvl, fontsize=F_RUNG,
                 va="center", color=SLATE, fontweight="bold", zorder=4)
-        ax.text(lad_x0 + 1.6, ybot + 1.8, sub, fontsize=F_BODY,
+        ax.text(lad_x0 + 1.3, ybot + 1.8, sub, fontsize=F_BODY,
                 va="center", color=INK, zorder=4)
         if tag:
             cw, chh = 11.8, 2.5
