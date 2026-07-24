@@ -185,7 +185,9 @@ def main():
         if tag:
             cw, chh = 11.8, 2.5
             cx = lad_x1 - 1.6 - cw
-            cy = ybot + 1.15
+            # center the chip on the two-line body block (its va-center sits
+            # at ybot+1.8), not half a line above it
+            cy = ybot + 1.8 - chh / 2
             box(ax, cx, cy, cw, chh, SLATE, SLATE, lw=W_CHIP, r=R_IN, z=4)
             ax.text(cx + cw / 2, cy + chh / 2 - 0.05, tag, fontsize=5.8,
                     va="center", ha="center", color="white",
@@ -203,9 +205,12 @@ def main():
         r=R_IN, z=4)
     ax.text(gx, y_claim - 0.11, "the claim", fontsize=F_LABEL, ha="center",
             va="center", color=INK, fontweight="bold", zorder=5)
-    ax.text(gx, y_claim + 3.6, "paired per-fold Δ\nvs the tuned baseline",
-            fontsize=F_FINE, ha="center", va="center", color=GREY,
-            linespacing=1.35)
+    # kept inside the gutter (54.5-67.5): "tuned" is redundant with C1's
+    # tile ("tuned price-only baseline"), so drop it and size to clear both
+    # the harness strip and the ladder boxes
+    ax.text(gx, y_claim + 3.6, "paired per-fold Δ\nvs the baseline",
+            fontsize=4.9, ha="center", va="center", color=GREY,
+            linespacing=1.3)
 
     suffix = "" if variant == "A" else "-B"
     fig.savefig(OUT / f"fig-overview{suffix}.pdf", bbox_inches="tight",

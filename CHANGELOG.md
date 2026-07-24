@@ -14,7 +14,10 @@ concept DOI 10.5281/zenodo.21431362.
   C5 is drawn as the scope condition (outline badge, set apart) rather
   than a fifth identical control tile, matching the paper's "four controls
   + a fixed universe"; source-family tiles show their flags (Social
-  "17 aggregates + flag", Macro "6 series + FOMC") to match Table 2.
+  "17 aggregates + flag", Macro "6 series + FOMC") to match Table 2; the
+  "→ established" chip is centered on the two-line Level-3 body; and the
+  claim label ("paired per-fold Δ vs the baseline") is sized to stay
+  inside the gutter, clear of the harness and the ladder boxes.
 - **ECONOMIC-CONTEXT.md correction:** the FF/LSTM directional-accuracy
   values were swapped (had 0.520 FF / 0.522 LSTM; source phase5 Table 4.3
   is FF 0.5225 / LSTM 0.5201). Corrected; the Sharpe line was already
