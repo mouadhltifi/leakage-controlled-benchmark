@@ -133,12 +133,12 @@ def main():
         ("C2", "availability-timed chronology"),
         ("C3", "selection never reads the test set"),
         ("C4", "fold-level corrected statistics"),
-        ("C5", "scope: the fixed liquid universe"),
+        ("C5", "the fixed liquid universe"),
     ]
     c_top = Y_BAND1 - band_h - 2.3
     c_bot = Y_BAND0 + 0.9
     c_gap = 0.8
-    scope_gap = 1.2   # C5 is the scope condition, set apart from the four controls
+    scope_gap = 2.9   # room for the labeled divider that sets C5 (scope) apart
     c_h = (c_top - c_bot - (n - 1) * c_gap - scope_gap) / n
     for i, (cid, txt) in enumerate(controls):
         is_scope = (i == n - 1)   # C5: scope, not a fourth-wall control
@@ -156,6 +156,16 @@ def main():
                 zorder=5)
         ax.text(X_HAR0 + inset + 4.5, y + c_h / 2, txt, fontsize=F_BODY,
                 va="center", color=INK, zorder=5)
+        if is_scope:
+            # a labeled rule between the four controls and C5, so the reader
+            # sees at a glance that C5 is the scope, not a fifth control
+            y_div = y + c_h + (c_gap + scope_gap) / 2
+            x0d, x1d = X_HAR0 + inset, X_HAR1 - inset
+            ax.plot([x0d, x1d], [y_div, y_div], color=GREY, lw=0.5, zorder=3)
+            ax.text((x0d + x1d) / 2, y_div, "the scope, not a control",
+                    fontsize=F_FINE, style="italic", color=GREY,
+                    ha="center", va="center", zorder=5,
+                    bbox=dict(facecolor="white", edgecolor="none", pad=1.2))
 
     # ---- audit ladder (fills the band; B adds a peer container) -----------
     lad_x0, lad_x1 = X_LAD0, X_LAD1
