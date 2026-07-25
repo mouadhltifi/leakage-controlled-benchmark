@@ -101,11 +101,11 @@ def main():
     fams = [
         ("Price", "10 indicators"),
         ("News", "day-level sentiment"),
-        # 17 aggregate columns ship, 15 of them informative (two dispersion
-        # columns are constant placeholders -- StockTwits labels are
-        # categorical). State the informative count explicitly, matching
-        # Table 2; "15 aggregates" alone would misreport the column count.
-        ("Social", "15 informative + flag"),
+        # Block width, matching Table 2's Features/day column for every other
+        # family (News 10+flag, Macro 6+FOMC). Two of the seventeen are
+        # constant placeholders; the paper states that in Sec 3.1 rather than
+        # here, so the figure and the table cannot disagree on a count.
+        ("Social", "17 aggregates + flag"),
         ("Macro", "6 series + FOMC"),
         ("Graph", "sector + correlation"),
     ]

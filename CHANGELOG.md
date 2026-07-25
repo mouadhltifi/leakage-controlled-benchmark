@@ -6,7 +6,21 @@ tag; the changes are to data-file correctness, tooling, and documentation.
 "Archived" = published as a GitHub Release and ingested by Zenodo under the
 concept DOI 10.5281/zenodo.21431362.
 
-## v1.0.16 — 2026-07-25
+## v1.0.17 — 2026-07-25
+
+Figure-source only; supersedes v1.0.16 (tagged and pushed, never released).
+No data, harness, results or metadata change beyond the version string.
+
+- **Figure 1's Social tile reads "17 aggregates + flag"** (was "15
+  informative + flag"). The paper's Table 2 reports block width for every
+  family — News "10 stats + flag", Macro "6 series + FOMC" — and a gauntlet
+  lens found the Social row under-reporting it (16 vs the 18 the harness
+  actually feeds). Table 2 was corrected to the width, which left the figure
+  and the table printing different counts for the same family; the figure now
+  matches. That two of the seventeen are constant placeholders is stated in
+  §3.1 and the datasheet, so the two surfaces cannot disagree on a number.
+
+## v1.0.16 — 2026-07-25 (tag only; superseded before release, contents in v1.0.17)
 
 Supersedes v1.0.15 (tagged and pushed, never released); its contents ship here.
 Fixes everything a three-lens adversarial gauntlet found on v1.0.15, plus the
