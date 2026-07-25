@@ -6,7 +6,43 @@ tag; the changes are to data-file correctness, tooling, and documentation.
 "Archived" = published as a GitHub Release and ingested by Zenodo under the
 concept DOI 10.5281/zenodo.21431362.
 
-## v1.0.13 — 2026-07-25
+## v1.0.14 — 2026-07-25
+
+Closes the closable cores of the review's remaining open items; supersedes
+v1.0.13 (tagged and pushed, never released; a pushed tag is not moved).
+No reference number changes.
+
+- **Social-block derivation invariants, mechanically verified
+  (`scripts/data/check_social_invariants.py`, release-gate step 6).** The
+  StockTwits archive is gone, so the social aggregates cannot be re-derived
+  from source. What CAN be verified is now verified on every tag: 9 of the 15
+  informative columns are recomputed exactly from the 6 primitive ones
+  (log-volume, intensity, bullish ratio, labeled volume, and all four *_w3
+  rolling columns), the 2 placeholders are checked constant, and all ranges
+  are bounded — 13 invariants, 100.000% of 114,747 rows, negative-tested
+  (corrupting 101 rows makes it exit non-zero). The take-on-trust surface
+  shrinks from "the social block" to the six primitive columns. Found along
+  the way and now documented: `social_net_sentiment` is byte-identical to
+  `social_sent_mean` (a construction consequence of categorical labels), so
+  the block carries 14 distinct signals.
+- **The comparison family's external timestamp, stated precisely.** The k=8
+  declaration shipped inside the v1.0.5 archive, DataCite-registered
+  2026-07-21T08:08:06Z — a third-party timestamp we do not control. It
+  postdates our reference results (the paper's "not externally
+  pre-timestamped" disclosure stands), but it predates publication and any
+  external submission: the family provably cannot be changed in response to
+  submissions, and it is externally timestamped by construction for every
+  future appended test year.
+- **The release gate now runs on public infrastructure.**
+  `.github/workflows/release-gate.yml` (manifest-covered) executes
+  `scripts/release_gate.py` on GitHub's runners on every push to main and
+  every tag, with public logs. Not an independent human audit — that remains
+  open and invited — but the gate no longer runs only on the maintainers'
+  machines.
+
+## v1.0.13 — 2026-07-25 (tag only; superseded before release, contents in v1.0.14)
+
+
 
 Supersedes v1.0.12, which was tagged and pushed but never released; its
 contents ship here unchanged, plus the per-arm grid below. (A pushed tag is

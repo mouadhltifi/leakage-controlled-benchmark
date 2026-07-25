@@ -20,6 +20,9 @@ Checks, in order:
   5. Deposit consistency: the assembled H5s carry the released FF12
      graph, the publication-lagged (C2) macro block, and the canonical
      price block -- content checks the hash manifest cannot make.
+  6. Social-block derivation invariants: the StockTwits aggregates cannot
+     be re-derived from source (the archive is gone), so every derivable
+     column is recomputed from the primitives and byte-checked instead.
 """
 from __future__ import annotations
 
@@ -104,6 +107,14 @@ def main() -> int:
                        capture_output=True, text=True)
     step("H5 deposit matches the canonical tables (graph + macro + price)",
          r.returncode == 0,
+         r.stdout.strip().splitlines()[-1] if r.stdout else "no output")
+
+    # 6. social-block derivation invariants: the non-re-derivable source's
+    # derived columns must recompute exactly from its primitives
+    r = subprocess.run([sys.executable,
+                        str(ROOT / "scripts/data/check_social_invariants.py")],
+                       capture_output=True, text=True)
+    step("social block satisfies all derivation invariants", r.returncode == 0,
          r.stdout.strip().splitlines()[-1] if r.stdout else "no output")
 
     print(f"\n{'RELEASE GATE: PASS' if not FAILS else 'RELEASE GATE: FAIL -- do not tag'}")

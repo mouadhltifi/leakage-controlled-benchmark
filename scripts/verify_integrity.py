@@ -27,7 +27,8 @@ COVERED = ("src", "scripts", "configs", "tables",
            "data/raw/macro", "data/processed")
 # Normative top-level files: the rule text submitters are bound by is
 # inside the tamper-evidence scope, not outside it.
-COVERED_FILES = ("README.md", "SUBMITTING.md", "REPRODUCE.md",
+COVERED_FILES = (".github/workflows/release-gate.yml",
+                 "README.md", "SUBMITTING.md", "REPRODUCE.md",
                  "MAINTENANCE.md", "CHANGELOG.md", "DATA-STATEMENTS.md",
                  "DATASHEET.md", "ECONOMIC-CONTEXT.md", "LICENSE",
                  "CITATION.cff", "croissant.json",

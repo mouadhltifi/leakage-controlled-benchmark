@@ -55,7 +55,11 @@
      informative**: `social_sent_std` and `social_sent_std_w3` are constant
      `0.0` placeholders, because StockTwits labels messages categorically and
      has no continuous per-message score to take a within-day SD over — see
-     `data/README.md` and the `social_features.py` docstring) + a has-data
+     `data/README.md` and the `social_features.py` docstring; additionally
+     `social_net_sentiment` is byte-identical to `social_sent_mean` under
+     categorical labels, so the block carries 14 distinct signals — every
+     derivable column is mechanically re-verified against the primitives by
+     `scripts/data/check_social_invariants.py`, a release-gate step) + a has-data
      flag; coverage ends 2022-12-30, the 2023 gap is explicit.
   4. **Macro** — five federal FRED series resampled to business days, in
      original and **publication-lag-corrected** variants (+ FOMC dates);
