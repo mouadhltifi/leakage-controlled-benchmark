@@ -1,0 +1,171 @@
+{
+  "meta": {
+    "k_declared": 8,
+    "evaluator": "scripts/analysis/evaluate_submission.py",
+    "estimand": "per-arm; Table 3 pools these two columns",
+    "n_submissions": 16,
+    "n_certifying": 0
+  },
+  "configs": {
+    "P+N": {
+      "config_id": "A3",
+      "arms": {
+        "ff": {
+          "delta_mcc": 0.0033,
+          "verdict": "WITHIN THE REFERENCE NULL",
+          "certifies": false,
+          "n_cells": 15
+        },
+        "lstm": {
+          "delta_mcc": 0.001,
+          "verdict": "WITHIN THE REFERENCE NULL",
+          "certifies": false,
+          "n_cells": 15
+        }
+      },
+      "pooled_mean": 0.00215,
+      "reference_row": 0.0022,
+      "arm_swing": 0.0023
+    },
+    "P+M": {
+      "config_id": "A4",
+      "arms": {
+        "ff": {
+          "delta_mcc": -0.0002,
+          "verdict": "WITHIN THE REFERENCE NULL",
+          "certifies": false,
+          "n_cells": 15
+        },
+        "lstm": {
+          "delta_mcc": -0.0067,
+          "verdict": "WITHIN THE REFERENCE NULL",
+          "certifies": false,
+          "n_cells": 15
+        }
+      },
+      "pooled_mean": -0.00345,
+      "reference_row": -0.0035,
+      "arm_swing": 0.006500000000000001
+    },
+    "P+S": {
+      "config_id": "A6",
+      "arms": {
+        "ff": {
+          "delta_mcc": 0.0001,
+          "verdict": "WITHIN THE REFERENCE NULL",
+          "certifies": false,
+          "n_cells": 15
+        },
+        "lstm": {
+          "delta_mcc": -0.0095,
+          "verdict": "WITHIN THE REFERENCE NULL",
+          "certifies": false,
+          "n_cells": 15
+        }
+      },
+      "pooled_mean": -0.0047,
+      "reference_row": -0.0047,
+      "arm_swing": 0.0096
+    },
+    "P+G": {
+      "config_id": "A8",
+      "arms": {
+        "ff": {
+          "delta_mcc": 0.0152,
+          "verdict": "WITHIN THE REFERENCE NULL",
+          "certifies": false,
+          "n_cells": 15
+        },
+        "lstm": {
+          "delta_mcc": 0.0029,
+          "verdict": "WITHIN THE REFERENCE NULL",
+          "certifies": false,
+          "n_cells": 15
+        }
+      },
+      "pooled_mean": 0.009049999999999999,
+      "reference_row": 0.009,
+      "arm_swing": 0.0123
+    },
+    "P+N+M": {
+      "config_id": "A2",
+      "arms": {
+        "ff": {
+          "delta_mcc": -0.0114,
+          "verdict": "WITHIN THE REFERENCE NULL",
+          "certifies": false,
+          "n_cells": 15
+        },
+        "lstm": {
+          "delta_mcc": -0.0171,
+          "verdict": "WITHIN THE REFERENCE NULL",
+          "certifies": false,
+          "n_cells": 15
+        }
+      },
+      "pooled_mean": -0.01425,
+      "reference_row": -0.0142,
+      "arm_swing": 0.0057
+    },
+    "P+M+S": {
+      "config_id": "A5",
+      "arms": {
+        "ff": {
+          "delta_mcc": 0.0045,
+          "verdict": "WITHIN THE REFERENCE NULL",
+          "certifies": false,
+          "n_cells": 15
+        },
+        "lstm": {
+          "delta_mcc": -0.011,
+          "verdict": "WITHIN THE REFERENCE NULL",
+          "certifies": false,
+          "n_cells": 15
+        }
+      },
+      "pooled_mean": -0.00325,
+      "reference_row": -0.0032,
+      "arm_swing": 0.0155
+    },
+    "P+M+G": {
+      "config_id": "A9",
+      "arms": {
+        "ff": {
+          "delta_mcc": 0.0003,
+          "verdict": "WITHIN THE REFERENCE NULL",
+          "certifies": false,
+          "n_cells": 15
+        },
+        "lstm": {
+          "delta_mcc": -0.0038,
+          "verdict": "WITHIN THE REFERENCE NULL",
+          "certifies": false,
+          "n_cells": 15
+        }
+      },
+      "pooled_mean": -0.00175,
+      "reference_row": -0.0017,
+      "arm_swing": 0.0041
+    },
+    "P+N+M+S": {
+      "config_id": "A1",
+      "arms": {
+        "ff": {
+          "delta_mcc": -0.0006,
+          "verdict": "WITHIN THE REFERENCE NULL",
+          "certifies": false,
+          "n_cells": 15
+        },
+        "lstm": {
+          "delta_mcc": -0.0102,
+          "verdict": "WITHIN THE REFERENCE NULL",
+          "certifies": false,
+          "n_cells": 15
+        }
+      },
+      "pooled_mean": -0.0054,
+      "reference_row": -0.0054,
+      "arm_swing": 0.009600000000000001
+    }
+  }
+}

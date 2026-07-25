@@ -6,13 +6,31 @@ tag; the changes are to data-file correctness, tooling, and documentation.
 "Archived" = published as a GitHub Release and ingested by Zenodo under the
 concept DOI 10.5281/zenodo.21431362.
 
-## v1.0.12 — 2026-07-25
+## v1.0.13 — 2026-07-25
+
+Supersedes v1.0.12, which was tagged and pushed but never released; its
+contents ship here unchanged, plus the per-arm grid below. (A pushed tag is
+not moved, so the addition takes a new number rather than rewriting v1.0.12.)
 
 Adds a second classical price-only anchor and states one auditability limit
 plainly. Both come from an external pre-submission review. No existing
 reference number changes: the six prior anchors, the reference tables, the
 labels tables and the Section-6 demo claim block all regenerate identically.
 
+- **Per-arm reference grid shipped (`tables/arm_split.tex`,
+  `results/analysis/arm_split.json`, new
+  `scripts/analysis/make_arm_split_table.py`).** A reviewer asked us to
+  release every architecture arm rather than only the pooled estimand, so
+  that pooling cannot hide an arm that would certify. All eight declared
+  configurations x both arms now ship, each run through the release's own
+  evaluator at the declared `k=8`: **0 of 16 certify.** The script
+  self-validates — it recomputes the pooled mean of each pair and fails if it
+  does not reproduce the Table 3 row to 1e-4, and it fails loudly if any arm
+  ever certifies, so the table cannot silently contradict the paper. It also
+  reports the arm swing, which is comparable to or larger than every
+  multi-source effect in the grid (largest: price+macro+social at 0.0155,
+  ahead of price+graph's 0.0123) — the reason architecture is pooled rather
+  than selected over.
 - **New anchor: `gbm-price`.** Reviewers reasonably ask whether the tuned
   *neural* price-only baseline is simply weak, which would make the
   multi-source null an artifact of a soft comparator. The anchors now bracket
@@ -32,6 +50,8 @@ labels tables and the Section-6 demo claim block all regenerate identically.
   placeholder columns are checkable), and notes the direction of the residual
   risk: a derivation error that inflated the social signal would push toward a
   false positive we do not report.
+
+## v1.0.12 — 2026-07-25 (tag only; superseded before release, contents in v1.0.13)
 
 ## v1.0.11 — 2026-07-24
 
