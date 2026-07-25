@@ -5,6 +5,7 @@
     "n_folds": 5,
     "assembly": "mmfp.data.assemble.assemble_fold (price-only A7 config)",
     "logistic_features": "10 *_norm price block (harness train-fold scaler)",
+    "gbm_config": "HistGradientBoostingClassifier(max_iter=200, learning_rate=0.06, max_depth=4, l2_regularization=1.0) on the same price block",
     "momentum_feature": "raw return_1d (sign), joined by (Ticker, Date)",
     "random_seed": 42,
     "random_draws": 100,
@@ -139,6 +140,25 @@
       ],
       "mcc_mean": 0.014424,
       "accuracy_mean": 0.528346,
+      "provenance": "computed"
+    },
+    "gbm-price": {
+      "mcc_per_fold": [
+        -0.000593,
+        0.029085,
+        0.009231,
+        0.008611,
+        -0.037865
+      ],
+      "accuracy_per_fold": [
+        0.524554,
+        0.545021,
+        0.513077,
+        0.51711,
+        0.517501
+      ],
+      "mcc_mean": 0.001694,
+      "accuracy_mean": 0.523453,
       "provenance": "computed"
     }
   }

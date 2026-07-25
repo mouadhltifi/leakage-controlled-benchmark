@@ -20,6 +20,11 @@ Anchors
 6. logistic-price -- ``sklearn`` logistic regression fit on the fold's train
                      split over the ten ``*_norm`` price features (the harness's
                      train-fold-fit price block), predicting the test split.
+7. gbm-price      -- gradient-boosted trees (``HistGradientBoostingClassifier``)
+                     on the same train-fold price block. A non-linear,
+                     comparably tuned price-only comparator: reviewers
+                     reasonably ask whether the neural price baseline is simply
+                     weak, and this anchor answers it from the same assembly.
 
 Metrics use ``sklearn.metrics`` (``matthews_corrcoef`` returns 0.0 for a
 single-class prediction, which is the benchmark's convention for the always-*
@@ -60,6 +65,7 @@ from pathlib import Path
 
 import numpy as np
 import pandas as pd
+from sklearn.ensemble import HistGradientBoostingClassifier
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import accuracy_score, matthews_corrcoef
 
@@ -92,6 +98,7 @@ ANCHOR_ORDER = [
     "momentum",
     "reversal",
     "logistic-price",
+    "gbm-price",
 ]
 
 DEFAULT_JSON = ROOT / "results" / "analysis" / "naive_anchors.json"
@@ -195,6 +202,21 @@ def score_fold(
         raise AssertionError(f"fold {fold}: logistic MCC is not finite ({lr_mcc})")
     out["logistic-price"] = (float(lr_mcc), float(accuracy_score(y, lr_pred)))
 
+    # gradient-boosted trees on the same train-fold price block. Same features,
+    # same assembly, same test rows as the logistic anchor -- the only change is
+    # model class, so the pair brackets what price alone supports under a linear
+    # and a non-linear learner.
+    gbm = HistGradientBoostingClassifier(
+        max_iter=200, learning_rate=0.06, max_depth=4,
+        l2_regularization=1.0, random_state=RANDOM_SEED,
+    )
+    gbm.fit(art.train_features, art.train_labels_cls.astype(np.int64))
+    gb_pred = gbm.predict(art.test_features)
+    gb_mcc = matthews_corrcoef(y, gb_pred)
+    if not np.isfinite(gb_mcc):
+        raise AssertionError(f"fold {fold}: gbm MCC is not finite ({gb_mcc})")
+    out["gbm-price"] = (float(gb_mcc), float(accuracy_score(y, gb_pred)))
+
     # label cross-check: P(up) + P(down) == 1
     if abs(out["always-up"][1] + out["always-down"][1] - 1.0) > 1e-9:
         raise AssertionError(
@@ -250,6 +272,9 @@ def main() -> int:
             "n_folds": N_FOLDS,
             "assembly": "mmfp.data.assemble.assemble_fold (price-only A7 config)",
             "logistic_features": "10 *_norm price block (harness train-fold scaler)",
+            "gbm_config": ("HistGradientBoostingClassifier(max_iter=200, "
+                           "learning_rate=0.06, max_depth=4, "
+                           "l2_regularization=1.0) on the same price block"),
             "momentum_feature": "raw return_1d (sign), joined by (Ticker, Date)",
             "random_seed": RANDOM_SEED,
             "random_draws": RANDOM_DRAWS,

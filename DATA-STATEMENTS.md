@@ -52,6 +52,20 @@
   the 2023 gap explicitly flagged.
 - **Does not ship:** any message text, message ID, user ID, or per-message
   record.
+- **Auditability limit (stated plainly).** The upstream StockTwits archive is
+  no longer retrievable, so these aggregates **cannot be independently
+  re-derived from source**, and `MANIFEST.sha256` proves only that the shipped
+  file is unchanged --- not that the derivation was correct. What *is*
+  auditable: the derivation code ships
+  (`src/mmfp/features/social_features.py`, a port of the original
+  `build_stocktwits_features.py`) and can be read against the documented
+  column semantics; the schema, coverage window, per-column ranges and the two
+  constant placeholder columns are all checkable against `DATASHEET.md`; and
+  the social contrast is negative-to-null throughout, so a derivation error
+  that *inflated* the social signal would move the reported result toward a
+  false positive we do not report. Treat the social block as
+  use-as-shipped, code-reviewable but not re-derivable, and weight
+  social-family conclusions accordingly.
 - **Basis:** StockTwits' terms prohibit redistribution/extraction and there
   is no rehydration endpoint; messages carry author copyright. Day-level
   aggregates over ≥dozens of messages are non-reconstructive statistics.

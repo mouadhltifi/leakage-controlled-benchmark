@@ -6,6 +6,33 @@ tag; the changes are to data-file correctness, tooling, and documentation.
 "Archived" = published as a GitHub Release and ingested by Zenodo under the
 concept DOI 10.5281/zenodo.21431362.
 
+## v1.0.12 — 2026-07-25
+
+Adds a second classical price-only anchor and states one auditability limit
+plainly. Both come from an external pre-submission review. No existing
+reference number changes: the six prior anchors, the reference tables, the
+labels tables and the Section-6 demo claim block all regenerate identically.
+
+- **New anchor: `gbm-price`.** Reviewers reasonably ask whether the tuned
+  *neural* price-only baseline is simply weak, which would make the
+  multi-source null an artifact of a soft comparator. The anchors now bracket
+  it with a non-linear learner on the identical train-fold price block —
+  gradient-boosted trees (`HistGradientBoostingClassifier`, 200 iters, lr
+  0.06, depth 4, L2 1.0), same harness assembly, same test rows as the
+  logistic anchor. It reads **+0.002** mean test MCC, against the logistic
+  anchor's +0.014 and the neural baseline's +0.005. The neural bar therefore
+  sits *between* two classical price-only models rather than below them, and
+  the logistic anchor remains the binding classical leg of the dual bar.
+  `scripts/analysis/make_naive_anchors.py` computes it; self-validation passes.
+- **Social auditability limit stated (`DATA-STATEMENTS.md`).** The upstream
+  StockTwits archive is no longer retrievable, so the aggregates cannot be
+  re-derived from source and the manifest proves file identity, not derivation
+  correctness. The statement now says so plainly and names what *is* auditable
+  (the derivation code ships; schema, coverage, ranges and the two constant
+  placeholder columns are checkable), and notes the direction of the residual
+  risk: a derivation error that inflated the social signal would push toward a
+  false positive we do not report.
+
 ## v1.0.11 — 2026-07-24
 
 Fix release. Everything below was found by adversarial review — two external
