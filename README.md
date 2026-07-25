@@ -68,7 +68,7 @@ and aggregates ship; raw third-party text and proprietary classifications do
 not. Per-source terms, exclusions, regeneration paths, and the
 removal-on-request policy: **`DATA-STATEMENTS.md`**. Code is MIT; derived
 feature tables are CC-BY-4.0 (`LICENSE`). The paper's economic anchors
-(gross Sharpe, the 50.15% balanced-accuracy floor, the cost bound) derive
+(gross Sharpe, the 50.19% balanced-accuracy floor, the cost bound) derive
 step by step in **`ECONOMIC-CONTEXT.md`**.
 
 ## Provenance (exact reproducibility scope)

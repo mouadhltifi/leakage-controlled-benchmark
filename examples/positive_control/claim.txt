@@ -11,3 +11,4 @@ pooled d (n=15, descriptive): +180608.003
 fold conformance  : OK (n_test matches the frozen folds)
 vs logistic anchor: F0:-0.0256  F1:+0.0587  F2:+0.0284  F3:+0.0653  F4:+0.0635   mean +0.0381  p=0.092   (hard floor for certification: cleared)
 VERDICT           : SUPPORTED
+NOTE: the baseline arm (ff) is a submitter declaration; the arms differ, so a claim must use the arm the model belongs to (Table 7 prices the gap).

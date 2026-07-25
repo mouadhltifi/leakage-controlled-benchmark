@@ -32,6 +32,10 @@ GENERATORS = [
     ROOT / "scripts" / "figures" / "make_benchmark_figures.py",
 ]
 FIGDIR = ROOT / "figures"
+# The paper's six figures. Named explicitly so a generator that silently stops
+# emitting one is a FAILURE rather than a smaller, still-green run.
+EXPECTED = {"fig-overview.pdf", "fig-selection.pdf", "fig-split.pdf",
+            "fig-forest.pdf", "fig-timeline.pdf", "fig-sectorband.pdf"}
 
 
 def _run_once(dest: Path) -> list[str]:
@@ -75,6 +79,11 @@ def main() -> int:
               f"{sorted(set(names_a) ^ set(names_b))}")
         return 1
 
+    missing = sorted(EXPECTED - set(names_a))
+    if missing:
+        print(f"FAIL  generators did not emit {len(missing)} expected "
+              f"figure(s): {', '.join(missing)}")
+        return 1
     bad = [n for n in names_a if not filecmp.cmp(a / n, b / n, shallow=False)]
     for n in names_a:
         print(("FAIL  " if n in bad else "OK    ") + n)

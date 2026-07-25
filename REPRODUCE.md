@@ -12,8 +12,11 @@ the normative top-level files (README, SUBMITTING, REPRODUCE, MAINTENANCE,
 CHANGELOG, data statements, datasheet, LICENSE, CITATION.cff,
 croissant.json); the manifest itself and `.gitignore` are the only two
 files outside its scope (the header of `MANIFEST.sha256` states the same).
-`scripts/release_gate.py` runs this plus the evaluator regression battery
-and the byte-compared Section-6 demo — no tag is cut unless it passes on
+`scripts/release_gate.py` runs this plus the evaluator regression battery,
+the byte-compared Section-6 demo, metadata/version coherence, H5 deposit
+content, the social derivation invariants and figure determinism — ten
+steps in all, and the same command runs on public CI. No tag is cut unless
+every one passes on
 a fresh clone.
 
 ## 0. Environment
@@ -60,7 +63,9 @@ price-only baseline (A7) after Bonferroni (p_bonf = 1.0). Sections: `rq1`,
 ### 1b. All paper figures
 
 ```bash
-python scripts/figures/make_paper_figures.py   # writes vector PDFs to figures/
+python scripts/figures/make_overview_figure.py    # Figure 1
+python scripts/figures/make_benchmark_figures.py   # Figures 2-6
+python scripts/figures/make_paper_figures.py      # companion-study figures, not in this paper   # writes vector PDFs to figures/
 ```
 
 Produces the per-config forest plot, the MSGCA selection-inflation diagnostic

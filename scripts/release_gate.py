@@ -2,7 +2,12 @@
 """Pre-tag release gate. NO TAG IS CUT unless this exits 0 on the tree
 being tagged (run it on a fresh clone to match what reviewers get):
 
-    python3 scripts/release_gate.py [--expect-version X.Y.Z]
+    python3 scripts/release_gate.py            # on a tag checkout: self-checking
+    python3 scripts/release_gate.py --expect-version X.Y.Z   # explicit assertion
+
+With no --expect-version the gate resolves the tag at HEAD and checks the
+tree's metadata against it, so published instructions carry no version string
+to drift out of date (one did, in the v1.0.14 release note).
 
 Checks, in order:
   1. MANIFEST integrity: verify_integrity.py exits 0 with zero
@@ -84,10 +89,26 @@ def main() -> int:
         agree = str(cff.get("version")) == str(cro.get("version"))
         step("CITATION/croissant versions agree", agree,
              f"{cff.get('version')} vs {cro.get('version')}")
-        if a.expect_version:
-            step("version matches --expect-version",
-                 str(cff.get("version")) == a.expect_version,
-                 f"{cff.get('version')} vs {a.expect_version}")
+        # Version coherence. An explicit --expect-version asserts a value;
+        # with no flag we resolve the tag at HEAD instead, so a published
+        # command needs no version string -- the one that went stale in the
+        # v1.0.14 release note. An untagged checkout has nothing to compare
+        # against, which is reported rather than failed.
+        want, src = a.expect_version, "--expect-version"
+        if not want:
+            tags = subprocess.run(["git", "tag", "--points-at", "HEAD"],
+                                  capture_output=True, text=True,
+                                  cwd=str(ROOT)).stdout.split()
+            rel = [t for t in tags if t.startswith("v")]
+            if rel:
+                want, src = rel[0].lstrip("v"), f"tag {rel[0]}"
+        if want:
+            step(f"version matches {src}",
+                 str(cff.get("version")) == want,
+                 f"{cff.get('version')} vs {want}")
+        else:
+            print("NOTE  HEAD is not at a release tag; version coherence not "
+                  "checked (pass --expect-version to assert one)")
     except Exception as e:  # pragma: no cover
         step("metadata parse", False, str(e))
     try:

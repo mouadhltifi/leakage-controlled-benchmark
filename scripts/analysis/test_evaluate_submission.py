@@ -54,6 +54,13 @@ def craft(name: str, bump) -> Path:
 
 
 def check(label: str, out: str, must: list[str], must_not: list[str] = []):
+    """Assert on an evaluator run.
+
+    NOTE: never pass ``must=[""]`` -- the empty string is a substring of every
+    string, so such a case passes on any input. Three JSON assertions shipped
+    that way in v1.0.15 and could not have caught an inverted ``certified``
+    field; use ``must_not`` for negative checks instead.
+    """
     ok = all(m in out for m in must) and not any(m in out for m in must_not)
     print(("PASS  " if ok else "FAIL  ") + label)
     if not ok:
@@ -254,7 +261,7 @@ def main() -> int:
     check("envelope refuses a both-bars-clearing challenger", out,
           ["ENVELOPE REFERENCE"], ["SUPPORTED  ["])
     check("envelope: JSON certified=false", "" if cj and cj.get("certified") is False else "MISSING",
-          [""])
+          [], ["MISSING"])
 
     # (M12) undeclared k must not certify, and the JSON must agree with the
     # printed verdict -- the mutation that broke this was invisible before.
@@ -262,13 +269,13 @@ def main() -> int:
     check("k undeclared on a strong challenger: UNCERTIFIED + JSON false", out,
           ["UNCERTIFIED -- comparison family undeclared"], ["VERDICT           : SUPPORTED"])
     check("k-undeclared JSON certified=false",
-          "" if cj and cj.get("certified") is False else "MISSING", [""])
+          "" if cj and cj.get("certified") is False else "MISSING", [], ["MISSING"])
 
     # (M13) fabrication must FAIL CLOSED in the JSON too, not just annotate.
     out, cj = run_json(str(craft("mut_fab", lambda f: 0.9)), "--k", "1",
                        "--baseline-arch", "ff")
     check("fabrication: JSON certified=false (not annotate-only)",
-          "" if cj and cj.get("certified") is False else "MISSING", [""])
+          "" if cj and cj.get("certified") is False else "MISSING", [], ["MISSING"])
 
     # (M7) n_test conformance must bite on a NON-first row.
     nt = Path(tempfile.mkdtemp()) / "bad_ntest.csv"

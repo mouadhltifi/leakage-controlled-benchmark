@@ -183,6 +183,11 @@ def main() -> int:
                          "is a deprecated alias for envelope")
     ap.add_argument("--restrict-folds", default=None,
                     help="comma-separated fold_idx subset (coverage rule 8)")
+    ap.add_argument("--deterministic", action="store_true",
+                    help="attest that the model is seed-invariant by "
+                         "construction, so identical per-seed scores are "
+                         "expected rather than a relabelled single run "
+                         "(audit-verified at Level 3, not machine-checked)")
     ap.add_argument("--social-coverage-justified", action="store_true",
                     help="attest that the restriction is the rule-8 "
                          "social-coverage tail (the submitted model consumes "
@@ -364,8 +369,14 @@ def main() -> int:
         # is policing that selection. Seed-identical MCC in EVERY fold is the
         # tell (a genuine run differs in the low-order digits); a tie inside a
         # single fold is legitimate and does not trip this.
+        # A seed-invariant model legitimately produces identical scores; the
+        # benchmark's own logistic-price anchor is one. Such a submitter
+        # attests it with --deterministic, exactly as restricted coverage is
+        # attested; without the attestation, identical scores in EVERY fold
+        # are treated as one run relabelled.
         _by_fold_unique = full_grid.groupby("fold_idx")["mcc_sub"].nunique()
-        seeds_degenerate = bool((_by_fold_unique <= 1).all())
+        seeds_degenerate = (bool((_by_fold_unique <= 1).all())
+                            and not a.deterministic)
         if seeds_degenerate:
             seeds_ok = False
     else:
@@ -433,9 +444,10 @@ def main() -> int:
     if k_declared and assembly_verified and not seeds_ok:
         if seeds_degenerate:
             verdict += ("  [SEED CONTRACT NOT MET -- the three contract seeds "
-                        "carry an identical MCC in every fold, so they are one "
-                        "result relabelled, not three runs; certification "
-                        "requires three genuine seed replicates (rule 1)]")
+                        "carry an identical MCC in every fold. For a stochastic "
+                        "model that is one result relabelled, not three runs; "
+                        "if the model is seed-invariant by construction, "
+                        "declare it with --deterministic (rule 1)]")
         else:
             verdict += ("  [SEED CONTRACT NOT MET -- certification requires "
                         "seeds 42/123/456 paired in every submitted fold "
@@ -461,7 +473,7 @@ def main() -> int:
     # greps the verdict for "SUPPORTED" (or reads the JSON "certified" field)
     # must not see a pass. The Level-3 code audit stays the provenance
     # authority; this only stops the harness certifying an impossible score.
-    if float(full_grid["mcc_sub"].abs().max()) > 0.15:
+    if float(full_grid["mcc_sub"].abs().max()) >= 0.15:
         supported = False
         tag = ("  [FABRICATION CHECK -- a per-fold MCC exceeds 0.15, above "
                "every value this task has produced (shipped test-MCC max "
@@ -506,6 +518,12 @@ def main() -> int:
               "NOT a certification (rule 3).")
     if not seed_matched:
         print("NOTE: rule 1 expects seeds 42/123/456 matched to the baseline.")
+    print(f"NOTE: the baseline arm ({a.baseline_arch}) is a submitter "
+          "declaration; the arms differ, so a claim must use the arm the "
+          "model belongs to (Table 7 prices the gap).")
+    if a.deterministic:
+        print("NOTE: --deterministic asserted; seed-invariance is "
+              "audit-verified at Level 3, not machine-checked.")
     if a.json:
         # every float goes through _j: NaN/Infinity are not valid JSON
         # (RFC 8259), and a claim block a strict parser rejects is not a claim

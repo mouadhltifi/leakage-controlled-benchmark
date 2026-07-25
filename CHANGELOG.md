@@ -6,7 +6,52 @@ tag; the changes are to data-file correctness, tooling, and documentation.
 "Archived" = published as a GitHub Release and ingested by Zenodo under the
 concept DOI 10.5281/zenodo.21431362.
 
-## v1.0.15 — 2026-07-25
+## v1.0.16 — 2026-07-25
+
+Supersedes v1.0.15 (tagged and pushed, never released); its contents ship here.
+Fixes everything a three-lens adversarial gauntlet found on v1.0.15, plus the
+root cause behind a recurring release-note defect. No data or results change.
+
+- **Three battery assertions were vacuous.** The JSON `certified` cases added
+  in v1.0.13 called `check(..., must=[""])`, and the empty string is a
+  substring of every string — they passed on any input, so gate step 2 could
+  not have caught an inverted `certified` field. Fixed to `must_not`, and
+  negative-tested: inverting `certified` now produces 3 FAILURES where it
+  previously produced ALL PASS. `check()` carries a warning against the
+  pattern. The v1.0.13 changelog's "three cases now assert on the JSON
+  directly" was false; this entry corrects it.
+- **The public CI gate was RED at v1.0.15.** Step 7 (figure determinism) needs
+  matplotlib and the workflow's dependency list omitted it, so the advertised
+  public run failed at the tag the paper pinned. Added.
+- **A deterministic model was accused of fabrication.** The seed-degeneracy
+  rule refused certification whenever the three seeds carried identical
+  scores — which a seed-invariant model produces by construction, as the
+  benchmark's own `logistic-price` anchor does. Submitters now attest with
+  `--deterministic` (the same pattern as `--social-coverage-justified`), and
+  the message no longer presumes fabrication.
+- **No documented command regenerated the paper's figures.** Every normative
+  pointer named `make_paper_figures.py`, which produces the companion study's
+  figures and none of this paper's six. `REPRODUCE.md` now names
+  `make_overview_figure.py` and `make_benchmark_figures.py`; all three
+  generators pin `SOURCE_DATE_EPOCH`, so the byte-reproducibility claim covers
+  every figure the repo emits.
+- **The determinism check certified whatever it happened to produce.** It now
+  carries the expected six-figure set and fails if a generator silently stops
+  emitting one.
+- **The fabrication tripwire used a strict `>`**, so a per-fold MCC of exactly
+  0.150 passed; now `>=`.
+- **The baseline arm is stamped as a submitter declaration** in the claim
+  block, matching how every other free choice is handled — the arms differ by
+  up to 0.0052 MCC and nothing previously named the choice.
+- **Docs corrected:** `REPRODUCE.md` and `MAINTENANCE.md` described a 3–4 leg
+  gate (it has ten); `README.md` quoted the superseded 50.15% floor (50.19%).
+- **Release-note version coupling removed at the root.** The published gate
+  command carried a hand-maintained version string and went stale once
+  (v1.0.14 shipped `--expect-version 1.0.13`). With no flag the gate now
+  resolves the tag at HEAD and checks the tree's metadata against it, so the
+  published command is version-free and checks *more* than before.
+
+## v1.0.15 — 2026-07-25 (tag only; superseded before release, contents in v1.0.16)
 
 Figure-source only. No data, harness, results or metadata change beyond the
 version string; every reference number and the Section-6 demo claim block

@@ -26,6 +26,7 @@ from pathlib import Path
 
 import numpy as np
 import pandas as pd
+os.environ.setdefault("SOURCE_DATE_EPOCH", "1704067200")  # byte-reproducible PDFs
 import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
