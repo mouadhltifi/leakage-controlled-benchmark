@@ -65,7 +65,12 @@
   5. **Graph** — 55×55 same-sector adjacency from **public SIC→Fama-French-12
      labels** and rolling-correlation dynamic graphs (20-day, price-derived).
 - **Labels:** next-day direction (sign of log return, symmetric 0.5%
-  dead-zone) and next-day realized volatility.
+  dead-zone) and next-day realized volatility. The two shipped direction
+  surfaces use *permuted* {-1, 0, +1} encodings — the H5 `label_cls` is
+  **+1 up / 0 down / -1 dead-zone**, while `labels_direction_allday.parquet`
+  is **-1 down / 0 dead-zone** — so read the encoding, not the alphabet
+  (`data/README.md`). `labels_direction.parquet`, the decisive-day scoring
+  surface the evaluator's predictions mode uses, is unaffected.
 - **No personal data:** no message text, user IDs, or article text ship —
   only day-level numeric aggregates and derived features (see
   DATA-STATEMENTS §2–3).
