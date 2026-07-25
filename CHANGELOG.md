@@ -6,6 +6,29 @@ tag; the changes are to data-file correctness, tooling, and documentation.
 "Archived" = published as a GitHub Release and ingested by Zenodo under the
 concept DOI 10.5281/zenodo.21431362.
 
+## v1.0.15 — 2026-07-25
+
+Figure-source only. No data, harness, results or metadata change beyond the
+version string; every reference number and the Section-6 demo claim block
+regenerate identically.
+
+- **Figures are now byte-reproducible, and the gate proves it (step 7).**
+  matplotlib stamps `/CreationDate` from the wall clock, so every figure
+  regenerated to different bytes and "regenerate and diff" — a check this
+  release invites reviewers to run — could not distinguish a real change from
+  a timestamp. The generators now pin `SOURCE_DATE_EPOCH`, and
+  `scripts/figures/check_figure_determinism.py` generates each figure twice
+  and compares byte-for-byte (all 6 identical; negative-tested by removing the
+  pin). It compares only figures the run actually rewrote, so untouched output
+  from other generators cannot produce a false pass.
+- **Figure 1's scope divider reads "the scope" (was "the scope, not a
+  control").** Co-author review found the longer form reads as pre-empting a
+  criticism rather than stating the design. The paper's C5 prose was reworded
+  the same way. Cut as its own release because the paper pins a tag and
+  regenerating Figure 1 from v1.0.14 would otherwise produce a label the paper
+  does not show — the same paper/artifact drift the table-sync step closed
+  earlier today.
+
 ## v1.0.14 — 2026-07-25
 
 Closes the closable cores of the review's remaining open items; supersedes

@@ -22,8 +22,14 @@ histories, shipped) and the audited CAMEF constants (audits/camef/).
 from __future__ import annotations
 
 import json
+import os
 from pathlib import Path
 
+# Byte-reproducible PDFs: matplotlib stamps /CreationDate from the clock
+# unless SOURCE_DATE_EPOCH is set, so regenerating a figure produced different
+# bytes every time and "regenerate and compare" could not be used as a check.
+# Pinned to the benchmark's window end (2024-01-01Z).
+os.environ.setdefault("SOURCE_DATE_EPOCH", "1704067200")
 import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt

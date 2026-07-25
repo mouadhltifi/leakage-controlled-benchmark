@@ -23,6 +23,8 @@ Checks, in order:
   6. Social-block derivation invariants: the StockTwits aggregates cannot
      be re-derived from source (the archive is gone), so every derivable
      column is recomputed from the primitives and byte-checked instead.
+  7. Figure determinism: each paper figure is generated twice and compared
+     byte-for-byte, so "regenerate and diff" is a usable reviewer check.
 """
 from __future__ import annotations
 
@@ -115,6 +117,13 @@ def main() -> int:
                         str(ROOT / "scripts/data/check_social_invariants.py")],
                        capture_output=True, text=True)
     step("social block satisfies all derivation invariants", r.returncode == 0,
+         r.stdout.strip().splitlines()[-1] if r.stdout else "no output")
+
+    # 7. figure determinism: the paper's figures must regenerate byte-identically
+    r = subprocess.run([sys.executable,
+                        str(ROOT / "scripts/figures/check_figure_determinism.py")],
+                       capture_output=True, text=True)
+    step("paper figures regenerate byte-identically", r.returncode == 0,
          r.stdout.strip().splitlines()[-1] if r.stdout else "no output")
 
     print(f"\n{'RELEASE GATE: PASS' if not FAILS else 'RELEASE GATE: FAIL -- do not tag'}")

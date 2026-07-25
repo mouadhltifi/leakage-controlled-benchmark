@@ -24,6 +24,11 @@ from __future__ import annotations
 import os
 from pathlib import Path
 
+# Byte-reproducible PDFs: matplotlib stamps /CreationDate from the clock
+# unless SOURCE_DATE_EPOCH is set, so regenerating a figure produced different
+# bytes every time and "regenerate and compare" could not be used as a check.
+# Pinned to the benchmark's window end (2024-01-01Z).
+os.environ.setdefault("SOURCE_DATE_EPOCH", "1704067200")
 import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
@@ -165,11 +170,11 @@ def main():
                 va="center", color=INK, zorder=5)
         if is_scope:
             # a labeled rule between the four controls and C5, so the reader
-            # sees at a glance that C5 is the scope, not a fifth control
+            # sees at a glance that C5 states the scope the four run in
             y_div = y + c_h + (c_gap + scope_gap) / 2
             x0d, x1d = X_HAR0 + inset, X_HAR1 - inset
             ax.plot([x0d, x1d], [y_div, y_div], color=GREY, lw=0.5, zorder=3)
-            ax.text((x0d + x1d) / 2, y_div, "the scope, not a control",
+            ax.text((x0d + x1d) / 2, y_div, "the scope",
                     fontsize=F_FINE, style="italic", color=GREY,
                     ha="center", va="center", zorder=5,
                     # knockout must match the panel fill it sits on, not white,
